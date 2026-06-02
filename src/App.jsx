@@ -2585,13 +2585,39 @@ const CONSULTATIONS = [
 ]
 
 function Screen17({ navigate, goBack, onExit }) {
+  const [tab, setTab] = useState('consultations') // 'consultations' or 'prescriptions'
+
   return (
     <div className="pb-24">
       <FreedomShell onExit={onExit} />
-      <InnerNav title="История обращений" sub={`${CONSULTATIONS.length} записей`} goBack={goBack} />
+      <InnerNav title="Мои записи" sub={`${CONSULTATIONS.length} записей`} goBack={goBack} />
+
+      {/* Tab switcher */}
+      <div className="sticky top-14 z-10 px-4 pt-3 pb-2 flex gap-2" style={{ background: 'var(--bg-base)', borderBottom: '1px solid var(--border)' }}>
+        <button onClick={() => setTab('consultations')}
+          className="flex-1 py-2.5 rounded-xl font-semibold text-sm transition-all"
+          style={{
+            background: tab === 'consultations' ? 'rgba(0,185,86,0.15)' : 'rgba(100,116,139,0.1)',
+            color: tab === 'consultations' ? 'var(--green-500)' : 'var(--text-secondary)',
+            border: tab === 'consultations' ? '1px solid rgba(0,185,86,0.3)' : '1px solid rgba(100,116,139,0.2)'
+          }}>
+          📋 Обращения
+        </button>
+        <button onClick={() => setTab('prescriptions')}
+          className="flex-1 py-2.5 rounded-xl font-semibold text-sm transition-all"
+          style={{
+            background: tab === 'prescriptions' ? 'rgba(0,185,86,0.15)' : 'rgba(100,116,139,0.1)',
+            color: tab === 'prescriptions' ? 'var(--green-500)' : 'var(--text-secondary)',
+            border: tab === 'prescriptions' ? '1px solid rgba(0,185,86,0.3)' : '1px solid rgba(100,116,139,0.2)'
+          }}>
+          📄 Выписки
+        </button>
+      </div>
 
       <div className="px-4 pt-4 space-y-3">
-        {CONSULTATIONS.map((c, i) => (
+
+        {/* CONSULTATIONS TAB */}
+        {tab === 'consultations' && CONSULTATIONS.map((c, i) => (
           <button key={c.id} onClick={() => navigate(18, { consultationId: c.id })}
             className="w-full rounded-2xl p-4 text-left transition-all active:scale-95 card-up"
             style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', animationDelay: `${i * 0.05}s` }}>
@@ -2634,6 +2660,121 @@ function Screen17({ navigate, goBack, onExit }) {
             </div>
           </button>
         ))}
+
+        {/* PRESCRIPTIONS TAB */}
+        {tab === 'prescriptions' && CONSULTATIONS.filter(c => c.conclusion.medications.length > 0).map((c, i) => (
+          <button key={c.id} onClick={() => navigate(18, { consultationId: c.id })}
+            className="w-full rounded-2xl p-4 text-left transition-all active:scale-95 card-up"
+            style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', animationDelay: `${i * 0.05}s` }}>
+
+            <div className="flex items-start gap-3">
+              {/* Icon */}
+              <div className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center" style={{
+                background: 'linear-gradient(135deg, rgba(96,165,250,0.2), rgba(59,130,246,0.1))',
+                border: '1px solid rgba(59,130,246,0.3)'
+              }}>
+                <span style={{ fontSize: 18 }}>📄</span>
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="font-bold text-white text-sm mb-1">{c.conclusion.diagnosis}</div>
+                <div className="text-xs font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>
+                  {c.doctor} • {c.date}
+                </div>
+
+                {/* Medications list */}
+                <div className="space-y-1 mb-3">
+                  {c.conclusion.medications.slice(0, 2).map((med, mi) => (
+                    <div key={mi} className="text-xs" style={{ color: '#60A5FA' }}>
+                      💊 {med.length > 50 ? med.substring(0, 50) + '...' : med}
+                    </div>
+                  ))}
+                  {c.conclusion.medications.length > 2 && (
+                    <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                      +{c.conclusion.medications.length - 2} ещё
+                    </div>
+                  )}
+                </div>
+
+                {/* Quick action buttons */}
+                <div className="flex gap-2">
+                  <button onClick={(e) => {
+                    e.stopPropagation()
+                    const firstMed = c.conclusion.medications[0]
+                    const drugName = firstMed.split(' ')[0]
+                    navigate(11, { query: drugName, fromConsultation: true, medications: c.conclusion.medications })
+                  }}
+                    className="flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95"
+                    style={{ background: 'rgba(0,185,86,0.15)', color: 'var(--green-500)', border: '1px solid rgba(0,185,86,0.2)' }}>
+                    🏥 Аптека
+                  </button>
+                  <button onClick={(e) => {
+                    e.stopPropagation()
+                    const lines = [
+                      '═══════════════════════════════════════════════════',
+                      'ЗАКЛЮЧЕНИЕ И ВЫПИСКА КОНСУЛЬТАЦИИ',
+                      '═══════════════════════════════════════════════════',
+                      '',
+                      `Дата обращения: ${c.date}`,
+                      `Врач: ${c.doctor}`,
+                      `Специальность: ${c.specialty}`,
+                      '',
+                      '─────────────────────────────────────────────────',
+                      'ДИАГНОЗ',
+                      '─────────────────────────────────────────────────',
+                      c.conclusion.diagnosis,
+                      '',
+                      '─────────────────────────────────────────────────',
+                      'РЕКОМЕНДАЦИИ',
+                      '─────────────────────────────────────────────────',
+                      c.conclusion.recommendations.map(r => `• ${r}`).join('\n'),
+                      '',
+                      '─────────────────────────────────────────────────',
+                      'НАЗНАЧЕННЫЕ ЛЕКАРСТВА',
+                      '─────────────────────────────────────────────────',
+                      c.conclusion.medications.map(m => `💊 ${m}`).join('\n'),
+                      '',
+                      '─────────────────────────────────────────────────',
+                      'КОНТРОЛЬ',
+                      '─────────────────────────────────────────────────',
+                      c.conclusion.followUp,
+                      '',
+                      '═══════════════════════════════════════════════════',
+                      `Выписано: ${new Date().toLocaleString('ru-KZ')}`,
+                      '═══════════════════════════════════════════════════'
+                    ]
+                    const text = lines.join('\n')
+                    const element = document.createElement('a')
+                    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+                    element.setAttribute('download', `vypiska_${c.id}_${new Date().toISOString().split('T')[0]}.txt`)
+                    element.style.display = 'none'
+                    document.body.appendChild(element)
+                    element.click()
+                    document.body.removeChild(element)
+                  }}
+                    className="flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95"
+                    style={{ background: 'rgba(100,116,139,0.15)', color: '#94A3B8', border: '1px solid rgba(100,116,139,0.2)' }}>
+                    ⬇ Скачать
+                  </button>
+                </div>
+              </div>
+
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="flex-shrink-0" style={{ color: 'var(--text-muted)', marginTop: 2 }}>
+                <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </button>
+        ))}
+
+        {/* Empty state for prescriptions */}
+        {tab === 'prescriptions' && CONSULTATIONS.filter(c => c.conclusion.medications.length > 0).length === 0 && (
+          <div className="text-center py-12">
+            <div style={{ fontSize: 48, marginBottom: 12 }}>📄</div>
+            <div className="text-white font-semibold mb-1">Нет выписок</div>
+            <div style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Выписки появятся после консультаций с назначениями</div>
+          </div>
+        )}
+
       </div>
       <BottomNav current={12} navigate={navigate} />
     </div>
