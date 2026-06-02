@@ -2511,6 +2511,338 @@ function Screen16({ navigate }) {
   )
 }
 
+// ─── Screen 17: История обращений ────────────────────────────────────────────
+
+const CONSULTATIONS = [
+  {
+    id: 'consult-1',
+    date: '2024-05-20 14:30',
+    doctor: 'Айгуль Сейткали',
+    specialty: 'Терапевт',
+    complaint: 'Боль в горле',
+    diagnosis: 'ОРВИ, фарингит',
+    status: 'completed',
+    messages: [
+      { role: 'patient', text: 'Добрый день, беспокоит боль в горле уже 3 дня', time: '14:00' },
+      { role: 'doctor', text: 'Здравствуйте! Когда началось? Есть температура?', time: '14:02' },
+      { role: 'patient', text: 'С понедельника. Температура была до 37.5, вчера прошла', time: '14:03' },
+      { role: 'doctor', text: 'Понял. Похоже на вирусное воспаление. Назначу противовоспалительное', time: '14:05' },
+      { role: 'patient', text: 'Спасибо! Сколько дней лечиться?', time: '14:06' },
+      { role: 'doctor', text: 'Обычно 7-10 дней. Следите за состоянием, если хуже - звоните', time: '14:07' },
+    ],
+    conclusion: {
+      diagnosis: 'ОРВИ, острый фарингит',
+      recommendations: ['Постельный режим', 'Теплое питье (чай, молоко)', 'Полоскание горла', 'Избегать холодного'],
+      medications: ['Амоксициллин 500мг 3x в день (7 дней)', 'Спрей для горла Каметон 4x в день'],
+      followUp: '7 дней. Если не улучшится - повторная консультация'
+    }
+  },
+  {
+    id: 'consult-2',
+    date: '2024-05-10 10:15',
+    doctor: 'Нурлан Абенов',
+    specialty: 'Педиатр',
+    complaint: 'Плановый осмотр',
+    diagnosis: 'Здоров',
+    status: 'completed',
+    messages: [
+      { role: 'doctor', text: 'Привет Карина! Как дела? Как себя чувствуешь?', time: '10:00' },
+      { role: 'patient', text: 'Хорошо! Но немного устаю в конце дня', time: '10:01' },
+      { role: 'doctor', text: 'Это нормально в твоём возрасте. Спи достаточно?', time: '10:02' },
+      { role: 'patient', text: 'Примерно 7 часов в день', time: '10:03' },
+      { role: 'doctor', text: 'Хорошо. Всё хорошо. Давление в норме, анализы отличные. Продолжай так же', time: '10:05' },
+    ],
+    conclusion: {
+      diagnosis: 'Здоров. Общее состояние: отличное',
+      recommendations: ['Продолжить текущий образ жизни', 'Спорт 3-4 раза в неделю', 'Сбалансированное питание'],
+      medications: [],
+      followUp: 'Плановый осмотр через 6 месяцев'
+    }
+  },
+  {
+    id: 'consult-3',
+    date: '2024-04-28 16:45',
+    doctor: 'Мадина Кажибекова',
+    specialty: 'Кардиолог',
+    complaint: 'Тахикардия, сердцебиение',
+    diagnosis: 'Синусовая тахикардия. Стресс-зависимая',
+    status: 'completed',
+    messages: [
+      { role: 'patient', text: 'Добрый день. Последние дни часто чувствую учащённое сердцебиение', time: '16:30' },
+      { role: 'doctor', text: 'Добрый день. Когда это началось? При физической нагрузке или в покое?', time: '16:32' },
+      { role: 'patient', text: 'Даже в покое. Может быть из-за стресса на работе?', time: '16:34' },
+      { role: 'doctor', text: 'Вполне возможно. Давайте ЭКГ сделаем чтобы исключить аритмию', time: '16:36' },
+      { role: 'patient', text: 'Хорошо, сейчас?', time: '16:37' },
+      { role: 'doctor', text: 'Да, минутку. *ЭКГ в норме* Отлично! Только стресс. Релаксируй, медитация помогает', time: '16:40' },
+    ],
+    conclusion: {
+      diagnosis: 'Синусовая тахикардия стресс-зависимая. Аритмии нет',
+      recommendations: ['Снизить стресс', 'Медитация/йога 15-20 мин в день', 'Ограничить кофе', 'Спорт для расслабления'],
+      medications: ['Валериана если приступы - по 1 таб вечером'],
+      followUp: 'ЭКГ повторить через месяц'
+    }
+  },
+]
+
+function Screen17({ navigate, goBack, onExit }) {
+  return (
+    <div className="pb-24">
+      <FreedomShell onExit={onExit} />
+      <InnerNav title="История обращений" sub={`${CONSULTATIONS.length} записей`} goBack={goBack} />
+
+      <div className="px-4 pt-4 space-y-3">
+        {CONSULTATIONS.map((c, i) => (
+          <button key={c.id} onClick={() => navigate(18, { consultationId: c.id })}
+            className="w-full rounded-2xl p-4 text-left transition-all active:scale-95 card-up"
+            style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', animationDelay: `${i * 0.05}s` }}>
+
+            <div className="flex items-start gap-3">
+              {/* Doctor avatar */}
+              <div className="w-12 h-12 rounded-full flex-shrink-0" style={{
+                background: 'linear-gradient(135deg, #185FA5, #534AB7)',
+                border: '2px solid rgba(0,185,86,0.2)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 10, fontWeight: 'bold', color: 'white'
+              }}>
+                {c.doctor.split(' ').map(w => w[0]).join('')}
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between mb-0.5">
+                  <div className="font-bold text-white text-sm">{c.doctor}</div>
+                  <span className="text-xs px-2 py-1 rounded-full" style={{ background: 'rgba(0,185,86,0.15)', color: 'var(--green-500)' }}>
+                    ✓ {c.status === 'completed' ? 'Завершено' : 'Ожидание'}
+                  </span>
+                </div>
+
+                <div className="text-xs font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>
+                  {c.specialty} • {c.date}
+                </div>
+
+                <div className="text-sm text-white mb-1.5 leading-tight">
+                  <span style={{ color: 'var(--text-secondary)' }}>Диагноз:</span> {c.diagnosis}
+                </div>
+
+                <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                  {c.complaint}
+                </div>
+              </div>
+
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
+                <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </button>
+        ))}
+      </div>
+      <BottomNav current={12} navigate={navigate} />
+    </div>
+  )
+}
+
+// ─── Screen 18: Детали обращения ──────────────────────────────────────────────
+
+function Screen18({ navigate, goBack, onExit, ctx }) {
+  const consultation = CONSULTATIONS.find(c => c.id === ctx?.consultationId)
+  if (!consultation) return <div style={{ background: 'var(--bg-base)', minHeight: '100vh' }}>Консультация не найдена</div>
+
+  const [showConclusion, setShowConclusion] = useState(false)
+
+  // Handle "Show in Pharmacy" — navigate to drug analysis with first medication
+  const handleShowInPharmacy = () => {
+    if (consultation.conclusion.medications.length > 0) {
+      const firstMed = consultation.conclusion.medications[0]
+      // Extract drug name (e.g., "Амоксициллин" from "Амоксициллин 500мг 3x в день (7 дней)")
+      const drugName = firstMed.split(' ')[0]
+      navigate(11, { query: drugName, fromConsultation: true, medications: consultation.conclusion.medications })
+    }
+  }
+
+  // Handle PDF download — generate simple text-based document
+  const handleDownloadPDF = () => {
+    const lines = [
+      '═══════════════════════════════════════════════════',
+      'ЗАКЛЮЧЕНИЕ И ВЫПИСКА КОНСУЛЬТАЦИИ',
+      '═══════════════════════════════════════════════════',
+      '',
+      `Дата обращения: ${consultation.date}`,
+      `Врач: ${consultation.doctor}`,
+      `Специальность: ${consultation.specialty}`,
+      '',
+      '─────────────────────────────────────────────────',
+      'ЖАЛОБА И ДИАГНОЗ',
+      '─────────────────────────────────────────────────',
+      `Жалоба пациента: ${consultation.complaint}`,
+      `Диагноз: ${consultation.conclusion.diagnosis}`,
+      '',
+      '─────────────────────────────────────────────────',
+      'РЕКОМЕНДАЦИИ',
+      '─────────────────────────────────────────────────',
+      consultation.conclusion.recommendations.map(r => `• ${r}`).join('\n'),
+      '',
+    ]
+
+    if (consultation.conclusion.medications.length > 0) {
+      lines.push('─────────────────────────────────────────────────')
+      lines.push('НАЗНАЧЕННЫЕ ЛЕКАРСТВА')
+      lines.push('─────────────────────────────────────────────────')
+      consultation.conclusion.medications.forEach(med => {
+        lines.push(`💊 ${med}`)
+      })
+      lines.push('')
+    }
+
+    lines.push('─────────────────────────────────────────────────')
+    lines.push('ДАЛЬНЕЙШЕЕ НАБЛЮДЕНИЕ')
+    lines.push('─────────────────────────────────────────────────')
+    lines.push(consultation.conclusion.followUp)
+    lines.push('')
+    lines.push('═══════════════════════════════════════════════════')
+    lines.push(`Выписано: ${new Date().toLocaleString('ru-KZ')}`)
+    lines.push('═══════════════════════════════════════════════════')
+
+    const text = lines.join('\n')
+    const element = document.createElement('a')
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+    element.setAttribute('download', `konsultation_${consultation.id}_${new Date().toISOString().split('T')[0]}.txt`)
+    element.style.display = 'none'
+    document.body.appendChild(element)
+    element.click()
+    document.body.removeChild(element)
+  }
+
+  return (
+    <div className="pb-24">
+      <FreedomShell onExit={onExit} />
+      <InnerNav title="Обращение" sub={consultation.date} goBack={goBack} />
+
+      <div className="px-4 pt-4 space-y-4">
+
+        {/* Doctor info */}
+        <div className="rounded-2xl p-4" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
+          <div className="flex items-center gap-3">
+            <div className="w-14 h-14 rounded-full flex-shrink-0" style={{
+              background: 'linear-gradient(135deg, #185FA5, #534AB7)',
+              border: '2.5px solid rgba(0,185,86,0.3)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 12, fontWeight: 'bold', color: 'white'
+            }}>
+              {consultation.doctor.split(' ').map(w => w[0]).join('')}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="font-bold text-white">{consultation.doctor}</div>
+              <div className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>{consultation.specialty}</div>
+              <div className="text-xs mt-1" style={{ color: 'var(--green-500)' }}>★ 4.91 • Стаж 12 лет</div>
+            </div>
+          </div>
+
+          <div className="mt-3 pt-3 border-t" style={{ borderColor: 'var(--border)' }}>
+            <div className="text-xs font-medium mb-1" style={{ color: 'var(--text-muted)' }}>Диагноз</div>
+            <div className="font-semibold text-white text-sm">{consultation.diagnosis}</div>
+          </div>
+        </div>
+
+        {/* Chat messages */}
+        <div className="space-y-2">
+          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>
+            Диалог консультации
+          </div>
+          {consultation.messages.map((msg, i) => (
+            <div key={i} className={`flex ${msg.role === 'patient' ? 'justify-end' : 'justify-start'}`}>
+              <div className={`max-w-xs px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
+                msg.role === 'patient'
+                  ? 'bg-green-600 text-white rounded-br-none'
+                  : 'bg-gray-700 text-gray-100 rounded-bl-none'
+              }`}>
+                {msg.text}
+                <div className="text-[10px] mt-1 opacity-70">{msg.time}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Conclusion section */}
+        <div>
+          <button onClick={() => setShowConclusion(!showConclusion)}
+            className="w-full rounded-2xl p-4 text-left transition-all"
+            style={{ background: 'linear-gradient(135deg, rgba(0,185,86,0.1), rgba(0,185,86,0.05))', border: '1px solid rgba(0,185,86,0.2)' }}>
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <div className="font-bold text-white text-sm">Заключение и рекомендации</div>
+                <div className="text-xs mt-1" style={{ color: 'var(--green-500)' }}>Нажми чтобы раскрыть</div>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{
+                color: 'var(--green-500)',
+                transform: showConclusion ? 'rotate(180deg)' : 'none',
+                transition: 'transform 0.2s'
+              }}>
+                <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </button>
+
+          {showConclusion && (
+            <div className="rounded-2xl p-4 mt-2 space-y-3" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
+
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>Диагноз</div>
+                <div className="text-sm text-white">{consultation.conclusion.diagnosis}</div>
+              </div>
+
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)' }}>Рекомендации</div>
+                <div className="space-y-1">
+                  {consultation.conclusion.recommendations.map((rec, i) => (
+                    <div key={i} className="flex items-start gap-2 text-sm">
+                      <span style={{ color: 'var(--green-500)' }}>✓</span>
+                      <span className="text-white">{rec}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {consultation.conclusion.medications.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)' }}>Назначенные лекарства</div>
+                  <div className="space-y-1">
+                    {consultation.conclusion.medications.map((med, i) => (
+                      <div key={i} className="flex items-start gap-2 text-sm">
+                        <span style={{ color: '#60A5FA' }}>💊</span>
+                        <span className="text-white">{med}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>Контроль</div>
+                <div className="text-sm text-white">{consultation.conclusion.followUp}</div>
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex gap-2 pt-2">
+                <button onClick={handleShowInPharmacy}
+                  className="flex-1 py-2.5 rounded-xl font-semibold text-sm transition-all active:scale-95"
+                  style={{ background: 'rgba(0,185,86,0.15)', color: 'var(--green-500)', border: '1px solid rgba(0,185,86,0.3)' }}>
+                  📱 Показать в аптеке
+                </button>
+                <button onClick={handleDownloadPDF}
+                  className="flex-1 py-2.5 rounded-xl font-semibold text-sm transition-all active:scale-95"
+                  style={{ background: 'rgba(100,116,139,0.15)', color: '#94A3B8', border: '1px solid rgba(100,116,139,0.3)' }}>
+                  📄 Скачать
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+      </div>
+      <BottomNav current={12} navigate={navigate} />
+    </div>
+  )
+}
+
 // ─── App Shell ────────────────────────────────────────────────────────────────
 
 const SCREENS = {
@@ -2518,7 +2850,7 @@ const SCREENS = {
   4: Screen4, 5: Screen5, 6: Screen6, 7: Screen7,
   8: Screen8, 9: Screen9, 10: Screen10, 11: Screen11,
   12: Screen12, 13: Screen13, 14: Screen14, 15: Screen15,
-  16: Screen16,
+  16: Screen16, 17: Screen17, 18: Screen18,
 }
 
 export default function App() {
