@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Header, Card, Button, Pill, DoctorCard, FormError } from '../components/UI'
+import { Header, Card, Button, Pill, DoctorCard, FormError, CheckboxInput } from '../components/UI'
 import { useToast } from '../contexts/ToastContext'
 import { DOCTORS, CURRENT_USER } from '../data/mockData'
 
@@ -168,20 +168,18 @@ export default function ConfirmationScreen({ nav, params }) {
 
         {/* Consent */}
         <Card className="animate-fadeIn" style={{ animationDelay: '200ms' }}>
-          <label className="flex items-start gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={consent}
-              onChange={(e) => setConsent(e.target.checked)}
-              className="w-5 h-5 mt-1 accent-[#00B956]"
-            />
-            <span className="text-xs text-[#94A3B8] flex-1">
-              Я даю согласие на обработку медицинских данных{' '}
-              <a href="#" className="text-[#00B956] hover:underline">
-                (подробнее)
-              </a>
-            </span>
-          </label>
+          <CheckboxInput
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            label={
+              <>
+                Я даю согласие на обработку медицинских данных{' '}
+                <a href="#" className="text-[#00B956] hover:underline">
+                  (подробнее)
+                </a>
+              </>
+            }
+          />
         </Card>
 
         {/* Validation Error */}

@@ -71,11 +71,14 @@ export function CheckboxInput({ label, checked, onChange, disabled = false }) {
 
 export function Header({ title, subtitle, onBack, rightIcon, backText = '←' }) {
   return (
-    <div className="sticky top-0 z-40 bg-[#0D1117] border-b border-[rgba(255,255,255,0.08)]">
+    <div className="sticky top-0 z-40 backdrop-blur-md bg-gradient-to-b from-[rgba(30,34,53,0.8)] to-transparent border-b border-[rgba(0,185,86,0.1)]">
       <div className="px-4 py-4 sm:py-3 flex items-center justify-between min-h-[56px] sm:min-h-auto">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           {onBack && (
-            <button onClick={onBack} className="text-[#00B956] font-600 text-2xl sm:text-lg hover:opacity-70 active:opacity-50 min-w-[48px] sm:min-w-auto min-h-[48px] sm:min-h-auto flex items-center justify-center flex-shrink-0">
+            <button
+              onClick={onBack}
+              className="text-[#00B956] font-600 text-2xl sm:text-lg hover:opacity-70 active:opacity-50 min-w-[48px] sm:min-w-auto min-h-[48px] sm:min-h-auto flex items-center justify-center flex-shrink-0 transition-all active:scale-95"
+            >
               {backText}
             </button>
           )}

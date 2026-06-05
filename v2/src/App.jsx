@@ -142,20 +142,25 @@ function BottomNav({ activeTab, onTabChange }) {
   ]
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-[#0D1117] border-t border-[rgba(255,255,255,0.08)] z-40 safe-area-inset-bottom">
-      <div className="flex items-center justify-around min-h-[64px] sm:min-h-[64px] max-w-lg mx-auto pb-safe">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => onTabChange(tab.id)}
-            className={`flex-1 flex flex-col items-center justify-center gap-1 py-3 sm:py-2 transition-colors active:opacity-70 min-h-[64px] sm:min-h-auto ${
-              activeTab === tab.id ? 'text-[#00B956]' : 'text-[#94A3B8] hover:text-[#F9FAFB]'
-            }`}
-          >
-            <span className="text-2xl sm:text-xl">{tab.icon}</span>
-            <span className="text-[11px] sm:text-xs font-600 text-center leading-tight">{tab.label}</span>
-          </button>
-        ))}
+    <div className="fixed bottom-0 left-0 right-0 z-40 safe-area-inset-bottom">
+      <div className="backdrop-blur-md bg-[rgba(13,17,23,0.8)] border-t border-[rgba(0,185,86,0.1)]">
+        <div className="flex items-center justify-around min-h-[64px] sm:min-h-[64px] max-w-lg mx-auto pb-safe">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => onTabChange(tab.id)}
+              className={`flex-1 flex flex-col items-center justify-center gap-1 py-3 sm:py-2 transition-all active:scale-95 min-h-[64px] sm:min-h-auto relative ${
+                activeTab === tab.id ? 'text-[#00B956]' : 'text-[#94A3B8] hover:text-[#F9FAFB]'
+              }`}
+            >
+              {activeTab === tab.id && (
+                <div className="absolute top-0 w-8 h-1 bg-[#00B956] rounded-b-full animate-slideDown" />
+              )}
+              <span className="text-2xl sm:text-xl">{tab.icon}</span>
+              <span className="text-[11px] sm:text-xs font-600 text-center leading-tight">{tab.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   )
@@ -310,6 +315,17 @@ export default function App() {
           }
         }
 
+        @keyframes slideDown {
+          from {
+            transform: translateY(-4px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
         .animate-fadeIn {
           animation: fadeIn 0.3s ease-out forwards;
         }
@@ -332,6 +348,10 @@ export default function App() {
 
         .animate-slideup {
           animation: slideup 0.3s ease-out forwards;
+        }
+
+        .animate-slideDown {
+          animation: slideDown 0.3s ease-out forwards;
         }
 
         ::-webkit-scrollbar {
