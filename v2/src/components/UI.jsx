@@ -468,3 +468,35 @@ export function Stat({ label, value, unit = '', status = 'normal', icon = '' }) 
     </div>
   )
 }
+
+export function RatingBar({ rating = 5, count = 0, total = 100, color = '#EF9F27' }) {
+  const percentage = total > 0 ? (count / total) * 100 : 0
+  return (
+    <div className="flex items-center gap-3">
+      <span className="text-sm font-600 text-[#F9FAFB] w-8">{rating}★</span>
+      <div className="flex-1 h-2 bg-[#0D1117] rounded-full overflow-hidden">
+        <div
+          className="h-full transition-all"
+          style={{ width: `${percentage}%`, backgroundColor: color }}
+        ></div>
+      </div>
+      <span className="text-xs text-[#94A3B8] w-6">{count}</span>
+    </div>
+  )
+}
+
+export function RatingSummary({ rating = 4.8, totalReviews = 14, distribution = {} }) {
+  return (
+    <div className="text-center mb-6">
+      <div className="text-5xl font-700 text-[#F9FAFB]">{rating}</div>
+      <div className="flex justify-center gap-1 my-2">
+        {[...Array(5)].map((_, i) => (
+          <span key={i} className="text-yellow-400 text-lg">
+            ★
+          </span>
+        ))}
+      </div>
+      <p className="text-sm text-[#94A3B8]">{totalReviews} отзывов</p>
+    </div>
+  )
+}
