@@ -434,3 +434,37 @@ export function Tooltip({ text, children, position = 'top' }) {
     </div>
   )
 }
+
+export function Stat({ label, value, unit = '', status = 'normal', icon = '' }) {
+  const statusColor = {
+    normal: '#00B956',
+    warning: '#EF9F27',
+    critical: '#E24B4A',
+    info: '#185FA5'
+  }
+
+  return (
+    <div className="bg-[#0D1117] rounded-[14px] p-4 border border-[rgba(255,255,255,0.06)]">
+      <div className="flex items-start justify-between mb-2">
+        <div className="flex items-center gap-2">
+          {icon && <span className="text-lg">{icon}</span>}
+          <p className="text-xs text-[#94A3B8] font-600 uppercase">{label}</p>
+        </div>
+        {status !== 'normal' && (
+          <span
+            className="text-xs font-700 px-2 py-1 rounded-full"
+            style={{ backgroundColor: `${statusColor[status]}20`, color: statusColor[status] }}
+          >
+            {status === 'warning' ? '⚠' : status === 'critical' ? '●' : '✓'}
+          </span>
+        )}
+      </div>
+      <div className="flex items-baseline gap-1">
+        <span className="text-lg font-700 text-[#F9FAFB]" style={{ color: statusColor[status] }}>
+          {value}
+        </span>
+        {unit && <span className="text-xs text-[#94A3B8]">{unit}</span>}
+      </div>
+    </div>
+  )
+}

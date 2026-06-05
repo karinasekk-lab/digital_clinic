@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Header, Card, Button, Pill, DoctorCard, EmptyState, SkeletonCard, SkeletonLoader } from '../components/UI'
+import { Header, Card, Button, Pill, DoctorCard, EmptyState, SkeletonCard, SkeletonLoader, Stat } from '../components/UI'
 import { CURRENT_USER, DOCTORS, APPOINTMENTS, NEWS_AND_TIPS, HEALTH_STATS } from '../data/mockData'
 
 export default function HomeScreen({ nav }) {
@@ -183,28 +183,42 @@ export default function HomeScreen({ nav }) {
         </div>
 
         {/* Health Stats */}
-        <Card className="animate-fadeIn" style={{ animationDelay: '200ms' }}>
-          <h3 className="text-sm font-700 text-[#F9FAFB] mb-4">Ваши показатели</h3>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between items-center">
-              <span className="text-[#94A3B8]">Давление</span>
-              <span className="text-[#F9FAFB] font-600">
-                {HEALTH_STATS.bloodPressure.systolic}/{HEALTH_STATS.bloodPressure.diastolic} ✓
-              </span>
-            </div>
-            <div className="flex justify-between items-center opacity-50">
-              <span className="text-[#94A3B8]">Пульс</span>
-              <span className="text-[#F9FAFB]">—</span>
-            </div>
-            <div className="flex justify-between items-center opacity-50">
-              <span className="text-[#94A3B8]">Вес</span>
-              <span className="text-[#F9FAFB]">—</span>
-            </div>
+        <div className="animate-fadeIn space-y-3" style={{ animationDelay: '200ms' }}>
+          <h3 className="text-xs font-700 uppercase text-[#94A3B8] px-2">Ваши показатели</h3>
+          <div className="grid grid-cols-2 gap-3">
+            <Stat
+              icon="❤️"
+              label="Давление"
+              value={`${HEALTH_STATS.bloodPressure.systolic}/${HEALTH_STATS.bloodPressure.diastolic}`}
+              unit="мм рт.ст"
+              status="normal"
+            />
+            <Stat
+              icon="🫀"
+              label="Пульс"
+              value="72"
+              unit="уд/мин"
+              status="normal"
+            />
+            <Stat
+              icon="⚖️"
+              label="Вес"
+              value="72"
+              unit="кг"
+              status="info"
+            />
+            <Stat
+              icon="📏"
+              label="Рост"
+              value="180"
+              unit="см"
+              status="info"
+            />
           </div>
-          <Button variant="secondary" size="sm" className="w-full mt-4">
+          <Button variant="secondary" size="sm" className="w-full">
             Добавить показатели
           </Button>
-        </Card>
+        </div>
 
         {/* News & Tips */}
         <div className="space-y-3">
