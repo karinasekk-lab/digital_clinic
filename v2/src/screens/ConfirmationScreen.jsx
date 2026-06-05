@@ -173,20 +173,20 @@ export default function ConfirmationScreen({ nav, params }) {
         </Card>
 
         {/* CTA Buttons */}
-        <div className="space-y-3 sticky bottom-20">
+        <div className="space-y-2 sm:space-y-3 fixed bottom-0 left-0 right-0 bg-gradient-to-t from-[#0D1117] from-90% to-transparent pt-4 px-4 pb-32 sm:pb-24 sm:sticky sm:bottom-20">
           <Button onClick={handleConfirm} size="md" className="w-full" disabled={!consent}>
             Оплатить · начать сейчас
           </Button>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 sm:flex sm:gap-2 gap-2">
             <Button
               onClick={() => nav.popTo('doctor-list')}
               variant="ghost"
               size="sm"
-              className="flex-1"
+              className="flex-1 text-xs sm:text-sm"
             >
-              Выбрать другого врача
+              Выбрать другого
             </Button>
-            <Button onClick={() => nav.pop()} variant="ghost" size="sm" className="flex-1">
+            <Button onClick={() => nav.pop()} variant="ghost" size="sm" className="flex-1 text-xs sm:text-sm">
               Отмена
             </Button>
           </div>

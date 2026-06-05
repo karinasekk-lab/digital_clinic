@@ -19,19 +19,19 @@ export default function HomeScreen({ nav }) {
   const moodEmojis = ['😊 Хорошо', '😐 Нормально', '😟 Плохо']
 
   return (
-    <div className="min-h-screen bg-[#0D1117] pb-24">
+    <div className="min-h-screen bg-[#0D1117] pb-32 sm:pb-24">
       {/* Header with greeting */}
-      <div className="bg-gradient-to-b from-[#1E2235] to-transparent pt-4 px-4 pb-4 sticky top-0 z-30">
+      <div className="bg-gradient-to-b from-[#1E2235] to-transparent pt-4 sm:pt-4 px-4 pb-4 sticky top-0 z-30">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-700 text-[#F9FAFB]">← Мое здоровье</h1>
-          <button className="relative p-2 hover:bg-[#1E2235] rounded-full transition-colors">
+          <h1 className="text-xl sm:text-2xl font-700 text-[#F9FAFB]">← Мое здоровье</h1>
+          <button className="relative p-3 sm:p-2 hover:bg-[#1E2235] rounded-full transition-colors active:bg-[#1E2235] min-w-[48px] sm:min-w-auto min-h-[48px] sm:min-h-auto flex items-center justify-center">
             🔔
-            <span className="absolute top-1 right-1 w-2 h-2 bg-[#E24B4A] rounded-full"></span>
+            <span className="absolute top-2 right-2 w-2 h-2 bg-[#E24B4A] rounded-full"></span>
           </button>
         </div>
       </div>
 
-      <div className="px-4 space-y-4">
+      <div className="px-4 space-y-4 sm:space-y-4">
         {/* Greeting Card */}
         <Card variant="green" className="animate-fadeIn">
           <h2 className="text-lg font-700 text-[#F9FAFB] mb-2">

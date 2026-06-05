@@ -46,12 +46,12 @@ export default function DoctorListScreen({ nav }) {
         />
 
         {/* Specialty Filters */}
-        <div className="flex gap-2 overflow-x-auto pb-2 snap-x snap-mandatory">
+        <div className="flex gap-2 overflow-x-auto pb-3 snap-x snap-mandatory -mx-4 px-4">
           {SPECIALTIES.map((spec) => (
             <button
               key={spec}
               onClick={() => setSelectedSpecialty(spec)}
-              className={`flex-shrink-0 px-4 py-2 rounded-full font-600 text-sm transition-all snap-center ${
+              className={`flex-shrink-0 px-4 py-3 sm:py-2 rounded-full font-600 text-sm sm:text-sm transition-all snap-center min-h-[44px] sm:min-h-auto flex items-center justify-center ${
                 selectedSpecialty === spec
                   ? 'bg-[#00B956] text-white shadow-[0_4px_12px_rgba(0,185,86,0.3)]'
                   : 'bg-[#1E2235] text-[#94A3B8] border border-[rgba(255,255,255,0.08)]'

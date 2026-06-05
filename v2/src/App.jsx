@@ -137,18 +137,18 @@ function BottomNav({ activeTab, onTabChange }) {
   ]
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-[#0D1117] border-t border-[rgba(255,255,255,0.08)] z-40">
-      <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
+    <div className="fixed bottom-0 left-0 right-0 bg-[#0D1117] border-t border-[rgba(255,255,255,0.08)] z-40 safe-area-inset-bottom">
+      <div className="flex items-center justify-around min-h-[64px] sm:min-h-[64px] max-w-lg mx-auto pb-safe">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 transition-colors ${
+            className={`flex-1 flex flex-col items-center justify-center gap-1 py-3 sm:py-2 transition-colors active:opacity-70 min-h-[64px] sm:min-h-auto ${
               activeTab === tab.id ? 'text-[#00B956]' : 'text-[#94A3B8] hover:text-[#F9FAFB]'
             }`}
           >
-            <span className="text-xl">{tab.icon}</span>
-            <span className="text-xs font-600">{tab.label}</span>
+            <span className="text-2xl sm:text-xl">{tab.icon}</span>
+            <span className="text-[11px] sm:text-xs font-600 text-center leading-tight">{tab.label}</span>
           </button>
         ))}
       </div>
@@ -195,6 +195,13 @@ export default function App() {
           box-sizing: border-box;
         }
 
+        html {
+          --safe-area-inset-bottom: env(safe-area-inset-bottom, 0);
+          --safe-area-inset-top: env(safe-area-inset-top, 0);
+          --safe-area-inset-left: env(safe-area-inset-left, 0);
+          --safe-area-inset-right: env(safe-area-inset-right, 0);
+        }
+
         html, body, #root {
           width: 100%;
           height: 100%;
@@ -204,6 +211,16 @@ export default function App() {
           background: #0D1117;
           color: #F9FAFB;
           overflow: hidden;
+          -webkit-font-smoothing: antialiased;
+          -webkit-touch-callout: none;
+        }
+
+        .safe-area-inset-bottom {
+          padding-bottom: var(--safe-area-inset-bottom);
+        }
+
+        .pb-safe {
+          padding-bottom: var(--safe-area-inset-bottom);
         }
 
         @keyframes fadeIn {

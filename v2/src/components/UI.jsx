@@ -1,7 +1,7 @@
 // Reusable UI Components
 
 export function Button({ children, variant = 'primary', size = 'md', onClick, disabled, className = '' }) {
-  const baseClasses = 'font-600 rounded-[14px] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
+  const baseClasses = 'font-600 rounded-[14px] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[48px] sm:min-h-auto'
 
   const variants = {
     primary: 'bg-gradient-to-br from-[#00B956] to-[#009644] text-white shadow-[0_4px_20px_rgba(0,185,86,0.35)]',
@@ -12,9 +12,9 @@ export function Button({ children, variant = 'primary', size = 'md', onClick, di
   }
 
   const sizes = {
-    sm: 'h-10 px-4 text-sm',
-    md: 'h-[52px] px-6 text-[15px]',
-    lg: 'h-14 px-8 text-base'
+    sm: 'h-12 sm:h-10 px-4 text-sm',
+    md: 'h-[56px] sm:h-[52px] px-6 text-[15px]',
+    lg: 'h-16 sm:h-14 px-8 text-base'
   }
 
   return (
@@ -30,10 +30,10 @@ export function Button({ children, variant = 'primary', size = 'md', onClick, di
 
 export function Card({ children, className = '', variant = 'default' }) {
   const variants = {
-    default: 'bg-[#1E2235] border border-[rgba(255,255,255,0.06)] rounded-[20px] p-4 shadow-[0_4px_24px_rgba(0,0,0,0.3)]',
-    elevated: 'bg-[#243050] border border-[rgba(255,255,255,0.08)] rounded-[20px] p-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)]',
-    green: 'bg-[#052E16] border border-[rgba(0,185,86,0.2)] rounded-[20px] p-4',
-    amber: 'bg-[#2d2416] border border-[rgba(239,159,39,0.2)] rounded-[20px] p-4'
+    default: 'bg-[#1E2235] border border-[rgba(255,255,255,0.06)] rounded-[20px] p-5 sm:p-4 shadow-[0_4px_24px_rgba(0,0,0,0.3)]',
+    elevated: 'bg-[#243050] border border-[rgba(255,255,255,0.08)] rounded-[20px] p-5 sm:p-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)]',
+    green: 'bg-[#052E16] border border-[rgba(0,185,86,0.2)] rounded-[20px] p-5 sm:p-4',
+    amber: 'bg-[#2d2416] border border-[rgba(239,159,39,0.2)] rounded-[20px] p-5 sm:p-4'
   }
 
   return <div className={`${variants[variant]} ${className}`}>{children}</div>
@@ -42,19 +42,19 @@ export function Card({ children, className = '', variant = 'default' }) {
 export function Header({ title, subtitle, onBack, rightIcon, backText = '←' }) {
   return (
     <div className="sticky top-0 z-40 bg-[#0D1117] border-b border-[rgba(255,255,255,0.08)]">
-      <div className="px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3 flex-1">
+      <div className="px-4 py-4 sm:py-3 flex items-center justify-between min-h-[56px] sm:min-h-auto">
+        <div className="flex items-center gap-3 flex-1 min-w-0">
           {onBack && (
-            <button onClick={onBack} className="text-[#00B956] font-600 text-lg hover:opacity-70">
+            <button onClick={onBack} className="text-[#00B956] font-600 text-2xl sm:text-lg hover:opacity-70 active:opacity-50 min-w-[48px] sm:min-w-auto min-h-[48px] sm:min-h-auto flex items-center justify-center flex-shrink-0">
               {backText}
             </button>
           )}
-          <div>
-            <h1 className="text-[22px] font-700 text-[#F9FAFB]">{title}</h1>
-            {subtitle && <p className="text-[12px] text-[#94A3B8] mt-0.5">{subtitle}</p>}
+          <div className="min-w-0">
+            <h1 className="text-xl sm:text-[22px] font-700 text-[#F9FAFB] truncate">{title}</h1>
+            {subtitle && <p className="text-[11px] sm:text-[12px] text-[#94A3B8] mt-0.5">{subtitle}</p>}
           </div>
         </div>
-        {rightIcon && <div className="text-lg">{rightIcon}</div>}
+        {rightIcon && <div className="text-xl sm:text-lg flex-shrink-0 ml-2">{rightIcon}</div>}
       </div>
     </div>
   )
@@ -94,14 +94,14 @@ export function Pill({ children, variant = 'default', icon = '' }) {
 export function Input({ placeholder, value, onChange, type = 'text', icon, className = '' }) {
   return (
     <div className={`relative flex items-center ${className}`}>
-      {icon && <span className="absolute left-4 text-lg">{icon}</span>}
+      {icon && <span className="absolute left-4 text-lg pointer-events-none">{icon}</span>}
       <input
         type={type}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className={`w-full bg-[#1E2235] border border-[rgba(255,255,255,0.08)] rounded-full text-[#F9FAFB] placeholder-[#4B5563] text-sm py-3 px-4 outline-none focus:border-[rgba(0,185,86,0.3)] transition-colors ${
-          icon ? 'pl-10' : ''
+        className={`w-full bg-[#1E2235] border border-[rgba(255,255,255,0.08)] rounded-full text-[#F9FAFB] placeholder-[#4B5563] text-base py-4 sm:py-3 px-5 sm:px-4 outline-none focus:border-[rgba(0,185,86,0.3)] transition-colors min-h-[48px] sm:min-h-auto ${
+          icon ? 'pl-12 sm:pl-10' : ''
         }`}
       />
     </div>

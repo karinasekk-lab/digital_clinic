@@ -169,12 +169,12 @@ export default function MyRecordsScreen({ nav }) {
       <Header title="Мои записи" rightIcon="⚙️" />
 
       {/* Tabs */}
-      <div className="flex border-b border-[rgba(255,255,255,0.08)] sticky top-16 z-20 bg-[#0D1117]">
+      <div className="flex border-b border-[rgba(255,255,255,0.08)] sticky top-16 z-20 bg-[#0D1117] overflow-x-auto">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`flex-1 py-4 px-4 text-sm font-600 border-b-2 transition-colors ${
+            className={`flex-1 py-4 sm:py-4 px-3 sm:px-4 text-xs sm:text-sm font-600 border-b-2 transition-colors whitespace-nowrap min-h-[48px] sm:min-h-auto flex items-center justify-center ${
               activeTab === tab
                 ? 'text-[#00B956] border-[#00B956]'
                 : 'text-[#94A3B8] border-transparent hover:text-[#F9FAFB]'
