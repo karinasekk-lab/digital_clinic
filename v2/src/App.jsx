@@ -176,18 +176,24 @@ export default function App() {
   if (!mounted) return <div className="min-h-screen bg-[#0D1117]"></div>
 
   return (
-    <div className="fixed inset-0 bg-[#0D1117] flex flex-col overflow-hidden">
-      {/* Screen content */}
-      <div className="flex-1 overflow-y-auto">
-        <ScreenRouter
-          currentScreen={nav.currentScreen}
-          screenParams={nav.currentParams}
-          nav={nav}
-        />
-      </div>
+    <div className="fixed inset-0 bg-gradient-to-b from-[#000000] to-[#0a0a0a] flex items-center justify-center p-4">
+      {/* Phone Frame */}
+      <div className="w-full max-w-[390px] h-screen max-h-screen bg-black rounded-[40px] shadow-2xl overflow-hidden border-8 border-black relative flex flex-col">
+        {/* Notch Simulation */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-7 bg-black rounded-b-3xl z-50"></div>
 
-      {/* Bottom navigation */}
-      {!hideBottomNav && <BottomNav activeTab={nav.activeTab} onTabChange={handleTabChange} />}
+        {/* App Content */}
+        <div className="flex-1 overflow-y-auto w-full bg-[#0D1117]">
+          <ScreenRouter
+            currentScreen={nav.currentScreen}
+            screenParams={nav.currentParams}
+            nav={nav}
+          />
+        </div>
+
+        {/* Bottom navigation */}
+        {!hideBottomNav && <BottomNav activeTab={nav.activeTab} onTabChange={handleTabChange} />}
+      </div>
 
       {/* Global styles */}
       <style>{`
@@ -208,7 +214,7 @@ export default function App() {
           margin: 0;
           padding: 0;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-          background: #0D1117;
+          background: #000000;
           color: #F9FAFB;
           overflow: hidden;
           -webkit-font-smoothing: antialiased;
