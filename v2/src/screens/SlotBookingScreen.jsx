@@ -1,11 +1,16 @@
 import { useState } from 'react'
-import { Header, Card, Button, Pill } from '../components/UI'
+import { Header, Card, Button, Pill, ProgressIndicator } from '../components/UI'
 import { DOCTORS } from '../data/mockData'
 
 export default function SlotBookingScreen({ nav, params }) {
   const doctor = DOCTORS.find((d) => d.id === params.doctorId) || DOCTORS[0]
   const [selectedDate, setSelectedDate] = useState(null)
   const [selectedTime, setSelectedTime] = useState(null)
+
+  // Calculate progress
+  let progress = 1
+  if (selectedDate) progress = 2
+  if (selectedTime) progress = 3
 
   // Generate week dates
   const dates = []
@@ -30,8 +35,16 @@ export default function SlotBookingScreen({ nav, params }) {
       <Header title="Выбрать время" onBack={() => nav.pop()} />
 
       <div className="px-4 space-y-4 pt-4">
+        {/* Progress Indicator */}
+        <Card className="animate-fadeIn">
+          <ProgressIndicator
+            steps={['Дата', 'Время', 'Подтверждение']}
+            currentStep={progress}
+          />
+        </Card>
+
         {/* Doctor Mini Card */}
-        <Card className="flex gap-3 animate-fadeIn">
+        <Card className="flex gap-3 animate-fadeIn" style={{ animationDelay: '50ms' }}>
           <div className="text-4xl flex-shrink-0">{doctor.photo}</div>
           <div className="flex-1">
             <h3 className="font-700 text-sm text-[#F9FAFB]">{doctor.name}</h3>

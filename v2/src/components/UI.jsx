@@ -1,14 +1,14 @@
 // Reusable UI Components
 
-export function Button({ children, variant = 'primary', size = 'md', onClick, disabled, className = '' }) {
-  const baseClasses = 'font-600 rounded-[14px] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[48px] sm:min-h-auto'
+export function Button({ children, variant = 'primary', size = 'md', onClick, disabled, className = '', isLoading = false }) {
+  const baseClasses = 'font-600 rounded-[14px] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[48px] sm:min-h-auto hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2'
 
   const variants = {
-    primary: 'bg-gradient-to-br from-[#00B956] to-[#009644] text-white shadow-[0_4px_20px_rgba(0,185,86,0.35)]',
-    secondary: 'bg-[#1E2235] text-[#F9FAFB] border border-[rgba(255,255,255,0.08)]',
-    outline: 'bg-transparent border border-[rgba(255,255,255,0.2)] text-[#00B956]',
-    red: 'bg-[#E24B4A] text-white',
-    ghost: 'bg-transparent text-[#F9FAFB]'
+    primary: 'bg-gradient-to-br from-[#00B956] to-[#009644] text-white shadow-[0_4px_20px_rgba(0,185,86,0.35)] hover:shadow-[0_6px_24px_rgba(0,185,86,0.4)] focus:ring-[#00B956]',
+    secondary: 'bg-[#1E2235] text-[#F9FAFB] border border-[rgba(255,255,255,0.08)] hover:border-[rgba(0,185,86,0.3)] focus:ring-[rgba(0,185,86,0.3)]',
+    outline: 'bg-transparent border border-[rgba(255,255,255,0.2)] text-[#00B956] hover:border-[#00B956] hover:bg-[rgba(0,185,86,0.1)] focus:ring-[#00B956]',
+    red: 'bg-[#E24B4A] text-white shadow-[0_4px_12px_rgba(226,75,74,0.3)] hover:shadow-[0_6px_16px_rgba(226,75,74,0.4)] focus:ring-[#E24B4A]',
+    ghost: 'bg-transparent text-[#F9FAFB] hover:bg-[rgba(255,255,255,0.08)] focus:ring-[rgba(255,255,255,0.2)]'
   }
 
   const sizes = {
@@ -20,15 +20,22 @@ export function Button({ children, variant = 'primary', size = 'md', onClick, di
   return (
     <button
       onClick={onClick}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`}
     >
-      {children}
+      {isLoading ? (
+        <>
+          <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
+          {children}
+        </>
+      ) : (
+        children
+      )}
     </button>
   )
 }
 
-export function Card({ children, className = '', variant = 'default' }) {
+export function Card({ children, className = '', variant = 'default', onClick = null, interactive = false }) {
   const variants = {
     default: 'bg-[#1E2235] border border-[rgba(255,255,255,0.06)] rounded-[20px] p-5 sm:p-4 shadow-[0_4px_24px_rgba(0,0,0,0.3)]',
     elevated: 'bg-[#243050] border border-[rgba(255,255,255,0.08)] rounded-[20px] p-5 sm:p-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)]',
@@ -36,7 +43,30 @@ export function Card({ children, className = '', variant = 'default' }) {
     amber: 'bg-[#2d2416] border border-[rgba(239,159,39,0.2)] rounded-[20px] p-5 sm:p-4'
   }
 
-  return <div className={`${variants[variant]} ${className}`}>{children}</div>
+  const interactiveClass = interactive || onClick ? 'cursor-pointer transition-all hover:shadow-lg hover:border-[rgba(0,185,86,0.3)]' : ''
+
+  return (
+    <div className={`${variants[variant]} ${className} ${interactiveClass}`} onClick={onClick}>
+      {children}
+    </div>
+  )
+}
+
+export function CheckboxInput({ label, checked, onChange, disabled = false }) {
+  return (
+    <label className="flex items-start gap-3 cursor-pointer group">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={onChange}
+        disabled={disabled}
+        className="w-5 h-5 mt-1 accent-[#00B956] cursor-pointer disabled:cursor-not-allowed"
+      />
+      <span className="text-sm text-[#94A3B8] flex-1 group-hover:text-[#F9FAFB] transition-colors">
+        {label}
+      </span>
+    </label>
+  )
 }
 
 export function Header({ title, subtitle, onBack, rightIcon, backText = '←' }) {
@@ -91,19 +121,27 @@ export function Pill({ children, variant = 'default', icon = '' }) {
   )
 }
 
-export function Input({ placeholder, value, onChange, type = 'text', icon, className = '' }) {
+export function Input({ placeholder, value, onChange, type = 'text', icon, className = '', error = '', disabled = false }) {
   return (
-    <div className={`relative flex items-center ${className}`}>
-      {icon && <span className="absolute left-4 text-lg pointer-events-none">{icon}</span>}
-      <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className={`w-full bg-[#1E2235] border border-[rgba(255,255,255,0.08)] rounded-full text-[#F9FAFB] placeholder-[#4B5563] text-base py-4 sm:py-3 px-5 sm:px-4 outline-none focus:border-[rgba(0,185,86,0.3)] transition-colors min-h-[48px] sm:min-h-auto ${
-          icon ? 'pl-12 sm:pl-10' : ''
-        }`}
-      />
+    <div className={`relative flex flex-col gap-2 ${className}`}>
+      <div className="relative flex items-center">
+        {icon && <span className="absolute left-4 text-lg pointer-events-none">{icon}</span>}
+        <input
+          type={type}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={`w-full rounded-full text-[#F9FAFB] placeholder-[#4B5563] text-base py-4 sm:py-3 px-5 sm:px-4 outline-none transition-all min-h-[48px] sm:min-h-auto focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${
+            icon ? 'pl-12 sm:pl-10' : ''
+          } ${
+            error
+              ? 'bg-[rgba(226,75,74,0.1)] border border-[#E24B4A] focus:border-[#E24B4A] focus:ring-[rgba(226,75,74,0.3)]'
+              : 'bg-[#1E2235] border border-[rgba(255,255,255,0.08)] focus:border-[#00B956] focus:ring-[rgba(0,185,86,0.3)]'
+          }`}
+        />
+      </div>
+      {error && <span className="text-xs text-[#E24B4A] px-2">{error}</span>}
     </div>
   )
 }
@@ -318,6 +356,78 @@ export function FormSuccess({ message }) {
     <div className="flex items-center gap-2 px-3 py-2 bg-[rgba(0,185,86,0.1)] border border-[rgba(0,185,86,0.2)] rounded-[10px]">
       <span className="text-green-400">✓</span>
       <span className="text-sm text-[#00B956]">{message}</span>
+    </div>
+  )
+}
+
+export function ProgressIndicator({ steps, currentStep }) {
+  return (
+    <div className="w-full">
+      <div className="flex items-center gap-2">
+        {steps.map((step, index) => {
+          const isActive = index < currentStep
+          const isCurrent = index === currentStep - 1
+          return (
+            <div key={index} className="flex items-center gap-2 flex-1">
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center font-600 text-sm transition-all ${
+                  isActive || isCurrent
+                    ? 'bg-[#00B956] text-white'
+                    : 'bg-[#1E2235] text-[#94A3B8] border border-[rgba(255,255,255,0.08)]'
+                }`}
+              >
+                {isActive ? '✓' : index + 1}
+              </div>
+              {index < steps.length - 1 && (
+                <div
+                  className={`flex-1 h-1 rounded-full transition-all ${
+                    isActive ? 'bg-[#00B956]' : 'bg-[#1E2235]'
+                  }`}
+                />
+              )}
+            </div>
+          )
+        })}
+      </div>
+      <div className="flex justify-between mt-2">
+        {steps.map((step, index) => (
+          <span
+            key={index}
+            className={`text-xs font-600 ${
+              index < currentStep || index === currentStep - 1 ? 'text-[#00B956]' : 'text-[#94A3B8]'
+            }`}
+          >
+            {step}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export function Tooltip({ text, children, position = 'top' }) {
+  const positions = {
+    top: 'bottom-full mb-2',
+    bottom: 'top-full mt-2',
+    left: 'right-full mr-2',
+    right: 'left-full ml-2'
+  }
+
+  return (
+    <div className="relative group inline-block">
+      {children}
+      <div
+        className={`absolute hidden group-hover:block ${positions[position]} left-1/2 transform -translate-x-1/2 bg-[#0A0E1A] text-[#F9FAFB] text-xs font-600 px-3 py-2 rounded-[8px] whitespace-nowrap z-50 border border-[rgba(255,255,255,0.08)]`}
+      >
+        {text}
+        <div
+          className={`absolute ${
+            position === 'top' || position === 'bottom'
+              ? 'left-1/2 transform -translate-x-1/2 ' + (position === 'top' ? 'top-full border-t-[#0A0E1A]' : 'bottom-full border-b-[#0A0E1A]')
+              : 'top-1/2 transform -translate-y-1/2 ' + (position === 'left' ? 'left-full border-l-[#0A0E1A]' : 'right-full border-r-[#0A0E1A]')
+          } border-4 border-transparent`}
+        />
+      </div>
     </div>
   )
 }
