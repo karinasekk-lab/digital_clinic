@@ -13,7 +13,8 @@ function StatusBar() {
 }
 
 // Freedom SuperApp shell — always visible, lets user exit back to «Моё здоровье»
-function FreedomShell({ onExit }) {
+// FIX 6 — Support chat icon in header; version toggle for v1/v2
+function FreedomShell({ onExit, onSupportClick, version, setVersion }) {
   return (
     <div className="sticky top-0 z-20 glass">
       <StatusBar />
@@ -34,14 +35,159 @@ function FreedomShell({ onExit }) {
           <span className="font-semibold text-white text-sm whitespace-nowrap tracking-tight">Цифровая клиника</span>
         </div>
 
-        {/* Right action */}
-        <div className="flex-shrink-0">
-          <button className="w-8 h-8 flex items-center justify-center rounded-full transition-all active:scale-90"
-            style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)' }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        {/* Right actions: version toggle + support chat */}
+        <div className="flex-shrink-0 flex gap-1.5">
+          {/* Version toggle for v1/v2 */}
+          <div className="flex items-center gap-1 px-2 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border)' }}>
+            <button onClick={() => setVersion('v1')}
+              className="px-2 py-0.5 rounded-md text-[10px] font-semibold transition-all"
+              style={{
+                background: version === 'v1' ? 'rgba(0,185,86,0.2)' : 'transparent',
+                color: version === 'v1' ? 'var(--green-500)' : 'var(--text-muted)'
+              }}>
+              v1
+            </button>
+            <div style={{ width: '1px', height: 12, background: 'var(--border)' }} />
+            <button onClick={() => setVersion('v2')}
+              className="px-2 py-0.5 rounded-md text-[10px] font-semibold transition-all"
+              style={{
+                background: version === 'v2' ? 'rgba(0,185,86,0.2)' : 'transparent',
+                color: version === 'v2' ? 'var(--green-500)' : 'var(--text-muted)'
+              }}>
+              v2
+            </button>
+          </div>
+
+          {/* Support chat */}
+          <button onClick={onSupportClick} className="w-8 h-8 flex items-center justify-center rounded-full transition-all active:scale-90"
+            style={{ background: 'rgba(0,185,86,0.1)', border: '1px solid rgba(0,185,86,0.2)' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
         </div>
       </div>
+    </div>
+  )
+}
+
+// FIX 1 — Compact profile bar below header
+function CompactProfileBar() {
+  return (
+    <div className="px-4 py-2.5 flex items-center gap-2" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border)' }}>
+      <div className="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center font-semibold text-sm" style={{ background: 'linear-gradient(135deg, #185FA5, #534AB7)', color: 'white' }}>
+        АК
+      </div>
+      <div className="flex-1 min-w-0 text-xs text-white">
+        <span className="font-semibold">Карина · 23 года</span>
+        <span style={{ color: 'var(--text-secondary)' }}> · 3 обращения · </span>
+        <span style={{ color: 'var(--green-500)' }}>ОСМС: Активен ✓</span>
+      </div>
+    </div>
+  )
+}
+
+// VERSION 2 — Full services catalog
+function ServicesCatalog({ navigate }) {
+  const catalog = {
+    consultations: {
+      title: 'ОНЛАЙН-КОНСУЛЬТАЦИИ',
+      color: '#00B956',
+      icon: '📹',
+      services: [
+        { title: 'Врач онлайн', sub: 'ответ за 3 мин', status: 'available', screen: 2 },
+        { title: 'Дежурный врач 24/7', sub: 'всегда на связи', status: 'available', screen: 2 },
+        { title: 'Педиатр онлайн', sub: 'для детей', status: 'available', screen: 2 },
+        { title: 'Второе мнение врача', sub: 'Скоро', status: 'soon' },
+        { title: 'Семейный врач', sub: 'Скоро', status: 'soon' },
+        { title: 'Психолог онлайн', sub: 'Скоро', status: 'soon' },
+        { title: 'Диетолог / нутрициолог', sub: 'Скоро', status: 'soon' },
+      ]
+    },
+    ai: {
+      title: 'AI-ИНСТРУМЕНТЫ',
+      color: '#3B82F6',
+      icon: '🤖',
+      services: [
+        { title: 'Понять мои анализы', sub: 'расшифровка', status: 'available', screen: 7 },
+        { title: 'Что за лекарство?', sub: 'AI объяснит', status: 'available', screen: 11 },
+        { title: 'Расшифровка ЭКГ', sub: 'Скоро', status: 'soon' },
+        { title: 'Снимки МРТ/КТ', sub: 'Скоро', status: 'soon' },
+      ]
+    },
+    documents: {
+      title: 'ДОКУМЕНТЫ',
+      color: '#F59E0B',
+      icon: '📄',
+      services: [
+        { title: 'Больничный онлайн', sub: 'ЭЛН · официально', status: 'available', screen: 3, ctx: { symptom: 'Справка для работы', symptomIcon: '📄', isSickLeave: true } },
+        { title: 'Справка для работы', sub: 'Скоро', status: 'soon' },
+        { title: 'Справка для бассейна', sub: 'Скоро', status: 'soon' },
+        { title: 'Рецепт онлайн', sub: 'Скоро', status: 'soon' },
+      ]
+    },
+    companion: {
+      title: 'СОПРОВОЖДЕНИЕ',
+      color: '#8B5CF6',
+      icon: '🎯',
+      services: [
+        { title: 'Менеджер здоровья', sub: 'Скоро', status: 'soon' },
+        { title: 'Ведение беременности', sub: 'Скоро', status: 'soon' },
+        { title: 'Школьная медицина', sub: 'Скоро', status: 'soon' },
+        { title: 'Медпомощь в путешествии', sub: 'Скоро', status: 'soon' },
+        { title: 'Чекап / профилактика', sub: 'Скоро', status: 'soon' },
+      ]
+    }
+  }
+
+  return (
+    <div className="px-4 space-y-5">
+      {Object.entries(catalog).map(([key, section]) => (
+        <div key={key}>
+          <div className="flex items-center gap-2 mb-3">
+            <span style={{ fontSize: 20 }}>{section.icon}</span>
+            <div className="text-xs font-bold uppercase tracking-widest" style={{ color: section.color }}>
+              {section.title}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            {section.services.map((svc, i) => (
+              <button
+                key={i}
+                onClick={() => svc.status === 'available' && navigate(svc.screen, svc.ctx || {})}
+                disabled={svc.status === 'soon'}
+                className="w-full rounded-xl p-3 text-left transition-all active:scale-95 disabled:active:scale-100"
+                style={{
+                  background: svc.status === 'available'
+                    ? `rgba(${parseInt(section.color.slice(1,3),16)}, ${parseInt(section.color.slice(3,5),16)}, ${parseInt(section.color.slice(5,7),16)}, 0.08)`
+                    : 'var(--bg-elevated)',
+                  border: svc.status === 'available'
+                    ? `1px solid ${section.color}33`
+                    : '1px solid var(--border)',
+                  opacity: svc.status === 'soon' ? 0.6 : 1,
+                  cursor: svc.status === 'available' ? 'pointer' : 'default'
+                }}>
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <div className="font-semibold text-sm text-white">{svc.title}</div>
+                    <div className="text-xs mt-0.5" style={{ color: svc.status === 'available' ? section.color : 'var(--text-muted)' }}>
+                      {svc.sub}
+                    </div>
+                  </div>
+                  {svc.status === 'available' ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ color: section.color, marginLeft: 8 }}>
+                      <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  ) : (
+                    <span className="text-[10px] font-semibold px-2 py-1 rounded-full" style={{ background: 'rgba(100,116,139,0.2)', color: 'var(--text-muted)' }}>
+                      СКОРО
+                    </span>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
@@ -67,6 +213,7 @@ function InnerNav({ title, sub, goBack }) {
   )
 }
 
+// FIX 5 — Remove pharmacy (id 11) from nav, keep only 4 tabs
 function BottomNav({ current, navigate }) {
   const tabs = [
     {
@@ -75,18 +222,11 @@ function BottomNav({ current, navigate }) {
     },
     {
       id: 12, label: 'Мои записи',
-      // Calendar icon — matches «Мои обращения» (appointments history)
       svg: <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M8 2v4M16 2v4M3 10h18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>,
     },
     {
       id: 2, label: 'Врачи',
-      // Stethoscope icon — matches doctor catalogue, not video call
       svg: <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4.5 6.5a4 4 0 0 0 4 4h1a4 4 0 0 1 4 4v1a3 3 0 0 0 6 0v-1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/><circle cx="19.5" cy="14.5" r="1.5" stroke="currentColor" strokeWidth="1.8"/><path d="M4.5 6.5V4a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v2.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>,
-    },
-    {
-      id: 11, label: 'Расшифровка',
-      // Test tube/lab icon — matches «Что за лекарство?» AI analysis
-      svg: <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 3h12M7 4h10l-2 6v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-8l-2-6z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M9 10h6M9 14h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
     },
     {
       id: 15, label: 'Профиль',
@@ -202,83 +342,76 @@ function Screen0({ navigate, onExit }) {
 
 // ─── Screen 1: Main ──────────────────────────────────────────────────────────
 
-function Screen1({ navigate, onExit }) {
+function Screen1({ navigate, onExit, version, setVersion }) {
   // F5.2 FIX — recover interrupted session
   const [pendingSession, setPendingSession] = useState(null)
+  const [showSupport, setShowSupport] = useState(false) // FIX 6 — support chat modal
+
   useEffect(() => {
     const saved = localStorage.getItem('cdk_pending_session')
     if (saved) { try { setPendingSession(JSON.parse(saved)) } catch {} }
   }, [])
+
   function resumeSession()  { localStorage.removeItem('cdk_pending_session'); navigate(5) }
   function cancelSession()  { localStorage.removeItem('cdk_pending_session'); setPendingSession(null) }
 
+  // FIX 3 & 4 — Rename "Ребёнок" → "Здоровье ребёнка", add "Психологическая помощь"
   const symptoms = [
     { icon: '🌡', label: 'Температура' },
     { icon: '🤧', label: 'Горло / нос' },
     { icon: '🤢', label: 'Живот' },
     { icon: '❤️', label: 'Давление' },
-    { icon: '👶', label: 'Ребёнок' },
+    { icon: '👶', label: 'Здоровье ребёнка' },
+    { icon: '🧠', label: 'Психологическая помощь' },
+  ]
+  const extraSymptoms = [
     { icon: '💊', label: 'Другое' },
   ]
+  // FIX 7 — Simplified language for users
   const services = [
     { icon: '📹', title: 'Врач онлайн', sub: 'прямо сейчас', border: '#00B956', screen: 2, badge: '● 12 онлайн' },
-    { icon: '🔬', title: 'Разобрать анализы', sub: 'AI расшифровка', border: '#0F6E56', screen: 7 },
+    { icon: '🔬', title: 'Понять мои анализы', sub: 'AI расшифровка', border: '#0F6E56', screen: 7 },
     { icon: '💊', title: 'Что за лекарство?', sub: 'AI объяснит', border: '#534AB7', screen: 11 },
     { icon: '📄', title: 'Больничный онлайн', sub: 'ЭЛН · официально', border: '#185FA5', screen: 3, ctx: { symptom: 'Справка для работы', symptomIcon: '📄', isSickLeave: true } },
   ]
 
   return (
     <div className="pb-24">
-      <FreedomShell onExit={onExit} />
+      <FreedomShell onExit={onExit} onSupportClick={() => setShowSupport(true)} version={version} setVersion={setVersion} />
+      {/* FIX 1 — Compact profile bar */}
+      <CompactProfileBar />
       {/* Sub-status: online doctors count */}
 
-      <div className="px-4 space-y-3 pt-3">
+      {version === 'v1' ? (
+        /* V1 — Compact layout */
+        <div className="px-4 space-y-3 pt-3">
 
-        {/* F5.2 FIX — interrupted session recovery banner */}
-        {pendingSession && (
-          <div className="rounded-2xl p-4 fade-in-up" style={{ background: 'rgba(239,159,39,0.08)', border: '1px solid rgba(239,159,39,0.35)' }}>
-            <div className="font-semibold text-white text-sm mb-0.5">⚡ Незавершённая сессия</div>
-            <div className="text-xs mb-3" style={{ color: 'var(--text-secondary)' }}>
-              Оплата прошла · Айгуль Сейткали ожидала вас
+          {/* F5.2 FIX — interrupted session recovery banner */}
+          {pendingSession && (
+            <div className="rounded-2xl p-4 fade-in-up" style={{ background: 'rgba(239,159,39,0.08)', border: '1px solid rgba(239,159,39,0.35)' }}>
+              <div className="font-semibold text-white text-sm mb-0.5">⚡ Незавершённая сессия</div>
+              <div className="text-xs mb-3" style={{ color: 'var(--text-secondary)' }}>
+                Оплата прошла · Айгуль Сейткали ожидала вас
+              </div>
+              <div className="flex gap-2">
+                <button onClick={resumeSession} className="flex-1 btn-primary py-2.5 rounded-xl text-sm font-bold text-white">
+                  Вернуться к врачу →
+                </button>
+                <button onClick={cancelSession} className="flex-1 py-2.5 rounded-xl text-sm font-medium border transition-all"
+                  style={{ borderColor: 'var(--border)', color: 'var(--text-muted)', background: 'var(--bg-elevated)' }}>
+                  Отменить · возврат
+                </button>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <button onClick={resumeSession} className="flex-1 btn-primary py-2.5 rounded-xl text-sm font-bold text-white">
-                Вернуться к врачу →
-              </button>
-              <button onClick={cancelSession} className="flex-1 py-2.5 rounded-xl text-sm font-medium border transition-all"
-                style={{ borderColor: 'var(--border)', color: 'var(--text-muted)', background: 'var(--bg-elevated)' }}>
-                Отменить · возврат
-              </button>
-            </div>
-          </div>
-        )}
+          )}
 
-        {/* Profile card */}
-        <div className="card-up rounded-2xl p-4 flex flex-col gap-3" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-strong)', boxShadow: 'var(--shadow-card)' }}>
-          <div className="flex items-center gap-3">
-            <DoctorAvatar size={52} initials="АК" colors={['#185FA5','#534AB7']} />
-            <div className="flex-1">
-              <div className="font-bold text-white text-base tracking-tight">Карина · 23 года</div>
-              <div className="text-xs mt-0.5 font-medium" style={{ color: 'var(--text-secondary)' }}>Алматы · Добро пожаловать 👋</div>
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <button onClick={() => navigate(12)} className="flex-1 rounded-xl py-2.5 px-3 text-xs text-white flex items-center gap-1.5 min-w-0 transition-all active:scale-95" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)' }}>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="#8A95B0" strokeWidth="2"/><path d="M8 2v4M16 2v4M3 10h18" stroke="#8A95B0" strokeWidth="2" strokeLinecap="round"/></svg>
-              <span className="truncate"><b>Обращения</b> · 3</span>
-            </button>
-            <div className="flex-1 rounded-xl py-2.5 px-3 text-xs flex items-center gap-1.5 min-w-0" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)' }}>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#8A95B0" strokeWidth="2" strokeLinejoin="round"/></svg>
-              <span className="truncate" style={{ color: 'var(--text-secondary)' }}>ОСМС · <span style={{ color: 'var(--green-500)' }}>Активен ✓</span></span>
-            </div>
-          </div>
-        </div>
-
-        {/* Hero symptom section */}
+          {/* Hero symptom section — FIX 4: 3x2 grid + separate row for "Другое" */}
         <div className="card-up-d1 rounded-2xl overflow-hidden" style={{ background: 'linear-gradient(160deg, #0A2218 0%, #051A10 100%)', border: '1px solid rgba(0,185,86,0.18)', boxShadow: '0 4px 24px rgba(0,185,86,0.08)' }}>
           <div className="p-4 pb-3">
             <div className="font-bold text-white text-lg tracking-tight mb-1">Что вас беспокоит?</div>
             <div className="text-xs font-medium mb-3" style={{ color: 'var(--text-secondary)' }}>AI подберёт нужного врача за 2 вопроса</div>
+
+            {/* Main 3x2 grid */}
             <div className="grid grid-cols-2 gap-2 mb-3">
               {symptoms.map((s, i) => (
                 <button key={i} onClick={() => navigate(3, { symptom: s.label, symptomIcon: s.icon })}
@@ -288,6 +421,18 @@ function Screen1({ navigate, onExit }) {
                 </button>
               ))}
             </div>
+
+            {/* Extra row for "Другое" */}
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              {extraSymptoms.map((s, i) => (
+                <button key={i} onClick={() => navigate(3, { symptom: s.label, symptomIcon: s.icon })}
+                  className="rounded-xl py-2.5 px-3 text-sm text-white flex items-center gap-2 transition-all active:scale-95 text-left"
+                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}>
+                  <span className="text-base leading-none">{s.icon}</span><span className="font-medium">{s.label}</span>
+                </button>
+              ))}
+            </div>
+
             <button onClick={() => navigate(3, { symptom: 'Общее', symptomIcon: '🤔' })}
               className="text-xs w-full text-center font-medium transition-opacity active:opacity-60" style={{ color: 'var(--text-secondary)' }}>
               Не знаю что выбрать — помогите определить →
@@ -343,6 +488,40 @@ function Screen1({ navigate, onExit }) {
           </div>
         </div>
       </div>
+      ) : (
+        /* V2 — Full catalog layout */
+        <div className="space-y-5 pt-5">
+          <div className="px-4">
+            <div className="font-bold text-white text-xl tracking-tight mb-1">Все услуги</div>
+            <div className="text-sm" style={{ color: 'var(--text-secondary)' }}>Полный каталог медицинских услуг</div>
+          </div>
+          <ServicesCatalog navigate={navigate} />
+        </div>
+      )}
+
+      {/* FIX 6 — Support chat modal */}
+      {showSupport && (
+        <div className="fixed inset-0 z-50 flex items-end" style={{ background: 'rgba(0,0,0,0.4)', paddingBottom: 'env(safe-area-inset-bottom, 0)' }}>
+          <div className="w-full rounded-t-3xl p-4 max-w-[390px] mx-auto animate-in" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderBottomWidth: 0, boxShadow: '0 -4px 24px rgba(0,0,0,0.3)' }}>
+            <div className="flex items-center justify-between mb-4">
+              <div className="font-bold text-white text-lg">💬 Поддержка</div>
+              <button onClick={() => setShowSupport(false)} className="text-xl leading-none" style={{ color: 'var(--text-muted)' }}>✕</button>
+            </div>
+
+            <div className="rounded-2xl p-4 mb-4 text-center" style={{ background: 'rgba(0,185,86,0.1)', border: '1px solid rgba(0,185,86,0.2)' }}>
+              <div className="text-xs font-semibold mb-1" style={{ color: 'var(--green-500)' }}>● Мы онлайн</div>
+              <div className="text-sm text-white mb-3">Мы ответим в течение 5 минут</div>
+              <button onClick={() => setShowSupport(false)} className="btn-primary w-full py-2.5 rounded-xl text-sm font-bold text-white">
+                Написать в чат →
+              </button>
+            </div>
+
+            <div className="text-xs text-center" style={{ color: 'var(--text-secondary)' }}>
+              Часы работы: Пн-Вс 08:00–22:00 <br/> WhatsApp, Telegram, Email
+            </div>
+          </div>
+        </div>
+      )}
 
       <BottomNav current={1} navigate={navigate} />
     </div>
@@ -2997,6 +3176,7 @@ const SCREENS = {
 export default function App() {
   // Stack stores { id, ctx } so every screen can receive context about HOW it was reached
   const [stack, setStack] = useState([{ id: 16, ctx: {} }])
+  const [version, setVersion] = useState('v1') // v1 or v2
   const current = stack[stack.length - 1]   // { id, ctx }
 
   function navigate(id, ctx = {}) {
@@ -3032,6 +3212,8 @@ export default function App() {
           onExit={handleExit}
           ctx={current.ctx}
           navigateHome={navigateHome}
+          version={version}
+          setVersion={setVersion}
         />
       </div>
     </div>
