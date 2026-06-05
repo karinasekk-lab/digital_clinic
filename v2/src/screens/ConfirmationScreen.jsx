@@ -191,7 +191,7 @@ export default function ConfirmationScreen({ nav, params }) {
 
         {/* CTA Buttons */}
         <div className="space-y-2 sm:space-y-3 fixed bottom-0 left-0 right-0 bg-gradient-to-t from-[#0D1117] from-90% to-transparent pt-4 px-4 pb-32 sm:pb-24 sm:sticky sm:bottom-20">
-          <Button onClick={handleConfirm} size="md" className="w-full"
+          <Button onClick={handleConfirm} size="md" className="w-full">
             Оплатить · начать сейчас
           </Button>
           <div className="grid grid-cols-2 sm:flex sm:gap-2 gap-2">
