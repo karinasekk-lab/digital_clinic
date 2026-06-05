@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Header, Card, Button, Pill, DoctorCard } from '../components/UI'
+import { Header, Card, Button, Pill, DoctorCard, FormError } from '../components/UI'
+import { useToast } from '../contexts/ToastContext'
 import { DOCTORS, CURRENT_USER } from '../data/mockData'
 
 export default function ConfirmationScreen({ nav, params }) {
@@ -7,15 +8,26 @@ export default function ConfirmationScreen({ nav, params }) {
   const [paymentMethod, setPaymentMethod] = useState('freedompay')
   const [insuranceNumber, setInsuranceNumber] = useState('')
   const [consent, setConsent] = useState(false)
+  const [validationError, setValidationError] = useState('')
+  const { addToast } = useToast()
 
   const isInstant = !params.date && !params.time
   const bookingTime = isInstant ? 'сейчас' : `${params.date} ${params.time}`
 
   const handleConfirm = () => {
+    setValidationError('')
+
     if (!consent) {
-      alert('Пожалуйста, дайте согласие на обработку данных')
+      setValidationError('Пожалуйста, дайте согласие на обработку данных')
       return
     }
+
+    if (paymentMethod === 'insurance' && !insuranceNumber.trim()) {
+      setValidationError('Введите номер страхового полиса')
+      return
+    }
+
+    addToast('Консультация забронирована!', 'success', 2000)
     nav.push('connecting', { doctorId: doctor.id, bookingTime })
   }
 
@@ -172,9 +184,14 @@ export default function ConfirmationScreen({ nav, params }) {
           </label>
         </Card>
 
+        {/* Validation Error */}
+        {validationError && (
+          <FormError message={validationError} />
+        )}
+
         {/* CTA Buttons */}
         <div className="space-y-2 sm:space-y-3 fixed bottom-0 left-0 right-0 bg-gradient-to-t from-[#0D1117] from-90% to-transparent pt-4 px-4 pb-32 sm:pb-24 sm:sticky sm:bottom-20">
-          <Button onClick={handleConfirm} size="md" className="w-full" disabled={!consent}>
+          <Button onClick={handleConfirm} size="md" className="w-full"
             Оплатить · начать сейчас
           </Button>
           <div className="grid grid-cols-2 sm:flex sm:gap-2 gap-2">

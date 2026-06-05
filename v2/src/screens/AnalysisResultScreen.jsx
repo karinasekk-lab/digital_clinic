@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { Header, Card, Button, Pill } from '../components/UI'
+import { useToast } from '../contexts/ToastContext'
 import { ANALYSES } from '../data/mockData'
 
 export default function AnalysisResultScreen({ nav }) {
   const analysis = ANALYSES[0]
   const [expandedIndicators, setExpandedIndicators] = useState({})
+  const { addToast } = useToast()
 
   const toggleIndicator = (name) => {
     setExpandedIndicators((prev) => ({
@@ -99,17 +101,33 @@ export default function AnalysisResultScreen({ nav }) {
 
           <div className="grid grid-cols-1 gap-2">
             <Button
-              onClick={() => nav.push('doctor-list')}
+              onClick={() => {
+                addToast('Переход к выбору врача', 'info', 1500)
+                nav.push('doctor-list')
+              }}
               variant="primary"
               size="sm"
               className="w-full"
             >
               Начать консультацию с терапевтом
             </Button>
-            <Button variant="secondary" size="sm" className="w-full">
+            <Button
+              onClick={() => addToast('Откройте календарь для выбора времени', 'info', 2000)}
+              variant="secondary"
+              size="sm"
+              className="w-full"
+            >
               Выбрать удобное время →
             </Button>
-            <Button variant="secondary" size="sm" className="w-full">
+            <Button
+              onClick={() => {
+                addToast('Переход в чат поддержки', 'info', 1500)
+                nav.push('ai-chat')
+              }}
+              variant="secondary"
+              size="sm"
+              className="w-full"
+            >
               Задать вопрос в чате
             </Button>
           </div>
@@ -117,10 +135,20 @@ export default function AnalysisResultScreen({ nav }) {
 
         {/* Actions */}
         <div className="space-y-2">
-          <Button variant="secondary" size="sm" className="w-full">
+          <Button
+            onClick={() => addToast('PDF сохранён', 'success', 2000)}
+            variant="secondary"
+            size="sm"
+            className="w-full"
+          >
             💾 Сохранить в PDF
           </Button>
-          <Button variant="secondary" size="sm" className="w-full">
+          <Button
+            onClick={() => addToast('Отправлено врачу', 'success', 2000)}
+            variant="secondary"
+            size="sm"
+            className="w-full"
+          >
             📤 Поделиться с врачом
           </Button>
         </div>

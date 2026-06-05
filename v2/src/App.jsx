@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigation } from './hooks/useNavigation'
 import { StatusBar } from './components/UI'
+import { ToastProvider } from './contexts/ToastContext'
 
 // Import all screens
 import HomeScreen from './screens/HomeScreen'
@@ -123,7 +124,11 @@ function ScreenRouter({ currentScreen, screenParams, nav }) {
     'all-services': <AllServicesScreen nav={nav} />
   }
 
-  return screens[currentScreen] || <HomeScreen nav={nav} />
+  return (
+    <div className="animate-slideUp" style={{ animationDuration: '0.3s' }}>
+      {screens[currentScreen] || <HomeScreen nav={nav} />}
+    </div>
+  )
 }
 
 // Bottom Navigation
@@ -176,27 +181,28 @@ export default function App() {
   if (!mounted) return <div className="min-h-screen bg-[#0D1117]"></div>
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-b from-[#000000] to-[#0a0a0a] flex items-center justify-center p-4">
-      {/* Phone Frame */}
-      <div className="w-full max-w-[390px] h-screen max-h-screen bg-black rounded-[40px] shadow-2xl overflow-hidden border-8 border-black relative flex flex-col">
-        {/* Notch Simulation */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-7 bg-black rounded-b-3xl z-50"></div>
+    <ToastProvider>
+      <div className="fixed inset-0 bg-gradient-to-b from-[#000000] to-[#0a0a0a] flex items-center justify-center p-4">
+        {/* Phone Frame */}
+        <div className="w-full max-w-[390px] h-screen max-h-screen bg-black rounded-[40px] shadow-2xl overflow-hidden border-8 border-black relative flex flex-col">
+          {/* Notch Simulation */}
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-7 bg-black rounded-b-3xl z-50"></div>
 
-        {/* App Content */}
-        <div className="flex-1 overflow-y-auto w-full bg-[#0D1117]">
-          <ScreenRouter
-            currentScreen={nav.currentScreen}
-            screenParams={nav.currentParams}
-            nav={nav}
-          />
+          {/* App Content */}
+          <div className="flex-1 overflow-y-auto w-full bg-[#0D1117]">
+            <ScreenRouter
+              currentScreen={nav.currentScreen}
+              screenParams={nav.currentParams}
+              nav={nav}
+            />
+          </div>
+
+          {/* Bottom navigation */}
+          {!hideBottomNav && <BottomNav activeTab={nav.activeTab} onTabChange={handleTabChange} />}
         </div>
 
-        {/* Bottom navigation */}
-        {!hideBottomNav && <BottomNav activeTab={nav.activeTab} onTabChange={handleTabChange} />}
-      </div>
-
-      {/* Global styles */}
-      <style>{`
+        {/* Global styles */}
+        <style>{`
         * {
           box-sizing: border-box;
         }
@@ -240,8 +246,92 @@ export default function App() {
           }
         }
 
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(24px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes slideRight {
+          from {
+            opacity: 0;
+            transform: translateX(-24px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes slideLeft {
+          from {
+            opacity: 0;
+            transform: translateX(24px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes shimmer {
+          0% {
+            backgroundPosition: -1000px 0;
+          }
+          100% {
+            backgroundPosition: 1000px 0;
+          }
+        }
+
+        @keyframes slideup {
+          from {
+            transform: translateY(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
         .animate-fadeIn {
           animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .animate-slideUp {
+          animation: slideUp 0.4s ease-out forwards;
+        }
+
+        .animate-slideRight {
+          animation: slideRight 0.4s ease-out forwards;
+        }
+
+        .animate-slideLeft {
+          animation: slideLeft 0.4s ease-out forwards;
+        }
+
+        .animate-scaleIn {
+          animation: scaleIn 0.3s ease-out forwards;
+        }
+
+        .animate-slideup {
+          animation: slideup 0.3s ease-out forwards;
         }
 
         ::-webkit-scrollbar {
@@ -271,6 +361,7 @@ export default function App() {
           -moz-appearance: textfield;
         }
       `}</style>
-    </div>
+      </div>
+    </ToastProvider>
   )
 }

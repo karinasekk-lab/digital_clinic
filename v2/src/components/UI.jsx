@@ -176,18 +176,40 @@ export function EmptyState({ icon, title, subtitle, actionText, onAction }) {
 }
 
 export function Toast({ message, type = 'info', onClose }) {
-  const types = {
-    success: 'bg-[#00B956] text-white',
-    error: 'bg-[#E24B4A] text-white',
-    info: 'bg-[#185FA5] text-white'
+  const typeConfig = {
+    success: {
+      bg: 'bg-[#00B956]',
+      icon: '✓',
+      borderColor: 'border-[rgba(0,185,86,0.3)]'
+    },
+    error: {
+      bg: 'bg-[#E24B4A]',
+      icon: '✕',
+      borderColor: 'border-[rgba(226,75,74,0.3)]'
+    },
+    warning: {
+      bg: 'bg-[#EF9F27]',
+      icon: '⚠',
+      borderColor: 'border-[rgba(239,159,39,0.3)]'
+    },
+    info: {
+      bg: 'bg-[#185FA5]',
+      icon: 'ℹ',
+      borderColor: 'border-[rgba(24,95,165,0.3)]'
+    }
   }
 
+  const config = typeConfig[type] || typeConfig.info
+
   return (
-    <div className={`fixed bottom-20 left-4 right-4 px-4 py-3 rounded-[14px] text-sm font-600 ${types[type]} shadow-lg animate-slideup z-50`}>
-      <div className="flex items-center justify-between">
-        <span>{message}</span>
+    <div className={`${config.bg} border ${config.borderColor} text-white px-4 py-3 rounded-[14px] text-sm font-600 shadow-lg animate-slideup backdrop-blur-sm`}>
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <span>{config.icon}</span>
+          <span>{message}</span>
+        </div>
         {onClose && (
-          <button onClick={onClose} className="ml-4 text-lg opacity-70 hover:opacity-100">
+          <button onClick={onClose} className="text-lg opacity-80 hover:opacity-100 transition-opacity">
             ✕
           </button>
         )}
@@ -202,10 +224,47 @@ export function SkeletonLoader({ count = 3, height = '100px' }) {
       {[...Array(count)].map((_, i) => (
         <div
           key={i}
-          className="bg-[#1E2235] rounded-[20px] animate-pulse"
-          style={{ height }}
+          className="bg-gradient-to-r from-[#1E2235] via-[#243050] to-[#1E2235] rounded-[20px] animate-shimmer"
+          style={{
+            height,
+            backgroundSize: '200% 100%',
+            animation: 'shimmer 2s infinite'
+          }}
         ></div>
       ))}
+    </div>
+  )
+}
+
+export function SkeletonCard({ variant = 'default', count = 1 }) {
+  const variants = {
+    default: 'bg-[#1E2235] border border-[rgba(255,255,255,0.06)] rounded-[20px] p-5',
+    doctor: 'bg-[#1E2235] border border-[rgba(255,255,255,0.06)] rounded-[20px] p-4',
+    compact: 'bg-[#1E2235] rounded-[14px] p-3'
+  }
+
+  const skeletons = Array.from({ length: count }, (_, i) => (
+    <div key={i} className={`${variants[variant]} animate-pulse`}>
+      <div className="space-y-3">
+        <div className="h-4 bg-[#243050] rounded w-3/4"></div>
+        <div className="h-3 bg-[#243050] rounded w-1/2"></div>
+        <div className="h-3 bg-[#243050] rounded w-full"></div>
+      </div>
+    </div>
+  ))
+
+  return <div className="space-y-4">{skeletons}</div>
+}
+
+export function LoadingOverlay({ message = 'Загрузка...' }) {
+  return (
+    <div className="fixed inset-0 bg-[rgba(0,0,0,0.5)] flex items-center justify-center z-50 backdrop-blur-sm">
+      <div className="bg-[#1E2235] rounded-[20px] p-6 border border-[rgba(255,255,255,0.08)]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-[#1E2235] border-t-[#00B956] rounded-full animate-spin"></div>
+          <p className="text-sm text-[#F9FAFB] font-600">{message}</p>
+        </div>
+      </div>
     </div>
   )
 }
@@ -220,5 +279,45 @@ export function Badge({ count, position = 'top-right' }) {
     <span className={`absolute ${positions[position]} bg-[#E24B4A] text-white text-[10px] font-700 w-5 h-5 rounded-full flex items-center justify-center`}>
       {count}
     </span>
+  )
+}
+
+export function ErrorState({ icon = '⚠', title = 'Ошибка', subtitle, actionText, onAction, variant = 'default' }) {
+  const variants = {
+    default: 'bg-[#1E2235] border border-[rgba(226,75,74,0.2)]',
+    card: 'bg-transparent'
+  }
+
+  return (
+    <div className={`rounded-[20px] p-6 text-center ${variants[variant]}`}>
+      <div className="text-5xl mb-4">{icon}</div>
+      <h2 className="text-lg font-700 text-[#F9FAFB] mb-2">{title}</h2>
+      {subtitle && <p className="text-sm text-[#94A3B8] mb-6">{subtitle}</p>}
+      {actionText && onAction && (
+        <Button onClick={onAction} variant="secondary" size="sm">
+          {actionText}
+        </Button>
+      )}
+    </div>
+  )
+}
+
+export function FormError({ message }) {
+  if (!message) return null
+  return (
+    <div className="flex items-center gap-2 px-3 py-2 bg-[rgba(226,75,74,0.1)] border border-[rgba(226,75,74,0.2)] rounded-[10px]">
+      <span className="text-red-400">✕</span>
+      <span className="text-sm text-[#E24B4A]">{message}</span>
+    </div>
+  )
+}
+
+export function FormSuccess({ message }) {
+  if (!message) return null
+  return (
+    <div className="flex items-center gap-2 px-3 py-2 bg-[rgba(0,185,86,0.1)] border border-[rgba(0,185,86,0.2)] rounded-[10px]">
+      <span className="text-green-400">✓</span>
+      <span className="text-sm text-[#00B956]">{message}</span>
+    </div>
   )
 }

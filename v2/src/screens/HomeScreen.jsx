@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Header, Card, Button, Pill, DoctorCard, EmptyState } from '../components/UI'
+import { Header, Card, Button, Pill, DoctorCard, EmptyState, SkeletonCard, SkeletonLoader } from '../components/UI'
 import { CURRENT_USER, DOCTORS, APPOINTMENTS, NEWS_AND_TIPS, HEALTH_STATS } from '../data/mockData'
 
 export default function HomeScreen({ nav }) {
   const [greeting, setGreeting] = useState('Добрый день')
   const [upcomingAppointment, setUpcomingAppointment] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const hour = new Date().getHours()
@@ -12,11 +13,41 @@ export default function HomeScreen({ nav }) {
     else if (hour < 18) setGreeting('Добрый день')
     else setGreeting('Добрый вечер')
 
-    const upcoming = APPOINTMENTS.find(a => a.status === 'upcoming')
-    setUpcomingAppointment(upcoming)
+    // Simulate data loading
+    const timer = setTimeout(() => {
+      const upcoming = APPOINTMENTS.find(a => a.status === 'upcoming')
+      setUpcomingAppointment(upcoming)
+      setIsLoading(false)
+    }, 300)
+
+    return () => clearTimeout(timer)
   }, [])
 
   const moodEmojis = ['😊 Хорошо', '😐 Нормально', '😟 Плохо']
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#0D1117] pb-32 sm:pb-24">
+        {/* Header with greeting */}
+        <div className="bg-gradient-to-b from-[#1E2235] to-transparent pt-4 sm:pt-4 px-4 pb-4 sticky top-0 z-30">
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-xl sm:text-2xl font-700 text-[#F9FAFB]">← Мое здоровье</h1>
+            <button className="relative p-3 sm:p-2 hover:bg-[#1E2235] rounded-full transition-colors active:bg-[#1E2235] min-w-[48px] sm:min-w-auto min-h-[48px] sm:min-h-auto flex items-center justify-center">
+              🔔
+              <span className="absolute top-2 right-2 w-2 h-2 bg-[#E24B4A] rounded-full"></span>
+            </button>
+          </div>
+        </div>
+
+        <div className="px-4 space-y-4 sm:space-y-4">
+          <SkeletonCard count={1} />
+          <SkeletonCard count={1} />
+          <SkeletonCard count={1} />
+          <SkeletonLoader count={3} height="80px" />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-[#0D1117] pb-32 sm:pb-24">

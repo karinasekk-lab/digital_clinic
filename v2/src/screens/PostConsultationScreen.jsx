@@ -1,11 +1,23 @@
 import { useState } from 'react'
 import { Card, Button, Pill } from '../components/UI'
+import { useToast } from '../contexts/ToastContext'
 import { DOCTORS, CURRENT_USER } from '../data/mockData'
 
 export default function PostConsultationScreen({ nav, params }) {
   const doctor = DOCTORS.find((d) => d.id === params.doctorId) || DOCTORS[0]
   const [rating, setRating] = useState(0)
   const [review, setReview] = useState('')
+  const { addToast } = useToast()
+
+  const handleSubmitRating = () => {
+    if (rating === 0) {
+      addToast('Выберите оценку', 'warning', 2000)
+      return
+    }
+    addToast(`Спасибо за оценку ${rating} ★`, 'success', 2000)
+    setRating(0)
+    setReview('')
+  }
 
   return (
     <div className="min-h-screen bg-[#0D1117] pb-24">
@@ -82,7 +94,7 @@ export default function PostConsultationScreen({ nav, params }) {
             className="w-full bg-[#0D1117] border border-[rgba(255,255,255,0.08)] rounded-[12px] px-4 py-3 text-sm text-[#F9FAFB] placeholder-[#4B5563] outline-none focus:border-[rgba(0,185,86,0.3)] resize-none h-20 mb-3"
           />
 
-          <Button variant="secondary" size="sm" className="w-full">
+          <Button variant="secondary" size="sm" className="w-full" onClick={handleSubmitRating}>
             Отправить оценку
           </Button>
         </Card>
@@ -95,7 +107,12 @@ export default function PostConsultationScreen({ nav, params }) {
             <div className="flex-1">
               <h4 className="font-700 text-[#F9FAFB] text-sm mb-1">Продолжить наблюдение</h4>
               <p className="text-xs text-[#94A3B8] mb-3">Врач напишет через 3 дня</p>
-              <Button variant="primary" size="sm" className="w-full">
+              <Button
+                onClick={() => addToast('Наблюдение добавлено', 'success', 2000)}
+                variant="primary"
+                size="sm"
+                className="w-full"
+              >
                 Добавить наблюдение
               </Button>
             </div>
@@ -114,7 +131,10 @@ export default function PostConsultationScreen({ nav, params }) {
                 <div>• Парацетамол 500мг</div>
               </div>
               <Button
-                onClick={() => nav.push('home')}
+                onClick={() => {
+                  addToast('Переход в аптеку', 'info', 1500)
+                  nav.push('home')
+                }}
                 variant="secondary"
                 size="sm"
                 className="w-full"
@@ -133,7 +153,10 @@ export default function PostConsultationScreen({ nav, params }) {
               <h4 className="font-700 text-[#F9FAFB] text-sm mb-1">Оформить больничный</h4>
               <p className="text-xs text-[#94A3B8] mb-3">На основе консультации · 15 мин</p>
               <Button
-                onClick={() => nav.push('sick-leave')}
+                onClick={() => {
+                  addToast('Переход к оформлению больничного', 'info', 1500)
+                  nav.push('sick-leave')
+                }}
                 variant="secondary"
                 size="sm"
                 className="w-full"

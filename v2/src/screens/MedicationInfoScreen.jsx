@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Header, Card, Input, Button, Pill } from '../components/UI'
+import { useToast } from '../contexts/ToastContext'
 import { MEDICATIONS } from '../data/mockData'
 
 export default function MedicationInfoScreen({ nav }) {
   const [search, setSearch] = useState('')
   const [selectedDrug, setSelectedDrug] = useState(null)
   const [expandedSections, setExpandedSections] = useState({})
+  const { addToast } = useToast()
 
   const drug = selectedDrug || MEDICATIONS[0]
 
@@ -33,7 +35,13 @@ export default function MedicationInfoScreen({ nav }) {
             />
 
             {/* Camera Button */}
-            <Button variant="secondary" size="md" className="w-full animate-fadeIn" style={{ animationDelay: '50ms' }}>
+            <Button
+              onClick={() => addToast('Откройте камеру для сканирования упаковки', 'info', 2000)}
+              variant="secondary"
+              size="md"
+              className="w-full animate-fadeIn"
+              style={{ animationDelay: '50ms' }}
+            >
               📷 Сфотографировать упаковку
             </Button>
 
@@ -137,7 +145,10 @@ export default function MedicationInfoScreen({ nav }) {
 
             {/* CTA */}
             <Button
-              onClick={() => nav.push('ai-chat')}
+              onClick={() => {
+                addToast('Переход в чат с врачом', 'info', 1500)
+                nav.push('ai-chat')
+              }}
               variant="primary"
               size="md"
               className="w-full"

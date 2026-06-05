@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Header, Input, Pill, DoctorCard, Button } from '../components/UI'
+import { useToast } from '../contexts/ToastContext'
 import { DOCTORS } from '../data/mockData'
 
 const SPECIALTIES = ['Все', 'Терапевт', 'Педиатр', 'ЛОР', 'Кардиолог', 'Дерматолог', 'Психолог', 'Невролог']
@@ -8,6 +9,7 @@ export default function DoctorListScreen({ nav }) {
   const [search, setSearch] = useState('')
   const [selectedSpecialty, setSelectedSpecialty] = useState('Все')
   const [sortBy, setSortBy] = useState('online')
+  const { addToast } = useToast()
 
   const filteredDoctors = DOCTORS.filter((doctor) => {
     const matchesSearch =
@@ -97,7 +99,10 @@ export default function DoctorListScreen({ nav }) {
                   <Button
                     variant="primary"
                     size="sm"
-                    onClick={() => nav.push('confirmation', { doctorId: doctor.id })}
+                    onClick={() => {
+                      addToast(`${doctor.name} выбран для консультации`, 'success', 2000)
+                      nav.push('confirmation', { doctorId: doctor.id })
+                    }}
                     className="w-full mt-2"
                   >
                     Начать ▶
