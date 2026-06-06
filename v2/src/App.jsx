@@ -5,6 +5,7 @@ import { ToastProvider } from './contexts/ToastContext'
 
 // Import all screens
 import HomeScreen from './screens/HomeScreen'
+import HomeScreenPremium from './screens/HomeScreenPremium'
 import DoctorListScreen from './screens/DoctorListScreen'
 import DoctorProfileScreen from './screens/DoctorProfileScreen'
 import SlotBookingScreen from './screens/SlotBookingScreen'
@@ -35,7 +36,7 @@ import SchoolMedicineScreen from './screens/SchoolMedicineScreen'
 // Screen Router
 function ScreenRouter({ currentScreen, screenParams, nav }) {
   const screens = {
-    home: <HomeScreen nav={nav} />,
+    home: <HomeScreenPremium nav={nav} />,
     'doctor-list': <DoctorListScreen nav={nav} />,
     'doctor-profile': <DoctorProfileScreen nav={nav} params={screenParams} />,
     'slot-booking': <SlotBookingScreen nav={nav} params={screenParams} />,
