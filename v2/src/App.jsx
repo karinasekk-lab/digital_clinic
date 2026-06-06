@@ -23,80 +23,14 @@ import MedicationInfoScreen from './screens/MedicationInfoScreen'
 import DoctorReviewsScreen from './screens/DoctorReviewsScreen'
 import SupportChatScreen from './screens/SupportChatScreen'
 import NotificationsScreen from './screens/NotificationsScreen'
-import { SERVICES } from './data/services'
+import AllServicesScreenV2 from './screens/AllServicesScreenV2'
+import DutyDoctorScreen from './screens/DutyDoctorScreen'
+import SecondOpinionScreen from './screens/SecondOpinionScreen'
+import HealthManagerScreen from './screens/HealthManagerScreen'
+import CheckupsScreen from './screens/CheckupsScreen'
+import TravelMedicineScreen from './screens/TravelMedicineScreen'
+import SchoolMedicineScreen from './screens/SchoolMedicineScreen'
 
-// All Services Screen (keep existing)
-function AllServicesScreen({ nav }) {
-  return (
-    <div className="min-h-screen bg-[#0D1117] pb-24">
-      <div className="sticky top-0 z-40 bg-gradient-to-b from-slate-900 to-transparent backdrop-blur-md border-b border-slate-800">
-        <StatusBar />
-        <div className="px-4 py-4 flex flex-col gap-3">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-white font-bold text-xl">← Все услуги</h1>
-              <p className="text-xs mt-1" style={{ color: '#8A95B0' }}>
-                35 сервисов · 8 доступно · 27 скоро
-              </p>
-            </div>
-            <button className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2"/><path d="M12 7v5l4 2.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="pb-20">
-        {Object.entries(SERVICES).map(([key, section]) => (
-          <div key={key} className="mb-6">
-            <div className="flex items-center gap-2 mb-3 px-4">
-              <div className={`h-6 w-1 rounded-full ${section.colorClass}`} />
-              <h2 className="text-sm font-bold text-white uppercase tracking-wide">{section.title}</h2>
-            </div>
-            <div className="px-4 grid grid-cols-2 gap-2">
-              {section.items.map((item) => (
-                <button
-                  key={item.id}
-                  disabled={item.status !== 'active'}
-                  className="w-full text-left rounded-xl p-3 transition-all active:scale-95 disabled:active:scale-100"
-                  style={{
-                    background: item.status === 'active' ? 'rgba(15,110,86,0.08)' : 'rgba(100,116,139,0.05)',
-                    border: item.status === 'active' ? '1px solid rgba(0,185,86,0.2)' : '1px solid rgba(100,116,139,0.15)',
-                    opacity: item.status === 'active' ? 1 : 0.6,
-                    cursor: item.status === 'active' ? 'pointer' : 'default'
-                  }}
-                >
-                  <div className="flex items-start gap-3 relative">
-                    <div className="text-2xl pt-1">{item.icon}</div>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-sm text-white">{item.title}</div>
-                      <div className="text-xs mt-0.5" style={{ color: '#8A95B0' }}>{item.subtitle}</div>
-                    </div>
-                    {item.badge && (
-                      <div className="flex-shrink-0 text-[10px] font-bold px-2 py-1 rounded-full" style={{ background: '#EF4444', color: 'white' }}>
-                        {item.badge}
-                      </div>
-                    )}
-                    {!item.badge && item.status !== 'active' && (
-                      <div className="flex-shrink-0 text-[10px] font-bold px-2 py-1 rounded-full" style={{ background: 'rgba(100,116,139,0.2)', color: '#8A95B0' }}>
-                        СКОРО
-                      </div>
-                    )}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
-
-        <div className="px-4 py-8 text-center text-xs border-t" style={{ borderColor: '#1E2235', color: '#8A95B0' }}>
-          <p>Версия 2 · Полный каталог</p>
-          <p>EmAI × Freedom · 2026</p>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 // Screen Router
 function ScreenRouter({ currentScreen, screenParams, nav }) {
@@ -121,7 +55,13 @@ function ScreenRouter({ currentScreen, screenParams, nav }) {
     'doctor-reviews': <DoctorReviewsScreen nav={nav} params={screenParams} />,
     'support-chat': <SupportChatScreen nav={nav} />,
     notifications: <NotificationsScreen nav={nav} />,
-    'all-services': <AllServicesScreen nav={nav} />
+    'all-services': <AllServicesScreenV2 nav={nav} />,
+    'duty-doctor': <DutyDoctorScreen nav={nav} />,
+    'second-opinion': <SecondOpinionScreen nav={nav} />,
+    'health-manager': <HealthManagerScreen nav={nav} />,
+    checkups: <CheckupsScreen nav={nav} />,
+    'travel-medicine': <TravelMedicineScreen nav={nav} />,
+    'school-medicine': <SchoolMedicineScreen nav={nav} />
   }
 
   return (

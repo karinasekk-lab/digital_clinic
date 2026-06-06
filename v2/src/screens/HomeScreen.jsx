@@ -55,9 +55,14 @@ export default function HomeScreen({ nav }) {
       <div className="bg-gradient-to-b from-[#1E2235] to-transparent pt-4 sm:pt-4 px-4 pb-4 sticky top-0 z-30">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-xl sm:text-2xl font-700 text-[#F9FAFB]">← Мое здоровье</h1>
-          <button className="relative p-3 sm:p-2 hover:bg-[#1E2235] rounded-full transition-colors active:bg-[#1E2235] min-w-[48px] sm:min-w-auto min-h-[48px] sm:min-h-auto flex items-center justify-center">
+          <button
+            onClick={() => nav.push('notifications')}
+            className="relative p-3 sm:p-2 hover:bg-[#1E2235] rounded-full transition-colors active:bg-[#1E2235] min-w-[48px] sm:min-w-auto min-h-[48px] sm:min-h-auto flex items-center justify-center"
+          >
             🔔
-            <span className="absolute top-2 right-2 w-2 h-2 bg-[#E24B4A] rounded-full"></span>
+            <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#E24B4A] rounded-full flex items-center justify-center">
+              <span className="text-white text-xs font-700">2</span>
+            </span>
           </button>
         </div>
       </div>
@@ -103,7 +108,7 @@ export default function HomeScreen({ nav }) {
               ))}
             </div>
             <div className="grid grid-cols-3 gap-2">
-              {['❤️ Давление', '👶 Ребёнок', '🧠 Стресс'].map((chip) => (
+              {['❤️ Давление', '👶 Здоровье ребёнка', '🧠 Стресс'].map((chip) => (
                 <button
                   key={chip}
                   onClick={() => nav.push('ai-chat')}
@@ -146,7 +151,7 @@ export default function HomeScreen({ nav }) {
               { icon: '🔬', text: 'Анализы' },
               { icon: '💊', text: 'Лекарство' },
               { icon: '📄', text: 'Больничный' },
-              { icon: '🌙', text: '24/7' },
+              { icon: '🌙', text: 'Дежурный' },
               { icon: '✅', text: 'Все услуги' }
             ].map((service) => (
               <button
@@ -157,6 +162,7 @@ export default function HomeScreen({ nav }) {
                   else if (service.text === 'Анализы') nav.push('analysis-upload')
                   else if (service.text === 'Лекарство') nav.push('medication-info')
                   else if (service.text === 'Больничный') nav.push('sick-leave')
+                  else if (service.text === 'Дежурный') nav.push('duty-doctor')
                 }}
                 className="flex-shrink-0 flex flex-col items-center gap-2 p-3 bg-[#1E2235] rounded-[14px] border border-[rgba(255,255,255,0.06)] hover:border-[rgba(0,185,86,0.3)] transition-colors snap-center min-w-[90px]"
               >

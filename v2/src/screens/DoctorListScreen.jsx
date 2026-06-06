@@ -33,7 +33,12 @@ export default function DoctorListScreen({ nav }) {
     <div className="min-h-screen bg-[#0D1117] pb-24">
       <Header
         title="Врач онлайн"
-        subtitle={`● ${DOCTORS.filter((d) => d.status === 'online').length} онлайн`}
+        subtitle={
+          <span className="flex items-center gap-1">
+            <span className="w-2 h-2 bg-[#00B956] rounded-full animate-pulse"></span>
+            <span className="text-[#00B956]">{DOCTORS.filter((d) => d.status === 'online').length} врача онлайн сейчас</span>
+          </span>
+        }
         onBack={() => nav.pop()}
         rightIcon={null}
       />
@@ -95,18 +100,20 @@ export default function DoctorListScreen({ nav }) {
                     doctor={doctor}
                     onTap={() => nav.push('doctor-profile', { doctorId: doctor.id })}
                     showPrice={true}
+                    actionButton={
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => {
+                          addToast(`${doctor.name} выбран для консультации`, 'success', 2000)
+                          nav.push('confirmation', { doctorId: doctor.id })
+                        }}
+                        className="whitespace-nowrap"
+                      >
+                        Начать ▶
+                      </Button>
+                    }
                   />
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    onClick={() => {
-                      addToast(`${doctor.name} выбран для консультации`, 'success', 2000)
-                      nav.push('confirmation', { doctorId: doctor.id })
-                    }}
-                    className="w-full mt-2"
-                  >
-                    Начать ▶
-                  </Button>
                 </div>
               ))}
             </div>

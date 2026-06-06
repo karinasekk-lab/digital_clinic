@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Header, Card, Button, Pill } from '../components/UI'
+import { maskIIN } from '../utils/dateFormatter'
 import { CURRENT_USER } from '../data/mockData'
 
 export default function ProfileScreen({ nav }) {
@@ -22,7 +23,7 @@ export default function ProfileScreen({ nav }) {
           <h2 className="text-[20px] font-700 text-[#F9FAFB] mt-3">
             {CURRENT_USER.firstName} {CURRENT_USER.lastName}
           </h2>
-          <p className="text-sm text-[#94A3B8]">ИИН: {CURRENT_USER.iin} · {CURRENT_USER.age} лет</p>
+          <p className="text-sm text-[#94A3B8]">ИИН: {maskIIN(CURRENT_USER.iin)} · {CURRENT_USER.age} лет</p>
           <p className="text-xs text-[#94A3B8] mt-1">г. {CURRENT_USER.city}</p>
         </Card>
 

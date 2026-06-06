@@ -149,57 +149,89 @@ export function Input({ placeholder, value, onChange, type = 'text', icon, class
   )
 }
 
-export function DoctorCard({ doctor, onTap, showPrice = true, compact = false }) {
+export function DoctorAvatar({ name, size = 'md', isOnline = false }) {
+  // Extract initials from name
+  const initials = name
+    .split(' ')
+    .slice(0, 2)
+    .map((n) => n[0].toUpperCase())
+    .join('')
+
+  const sizeClasses = {
+    sm: 'w-10 h-10 text-xs',
+    md: 'w-16 h-16 text-2xl',
+    lg: 'w-20 h-20 text-3xl'
+  }
+
+  return (
+    <div className={`relative flex-shrink-0 ${sizeClasses[size]}`}>
+      <div
+        className={`w-full h-full rounded-full flex items-center justify-center font-bold text-white ${
+          isOnline ? 'border-2 border-[#00B956]' : ''
+        }`}
+        style={{
+          background: 'linear-gradient(135deg, #00B956, #0F6E56)'
+        }}
+      >
+        {initials}
+      </div>
+      {isOnline && (
+        <span className="absolute bottom-0 right-0 w-3 h-3 bg-[#00B956] rounded-full border-2 border-[#0D1117] animate-pulse"></span>
+      )}
+    </div>
+  )
+}
+
+export function DoctorCard({ doctor, onTap, showPrice = true, compact = false, actionButton = null }) {
+  const isOnline = doctor.status === 'online'
+
   if (compact) {
     return (
       <button onClick={onTap} className="flex items-center gap-3 w-full p-3 bg-[#1E2235] rounded-[14px] border border-[rgba(255,255,255,0.06)] hover:border-[rgba(0,185,86,0.3)] transition-colors">
-        <div className="text-4xl flex-shrink-0">{doctor.photo}</div>
+        <DoctorAvatar name={doctor.name} size="sm" isOnline={isOnline} />
         <div className="text-left flex-1 min-w-0">
           <div className="font-600 text-sm text-[#F9FAFB] truncate">{doctor.name}</div>
           <div className="text-xs text-[#94A3B8]">{doctor.specialty}</div>
         </div>
-        <span className="text-[10px] text-green-400">●</span>
+        {isOnline && <span className="text-[10px] text-[#00B956] animate-pulse">● онлайн</span>}
       </button>
     )
   }
 
   return (
-    <button
-      onClick={onTap}
-      className="w-full bg-[#1E2235] border border-[rgba(255,255,255,0.06)] rounded-[20px] p-4 hover:border-[rgba(0,185,86,0.3)] transition-colors text-left"
-    >
+    <div className="bg-[#1E2235] border border-[rgba(255,255,255,0.06)] rounded-[20px] p-4 hover:border-[rgba(0,185,86,0.3)] transition-colors">
       <div className="flex gap-4">
-        <div className="text-5xl flex-shrink-0 relative">
-          {doctor.photo}
-          {doctor.status === 'online' && (
-            <span className="absolute bottom-0 right-0 w-4 h-4 bg-[#00B956] rounded-full border-2 border-[#0D1117]"></span>
-          )}
-        </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="font-700 text-[15px] text-[#F9FAFB]">{doctor.name}</h3>
-          <p className="text-xs text-[#94A3B8] mt-1">
-            {doctor.specialty} · Стаж {doctor.experience} лет
-          </p>
-          <div className="flex items-center gap-1 mt-2">
-            <span className="text-yellow-400">★</span>
-            <span className="text-sm font-600 text-[#F9FAFB]">{doctor.rating}</span>
-            <span className="text-xs text-[#94A3B8]">({doctor.reviews})</span>
+        <button onClick={onTap} className="flex-1 flex gap-4 text-left">
+          <DoctorAvatar name={doctor.name} size="lg" isOnline={isOnline} />
+          <div className="flex-1 min-w-0">
+            <h3 className="font-700 text-[15px] text-[#F9FAFB]">{doctor.name}</h3>
+            <p className="text-xs text-[#94A3B8] mt-1">
+              {doctor.specialty} · Стаж {doctor.experience} лет
+            </p>
+            <div className="flex items-center gap-1 mt-2">
+              <span className="text-yellow-400">★</span>
+              <span className="text-sm font-600 text-[#F9FAFB]">{doctor.rating}</span>
+              <span className="text-xs text-[#94A3B8]">({doctor.reviews})</span>
+            </div>
+            {isOnline && (
+              <div className="text-xs text-[#00B956] font-600 mt-2 flex items-center gap-1">
+                <span className="w-2 h-2 bg-[#00B956] rounded-full animate-pulse"></span>
+                онлайн · ответ ~{doctor.waitTime} мин
+              </div>
+            )}
           </div>
-          {doctor.status === 'online' && (
-            <div className="text-xs text-[#00B956] font-600 mt-2 flex items-center gap-1">
-              <span className="w-2 h-2 bg-[#00B956] rounded-full animate-pulse"></span>
-              онлайн · ответ ~{doctor.waitTime} мин
+        </button>
+        <div className="flex flex-col items-end justify-between flex-shrink-0">
+          {showPrice && (
+            <div className="text-right">
+              <div className="font-700 text-[#F9FAFB] text-sm">{doctor.price.toLocaleString()} ₸</div>
+              <div className="text-xs text-[#00B956] mt-1">{doctor.cashback.toLocaleString()} ₸ кешбэком</div>
             </div>
           )}
+          {actionButton && <div className="mt-2">{actionButton}</div>}
         </div>
-        {showPrice && (
-          <div className="text-right flex-shrink-0">
-            <div className="font-700 text-[#F9FAFB] text-sm">{doctor.price.toLocaleString()} ₸</div>
-            <div className="text-xs text-[#00B956] mt-1">{doctor.cashback.toLocaleString()} ₸ кешбэком</div>
-          </div>
-        )}
       </div>
-    </button>
+    </div>
   )
 }
 
@@ -498,5 +530,57 @@ export function RatingSummary({ rating = 4.8, totalReviews = 14, distribution = 
       </div>
       <p className="text-sm text-[#94A3B8]">{totalReviews} отзывов</p>
     </div>
+  )
+}
+
+export function ServiceCard({ icon, title, subtitle, status = 'active', onTap, badge = null, colorBorder = 'green' }) {
+  const borderColors = {
+    green: 'border-l-[#00B956]',
+    blue: 'border-l-[#185FA5]',
+    amber: 'border-l-[#EF9F27]',
+    teal: 'border-l-[#06B6D4]',
+    purple: 'border-l-[#A855F7]',
+    orange: 'border-l-[#F97316]',
+    pink: 'border-l-[#EC4899]'
+  }
+
+  const isActive = status === 'active'
+  const isNew = badge === 'NEW'
+
+  return (
+    <button
+      onClick={isActive ? onTap : undefined}
+      disabled={!isActive}
+      className={`w-full text-left p-4 border-l-4 rounded-r-lg transition-all ${
+        borderColors[colorBorder]
+      } ${
+        isActive
+          ? 'bg-[#1E2235] border border-l-4 border-[rgba(255,255,255,0.06)] hover:border-[rgba(0,185,86,0.2)] cursor-pointer'
+          : 'bg-[#151a22] border border-l-4 border-[rgba(100,116,139,0.15)] opacity-60 cursor-not-allowed'
+      }`}
+    >
+      <div className="flex items-start justify-between">
+        <div className="flex items-start gap-3 flex-1">
+          <span className="text-2xl pt-1">{icon}</span>
+          <div className="flex-1 min-w-0">
+            <h4 className="font-600 text-sm text-[#F9FAFB]">{title}</h4>
+            <p className="text-xs text-[#94A3B8] mt-1">{subtitle}</p>
+          </div>
+        </div>
+        <div className="flex-shrink-0 ml-2">
+          {isActive ? (
+            <span className="text-xl text-[#00B956]">→</span>
+          ) : isNew ? (
+            <span className="text-[10px] font-700 px-2 py-1 rounded-full bg-[#E24B4A] text-white">
+              {badge} СКОРО
+            </span>
+          ) : (
+            <span className="text-[10px] font-700 px-2 py-1 rounded-full bg-[rgba(100,116,139,0.2)] text-[#8A95B0]">
+              СКОРО
+            </span>
+          )}
+        </div>
+      </div>
+    </button>
   )
 }
