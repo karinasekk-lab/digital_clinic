@@ -1,20 +1,21 @@
 // Reusable UI Components
+import { ArrowLeft, ChevronRight } from 'lucide-react'
 
 export function Button({ children, variant = 'primary', size = 'md', onClick, disabled, className = '', isLoading = false }) {
-  const baseClasses = 'font-600 rounded-[14px] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[48px] sm:min-h-auto hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2'
+  const baseClasses = 'font-600 rounded-[16px] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[48px] sm:min-h-auto focus:outline-none'
 
   const variants = {
-    primary: 'bg-gradient-to-br from-[#00B956] to-[#009644] text-white shadow-[0_4px_20px_rgba(0,185,86,0.35)] hover:shadow-[0_6px_24px_rgba(0,185,86,0.4)] focus:ring-[#00B956]',
-    secondary: 'bg-[#1E2235] text-[#F9FAFB] border border-[rgba(255,255,255,0.08)] hover:border-[rgba(0,185,86,0.3)] focus:ring-[rgba(0,185,86,0.3)]',
-    outline: 'bg-transparent border border-[rgba(255,255,255,0.2)] text-[#00B956] hover:border-[#00B956] hover:bg-[rgba(0,185,86,0.1)] focus:ring-[#00B956]',
-    red: 'bg-[#E24B4A] text-white shadow-[0_4px_12px_rgba(226,75,74,0.3)] hover:shadow-[0_6px_16px_rgba(226,75,74,0.4)] focus:ring-[#E24B4A]',
-    ghost: 'bg-transparent text-[#F9FAFB] hover:bg-[rgba(255,255,255,0.08)] focus:ring-[rgba(255,255,255,0.2)]'
+    primary: 'bg-[#00C853] hover:bg-[#00B85A] text-white shadow-lg shadow-[#00C853]/20 active:shadow-lg active:shadow-[#00C853]/10',
+    secondary: 'bg-[#171C2B] text-[#AAB3C5] border border-[#2A3145] hover:border-[#00C853]/50 hover:bg-[#1E2433] active:bg-[#171C2B]',
+    outline: 'bg-transparent border border-[#2A3145] text-[#00C853] hover:border-[#00C853] hover:bg-[rgba(0,200,83,0.05)]',
+    red: 'bg-[#E84C3D] hover:bg-[#D63C2D] text-white shadow-lg shadow-[#E84C3D]/20',
+    ghost: 'bg-transparent text-[#AAB3C5] hover:bg-[#171C2B] hover:text-[#FFFFFF]'
   }
 
   const sizes = {
-    sm: 'h-12 sm:h-10 px-4 text-sm',
-    md: 'h-[56px] sm:h-[52px] px-6 text-[15px]',
-    lg: 'h-16 sm:h-14 px-8 text-base'
+    sm: 'h-10 px-3 text-sm',
+    md: 'h-12 px-5 text-sm',
+    lg: 'h-14 px-6 text-base'
   }
 
   return (
@@ -37,13 +38,13 @@ export function Button({ children, variant = 'primary', size = 'md', onClick, di
 
 export function Card({ children, className = '', variant = 'default', onClick = null, interactive = false }) {
   const variants = {
-    default: 'bg-[#1E2235] border border-[rgba(255,255,255,0.06)] rounded-[20px] p-5 sm:p-4 shadow-[0_4px_24px_rgba(0,0,0,0.3)]',
-    elevated: 'bg-[#243050] border border-[rgba(255,255,255,0.08)] rounded-[20px] p-5 sm:p-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)]',
-    green: 'bg-[#052E16] border border-[rgba(0,185,86,0.2)] rounded-[20px] p-5 sm:p-4',
-    amber: 'bg-[#2d2416] border border-[rgba(239,159,39,0.2)] rounded-[20px] p-5 sm:p-4'
+    default: 'bg-[#171C2B] border border-[#2A3145] rounded-[24px] p-5 sm:p-4',
+    elevated: 'bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[24px] p-5 sm:p-4 shadow-lg shadow-[#00C853]/5',
+    green: 'bg-gradient-to-br from-[#052E16] to-[#030E0A] border border-[#00C853]/30 rounded-[24px] p-5 sm:p-4',
+    amber: 'bg-gradient-to-br from-[#2d2416] to-[#1a1509] border border-[rgba(239,159,39,0.2)] rounded-[24px] p-5 sm:p-4'
   }
 
-  const interactiveClass = interactive || onClick ? 'cursor-pointer transition-all hover:shadow-lg hover:border-[rgba(0,185,86,0.3)]' : ''
+  const interactiveClass = interactive || onClick ? 'cursor-pointer transition-all hover:border-[#00C853]/50 hover:shadow-lg hover:shadow-[#00C853]/10' : ''
 
   return (
     <div className={`${variants[variant]} ${className} ${interactiveClass}`} onClick={onClick}>
@@ -69,25 +70,25 @@ export function CheckboxInput({ label, checked, onChange, disabled = false }) {
   )
 }
 
-export function Header({ title, subtitle, onBack, rightIcon, backText = '←' }) {
+export function Header({ title, subtitle, onBack, rightIcon, backText = null }) {
   return (
-    <div className="sticky top-0 z-40 backdrop-blur-md bg-gradient-to-b from-[rgba(30,34,53,0.8)] to-transparent border-b border-[rgba(0,185,86,0.1)]">
-      <div className="px-4 py-4 sm:py-3 flex items-center justify-between min-h-[56px] sm:min-h-auto">
+    <div className="sticky top-0 z-40 backdrop-blur-md bg-gradient-to-b from-[#0D111A] via-[#0D111A] to-transparent border-b border-[#2A3145]">
+      <div className="px-4 py-4 sm:py-3 flex items-center justify-between min-h-[60px] sm:min-h-auto">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           {onBack && (
             <button
               onClick={onBack}
-              className="text-[#00B956] font-600 text-2xl sm:text-lg hover:opacity-70 active:opacity-50 min-w-[48px] sm:min-w-auto min-h-[48px] sm:min-h-auto flex items-center justify-center flex-shrink-0 transition-all active:scale-95"
+              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#171C2B] active:scale-95 transition-all flex-shrink-0"
             >
-              {backText}
+              {backText ? <span className="text-lg">{backText}</span> : <ArrowLeft size={20} className="text-[#AAB3C5]" strokeWidth={1.5} />}
             </button>
           )}
           <div className="min-w-0">
-            <h1 className="text-xl sm:text-[22px] font-700 text-[#F9FAFB] truncate">{title}</h1>
-            {subtitle && <p className="text-[11px] sm:text-[12px] text-[#94A3B8] mt-0.5">{subtitle}</p>}
+            <h1 className="text-lg sm:text-xl font-700 text-white truncate">{title}</h1>
+            {subtitle && (typeof subtitle === 'string' ? <p className="text-xs sm:text-sm text-[#AAB3C5] mt-0.5">{subtitle}</p> : <div className="mt-0.5">{subtitle}</div>)}
           </div>
         </div>
-        {rightIcon && <div className="text-xl sm:text-lg flex-shrink-0 ml-2">{rightIcon}</div>}
+        {rightIcon && <div className="text-lg sm:text-xl flex-shrink-0 ml-2">{rightIcon}</div>}
       </div>
     </div>
   )

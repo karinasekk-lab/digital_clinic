@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Header } from '../components/health/Header'
 import { HeroHealthAssistant } from '../components/health/HeroHealthAssistant'
-import { SymptomChips } from '../components/health/SymptomChips'
-import { AppointmentCard } from '../components/health/AppointmentCard'
-import { AvailableDoctors } from '../components/health/AvailableDoctors'
-import { HealthMetrics } from '../components/health/HealthMetrics'
+import { TodaySection } from '../components/health/TodaySection'
+import { MedicalSupport } from '../components/health/MedicalSupport'
+import { PromoCards } from '../components/health/PromoCards'
 import { Separator } from '../components/health/Separator'
 import { DOCTORS, APPOINTMENTS, CURRENT_USER } from '../data/mockData'
 import { useToast } from '../contexts/ToastContext'
@@ -12,13 +11,10 @@ import { useToast } from '../contexts/ToastContext'
 export default function HomeScreenPremium({ nav }) {
   const { addToast } = useToast()
   const [isLoading, setIsLoading] = useState(true)
-  const [upcomingAppointment, setUpcomingAppointment] = useState(null)
 
   useEffect(() => {
     // Simulate loading
     const timer = setTimeout(() => {
-      const upcoming = APPOINTMENTS.find((a) => a.status === 'upcoming')
-      setUpcomingAppointment(upcoming)
       setIsLoading(false)
     }, 300)
 
@@ -26,32 +22,28 @@ export default function HomeScreenPremium({ nav }) {
   }, [])
 
   const handleStartCheck = () => {
-    addToast('Запуск AI-проверки здоровья', 'info', 2000)
+    addToast('Запуск проверки симптомов', 'info', 2000)
     nav.push('ai-chat')
-  }
-
-  const handleSymptomSelect = (symptomId) => {
-    addToast('Проверка выбранного симптома', 'info', 1500)
-    nav.push('ai-chat', { symptom: symptomId })
-  }
-
-  const handleDoctorSelect = (doctorId) => {
-    const doctor = DOCTORS.find((d) => d.id === doctorId)
-    addToast(`${doctor?.name} выбран`, 'success', 1500)
-    nav.push('doctor-profile', { doctorId })
   }
 
   const handleViewAllDoctors = () => {
     nav.push('doctor-list')
   }
 
-  const handleAddMetrics = () => {
-    addToast('Перейти к добавлению показателей', 'info', 1500)
-    nav.push('profile')
-  }
+  const handlePromoClick = (promoId) => {
+    const routes = {
+      'cashback': 'doctor-list',
+      'analysis': 'analysis-upload',
+      'travel': null,
+      'health-manager': null
+    }
 
-  const handleNotifications = () => {
-    nav.push('notifications')
+    const route = routes[promoId]
+    if (route) {
+      nav.push(route)
+    } else {
+      addToast('Скоро будет доступно', 'info', 1500)
+    }
   }
 
   if (isLoading) {
@@ -72,7 +64,7 @@ export default function HomeScreenPremium({ nav }) {
 
       {/* Scrollable Content */}
       <div className="overflow-y-auto">
-        {/* AI Health Assistant - MAIN FOCUS */}
+        {/* AI Health Assistant */}
         <HeroHealthAssistant
           userName={CURRENT_USER.firstName}
           onStartCheck={handleStartCheck}
@@ -80,48 +72,21 @@ export default function HomeScreenPremium({ nav }) {
 
         <Separator />
 
-        {/* Quick Symptoms */}
-        <SymptomChips
-          onSymptomSelect={handleSymptomSelect}
-          onViewAll={() => nav.push('all-services')}
-        />
+        {/* Today Section - Health Status */}
+        <TodaySection />
 
         <Separator />
 
-        {/* Upcoming Appointment */}
-        {upcomingAppointment && (
-          <>
-            <AppointmentCard
-              doctor={upcomingAppointment.doctor.name}
-              appointmentDate={`${upcomingAppointment.date.split('-')[2]} ${['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'][new Date(upcomingAppointment.date).getMonth()]}`}
-              appointmentTime={upcomingAppointment.time}
-              timeUntil="через 2 дня"
-              onEnter={() => {
-                addToast('Вход в видеоконсультацию', 'success', 1500)
-                nav.push('video-call', { appointmentId: upcomingAppointment.id })
-              }}
-            />
-            <Separator />
-          </>
-        )}
-
-        {/* Available Doctors */}
-        <AvailableDoctors
-          doctors={DOCTORS}
-          onDoctorSelect={handleDoctorSelect}
-          onViewAll={handleViewAllDoctors}
-        />
+        {/* Medical Support - Doctors */}
+        <MedicalSupport onViewDoctors={handleViewAllDoctors} />
 
         <Separator />
 
-        {/* Health Metrics */}
-        <HealthMetrics
-          onAddMetrics={handleAddMetrics}
-          onViewAll={() => nav.push('profile')}
-        />
+        {/* Promo Cards */}
+        <PromoCards onPromoClick={handlePromoClick} />
 
         {/* Bottom Spacing */}
-        <div className="h-6" />
+        <div className="h-3" />
       </div>
     </div>
   )

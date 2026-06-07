@@ -7,24 +7,25 @@ import { ToastProvider } from './contexts/ToastContext'
 import HomeScreen from './screens/HomeScreen'
 import HomeScreenPremium from './screens/HomeScreenPremium'
 import DoctorListScreen from './screens/DoctorListScreen'
-import DoctorProfileScreen from './screens/DoctorProfileScreen'
-import SlotBookingScreen from './screens/SlotBookingScreen'
-import ConfirmationScreen from './screens/ConfirmationScreen'
-import ConnectingScreen from './screens/ConnectingScreen'
-import VideoCallScreen from './screens/VideoCallScreen'
-import PostConsultationScreen from './screens/PostConsultationScreen'
-import MyRecordsScreen from './screens/MyRecordsScreen'
-import AIChatScreen from './screens/AIChatScreen'
-import ProfileScreen from './screens/ProfileScreen'
-import AnalysisUploadScreen from './screens/AnalysisUploadScreen'
-import AnalysisProcessingScreen from './screens/AnalysisProcessingScreen'
-import AnalysisResultScreen from './screens/AnalysisResultScreen'
-import SickLeaveScreen from './screens/SickLeaveScreen'
-import MedicationInfoScreen from './screens/MedicationInfoScreen'
-import DoctorReviewsScreen from './screens/DoctorReviewsScreen'
-import SupportChatScreen from './screens/SupportChatScreen'
-import NotificationsScreen from './screens/NotificationsScreen'
-import AllServicesScreenV2 from './screens/AllServicesScreenV2'
+import DoctorListScreenPremium from './screens/DoctorListScreenPremium'
+import DoctorProfileScreenPremium from './screens/DoctorProfileScreenPremium'
+import SlotBookingScreenPremium from './screens/SlotBookingScreenPremium'
+import ConfirmationScreenPremium from './screens/ConfirmationScreenPremium'
+import ConnectingScreenPremium from './screens/ConnectingScreenPremium'
+import VideoCallScreenPremium from './screens/VideoCallScreenPremium'
+import PostConsultationScreenPremium from './screens/PostConsultationScreenPremium'
+import MyRecordsScreenPremium from './screens/MyRecordsScreenPremium'
+import AIChatScreenPremium from './screens/AIChatScreenPremium'
+import ProfileScreenPremium from './screens/ProfileScreenPremium'
+import AnalysisUploadScreenPremium from './screens/AnalysisUploadScreenPremium'
+import AnalysisProcessingScreenPremium from './screens/AnalysisProcessingScreenPremium'
+import AnalysisResultScreenPremium from './screens/AnalysisResultScreenPremium'
+import SickLeaveScreenPremium from './screens/SickLeaveScreenPremium'
+import MedicationInfoScreenPremium from './screens/MedicationInfoScreenPremium'
+import DoctorReviewsScreenPremium from './screens/DoctorReviewsScreenPremium'
+import SupportChatScreenPremium from './screens/SupportChatScreenPremium'
+import NotificationsScreenPremium from './screens/NotificationsScreenPremium'
+import AllServicesScreenV2Premium from './screens/AllServicesScreenV2Premium'
 import DutyDoctorScreen from './screens/DutyDoctorScreen'
 import SecondOpinionScreen from './screens/SecondOpinionScreen'
 import HealthManagerScreen from './screens/HealthManagerScreen'
@@ -37,26 +38,26 @@ import SchoolMedicineScreen from './screens/SchoolMedicineScreen'
 function ScreenRouter({ currentScreen, screenParams, nav }) {
   const screens = {
     home: <HomeScreenPremium nav={nav} />,
-    'doctor-list': <DoctorListScreen nav={nav} />,
-    'doctor-profile': <DoctorProfileScreen nav={nav} params={screenParams} />,
-    'slot-booking': <SlotBookingScreen nav={nav} params={screenParams} />,
-    confirmation: <ConfirmationScreen nav={nav} params={screenParams} />,
-    connecting: <ConnectingScreen nav={nav} params={screenParams} />,
-    'video-call': <VideoCallScreen nav={nav} params={screenParams} />,
-    'post-consultation': <PostConsultationScreen nav={nav} params={screenParams} />,
-    'my-records': <MyRecordsScreen nav={nav} />,
-    'records': <MyRecordsScreen nav={nav} />,
-    'ai-chat': <AIChatScreen nav={nav} />,
-    profile: <ProfileScreen nav={nav} />,
-    'analysis-upload': <AnalysisUploadScreen nav={nav} />,
-    'analysis-processing': <AnalysisProcessingScreen nav={nav} />,
-    'analysis-result': <AnalysisResultScreen nav={nav} />,
-    'sick-leave': <SickLeaveScreen nav={nav} />,
-    'medication-info': <MedicationInfoScreen nav={nav} />,
-    'doctor-reviews': <DoctorReviewsScreen nav={nav} params={screenParams} />,
-    'support-chat': <SupportChatScreen nav={nav} />,
-    notifications: <NotificationsScreen nav={nav} />,
-    'all-services': <AllServicesScreenV2 nav={nav} />,
+    'doctor-list': <DoctorListScreenPremium nav={nav} />,
+    'doctor-profile': <DoctorProfileScreenPremium nav={nav} params={screenParams} />,
+    'slot-booking': <SlotBookingScreenPremium nav={nav} params={screenParams} />,
+    confirmation: <ConfirmationScreenPremium nav={nav} params={screenParams} />,
+    connecting: <ConnectingScreenPremium nav={nav} params={screenParams} />,
+    'video-call': <VideoCallScreenPremium nav={nav} params={screenParams} />,
+    'post-consultation': <PostConsultationScreenPremium nav={nav} params={screenParams} />,
+    'my-records': <MyRecordsScreenPremium nav={nav} />,
+    'records': <MyRecordsScreenPremium nav={nav} />,
+    'ai-chat': <AIChatScreenPremium nav={nav} />,
+    profile: <ProfileScreenPremium nav={nav} />,
+    'analysis-upload': <AnalysisUploadScreenPremium nav={nav} />,
+    'analysis-processing': <AnalysisProcessingScreenPremium nav={nav} />,
+    'analysis-result': <AnalysisResultScreenPremium nav={nav} />,
+    'sick-leave': <SickLeaveScreenPremium nav={nav} />,
+    'medication-info': <MedicationInfoScreenPremium nav={nav} />,
+    'doctor-reviews': <DoctorReviewsScreenPremium nav={nav} params={screenParams} />,
+    'support-chat': <SupportChatScreenPremium nav={nav} />,
+    notifications: <NotificationsScreenPremium nav={nav} />,
+    'all-services': <AllServicesScreenV2Premium nav={nav} />,
     'duty-doctor': <DutyDoctorScreen nav={nav} />,
     'second-opinion': <SecondOpinionScreen nav={nav} />,
     'health-manager': <HealthManagerScreen nav={nav} />,
