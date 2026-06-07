@@ -5,88 +5,83 @@ export function TodaySection() {
       title: 'Давление в норме',
       subtitle: '120/80 мм рт. ст.',
       icon: '✓',
-      bgColor: '#00C853'
+      color: '#00C853'
     },
     {
       id: 'pulse',
       title: 'Пульс стабилен',
-      subtitle: '72 уд/мин',
+      subtitle: '',
       icon: '✓',
-      bgColor: '#00C853'
+      color: '#00C853'
     },
     {
       id: 'appointment',
       title: 'Через 2 дня приём у терапевта',
       subtitle: '4 июня · 14:00',
       icon: '📅',
-      bgColor: '#00C853'
+      color: '#00C853'
     },
     {
       id: 'water',
       title: 'Рекомендуем выпить ещё 700 мл воды',
-      subtitle: 'Цель: 2,000 мл · Выпито: 1,300 мл',
+      subtitle: 'Цель: 2,000 мл · Выпито: 700 мл',
       icon: '💧',
-      bgColor: '#3B82F6'
+      color: '#3B82F6'
     },
     {
       id: 'stress',
       title: 'Уровень стресса ниже среднего',
       subtitle: 'На 18% ниже, чем на прошлой неделе',
       icon: '🧠',
-      bgColor: '#A855F7'
+      color: '#A855F7'
     }
   ]
 
   return (
     <div className="px-4 py-3">
-      {/* Section Header */}
-      <h3 className="text-lg font-700 text-white mb-4">Сегодня</h3>
+      {/* Card */}
+      <div className="relative bg-gradient-to-br from-[#1A2332] to-[#0D1117] border border-[#2A3F5F] rounded-[16px] p-4 overflow-hidden">
+        {/* Header */}
+        <h3 className="text-white font-600 text-sm mb-4">Сегодня</h3>
 
-      {/* Today Card */}
-      <div className="relative bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[24px] p-6 overflow-hidden">
         {/* Glowing Heart - Right side */}
         <div
-          className="absolute -right-16 top-1/2 -translate-y-1/2 text-9xl select-none pointer-events-none"
+          className="absolute -right-12 top-1/2 -translate-y-1/2 select-none pointer-events-none"
           style={{
-            opacity: 0.25,
-            filter: 'drop-shadow(0 0 40px #00C85360)'
+            fontSize: '140px',
+            opacity: 0.2,
+            filter: 'drop-shadow(0 0 35px #00C85345)'
           }}
         >
           ❤️
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 pr-8 space-y-4">
-          {todayItems.map((item, index) => (
-            <div key={item.id}>
-              {/* Item */}
-              <div className="flex items-center gap-4 py-3">
-                {/* Icon Circle */}
-                <div
-                  className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-700 text-white"
-                  style={{ backgroundColor: item.bgColor }}
-                >
-                  {item.icon}
-                </div>
-
-                {/* Text Content */}
-                <div className="flex-1 min-w-0">
-                  <p className="text-base font-600 text-white leading-tight">
-                    {item.title}
-                  </p>
-                  <p className="text-sm text-[#AAB3C5] mt-1">
-                    {item.subtitle}
-                  </p>
-                </div>
-
-                {/* Arrow */}
-                <div className="flex-shrink-0 text-[#6B7280] text-xl">›</div>
+        {/* Items */}
+        <div className="space-y-3 relative z-10 pr-6">
+          {todayItems.map((item) => (
+            <div key={item.id} className="flex items-start gap-3">
+              {/* Icon */}
+              <div
+                className="flex-shrink-0 w-6 h-6 flex items-center justify-center text-lg"
+                style={{ color: item.color }}
+              >
+                {item.icon}
               </div>
 
-              {/* Divider - except for last item */}
-              {index < todayItems.length - 1 && (
-                <div className="h-px bg-gradient-to-r from-[#2A3145] to-transparent" />
-              )}
+              {/* Content */}
+              <div className="flex-1">
+                <p className="text-white text-sm font-500 leading-snug">
+                  {item.title}
+                </p>
+                {item.subtitle && (
+                  <p className="text-[#6B7280] text-xs mt-0.5">
+                    {item.subtitle}
+                  </p>
+                )}
+              </div>
+
+              {/* Arrow */}
+              <div className="flex-shrink-0 text-[#6B7280] text-sm pt-0.5">›</div>
             </div>
           ))}
         </div>
