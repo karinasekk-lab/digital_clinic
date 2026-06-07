@@ -22,9 +22,9 @@ export function PromoCards({ onPromoClick }) {
   ]
 
   return (
-    <div className="px-4 py-2">
+    <div className="px-4 py-1.5">
       {/* Premium Promo Cards - Green & Blue Only */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-2">
         {promos.map((promo) => {
           const Icon = promo.icon
 
@@ -32,7 +32,7 @@ export function PromoCards({ onPromoClick }) {
             <button
               key={promo.id}
               onClick={() => onPromoClick?.(promo.id)}
-              className="relative rounded-[16px] p-3 text-left transition-all hover:opacity-90 overflow-hidden group"
+              className="relative rounded-[16px] p-2.5 text-left transition-all hover:opacity-90 overflow-hidden group"
               style={{
                 background: `linear-gradient(135deg, ${promo.color}12, transparent)`,
                 border: `1.5px solid ${promo.color}30`

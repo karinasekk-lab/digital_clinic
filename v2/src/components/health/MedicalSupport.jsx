@@ -2,12 +2,12 @@ import { ChevronRight, Heart, Clock } from 'lucide-react'
 
 export function MedicalSupport({ onViewDoctors }) {
   return (
-    <div className="px-4 py-2 space-y-2">
+    <div className="px-4 py-1.5 space-y-1.5">
       {/* Section Header */}
       <h3 className="text-sm font-700 text-white">Медицинская поддержка</h3>
 
       {/* Outer Container Card */}
-      <div className="bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[16px] p-3 space-y-2">
+      <div className="bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[16px] p-2.5 space-y-1.5">
         {/* Doctor Inner Card */}
         <div className="bg-[#0D111A]/50 border border-[#2A3145]/50 rounded-[12px] p-2.5 flex items-center gap-2.5">
           {/* Avatar - Premium icon instead of emoji */}

@@ -58,7 +58,7 @@ export default function HomeScreenPremium({ nav }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#090D14] pb-24 safe-area-inset-bottom">
+    <div className="min-h-screen bg-[#090D14] pb-20 safe-area-inset-bottom">
       {/* Header */}
       <Header onBack={() => nav.pop()} notificationCount={2} />
 
@@ -86,7 +86,7 @@ export default function HomeScreenPremium({ nav }) {
         <PromoCards onPromoClick={handlePromoClick} />
 
         {/* Bottom Spacing */}
-        <div className="h-3" />
+        <div className="h-1" />
       </div>
     </div>
   )
