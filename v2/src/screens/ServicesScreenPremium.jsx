@@ -1,4 +1,4 @@
-import { ChevronRight, Check } from 'lucide-react'
+import { ChevronRight, Check, User, ClipboardList, Shield, Home, Stethoscope, Beaker, Plane, BookOpen, Lightbulb } from 'lucide-react'
 import { Header } from '../components/health/Header'
 import { Separator } from '../components/health/Separator'
 
@@ -6,7 +6,7 @@ export default function ServicesScreenPremium({ nav }) {
   const services = [
     {
       id: 'health-manager',
-      icon: '👤',
+      icon: User,
       title: 'Менеджер здоровья',
       subtitle: 'Персональный куратор',
       description: 'Выделенный специалист отслеживает ваше здоровье, координирует обследования и назначения',
@@ -16,13 +16,13 @@ export default function ServicesScreenPremium({ nav }) {
         'Рекомендации в одном месте'
       ],
       example: 'Менеджер распределит обследования на удобные дни',
-      color: '#A855F7',
+      color: '#00C853',
       badge: 'Популярно',
       action: () => nav.push('health-manager')
     },
     {
       id: 'checkups',
-      icon: '📋',
+      icon: ClipboardList,
       title: 'Чек-апы',
       subtitle: 'Комплексные обследования',
       description: 'Полная диагностика здоровья: анализы, УЗИ, ЭКГ, консультация врача в один день',
@@ -38,7 +38,7 @@ export default function ServicesScreenPremium({ nav }) {
     },
     {
       id: 'prevention',
-      icon: '🛡️',
+      icon: Shield,
       title: 'Профилактика',
       subtitle: 'Программы здоровья',
       description: 'Программы для здоровья: спорт, питание, сон, контроль стресса для всех возрастов',
@@ -54,7 +54,7 @@ export default function ServicesScreenPremium({ nav }) {
     },
     {
       id: 'house-calls',
-      icon: '🏠',
+      icon: Home,
       title: 'Домашние визиты',
       subtitle: 'Врач приходит к вам',
       description: 'Врач приедет на дом для консультации, осмотра, анализов без очередей и ожидания',
@@ -64,13 +64,13 @@ export default function ServicesScreenPremium({ nav }) {
         'Быстрое обслуживание'
       ],
       example: 'Визит терапевта от 5,000₸, вызов за 30 минут',
-      color: '#F97316',
+      color: '#3B82F6',
       badge: null,
       action: () => nav.push('duty-doctor')
     },
     {
       id: 'specialists',
-      icon: '⚕️',
+      icon: Stethoscope,
       title: 'Консультации специалистов',
       subtitle: 'Узкие специалисты онлайн',
       description: 'Видеоконсультации с кардиологами, неврологами, эндокринологами и другими специалистами',
@@ -80,13 +80,13 @@ export default function ServicesScreenPremium({ nav }) {
         'Направления на анализы'
       ],
       example: 'Консультация кардиолога в день обращения, результаты в кабинете',
-      color: '#06B6D4',
+      color: '#00C853',
       badge: null,
       action: () => nav.push('doctor-list')
     },
     {
       id: 'tests',
-      icon: '🧪',
+      icon: Beaker,
       title: 'Лабораторные анализы',
       subtitle: 'Исследования крови и проб',
       description: 'Все виды анализов: общие, гормоны, биохимия, коагулограмма, срочные за 1 час',
@@ -96,13 +96,13 @@ export default function ServicesScreenPremium({ nav }) {
         'Результаты в приложении'
       ],
       example: 'Анализ крови за 2,000₸, результат за 8 часов',
-      color: '#EF4444',
+      color: '#3B82F6',
       badge: null,
       action: () => nav.push('all-services')
     },
     {
       id: 'travel-medicine',
-      icon: '✈️',
+      icon: Plane,
       title: 'Медпомощь за рубежом',
       subtitle: 'Страховка в путешествиях',
       description: 'Медицинская страховка для поездок: консультации, помощь в поиске врача, эвакуация',
@@ -112,13 +112,13 @@ export default function ServicesScreenPremium({ nav }) {
         'От 2,000₸ за неделю'
       ],
       example: 'Страховка на отпуск в ОАЭ с консультацией врача',
-      color: '#F59E0B',
+      color: '#00C853',
       badge: null,
       action: () => nav.push('travel-medicine')
     },
     {
       id: 'school-medicine',
-      icon: '🎓',
+      icon: BookOpen,
       title: 'Школьная медицина',
       subtitle: 'Справки и осмотры',
       description: 'Справки для школы, садика, спорта, осмотры перед школой и после болезни за день',
@@ -128,7 +128,7 @@ export default function ServicesScreenPremium({ nav }) {
         'От 1,500₸'
       ],
       example: 'Справка после болезни с осмотром педиатра в день обращения',
-      color: '#8B5CF6',
+      color: '#3B82F6',
       badge: null,
       action: () => nav.push('school-medicine')
     }
@@ -163,8 +163,14 @@ export default function ServicesScreenPremium({ nav }) {
                 {/* Header: Icon, Title, and Badge */}
                 <div className="flex items-center gap-3">
                   {/* Icon Container */}
-                  <div className="flex-shrink-0 w-12 h-12 rounded-[12px] bg-[#0D111A] border border-[#2A3145] flex items-center justify-center text-xl">
-                    {service.icon}
+                  <div
+                    className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: `${service.color}15` }}
+                  >
+                    {service.icon && (() => {
+                      const Icon = service.icon
+                      return <Icon size={20} color={service.color} strokeWidth={2} />
+                    })()}
                   </div>
 
                   {/* Title Section */}
@@ -240,7 +246,9 @@ export default function ServicesScreenPremium({ nav }) {
             }}
           >
             <div className="flex items-start gap-3">
-              <span className="text-2xl flex-shrink-0">💡</span>
+              <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#00C85315' }}>
+                <Lightbulb size={16} color="#00C853" strokeWidth={2} />
+              </div>
               <div className="flex-1">
                 <h4 className="text-sm font-700 text-white">Рекомендация</h4>
                 <p className="text-xs text-[#AAB3C5] leading-4 mt-1">
