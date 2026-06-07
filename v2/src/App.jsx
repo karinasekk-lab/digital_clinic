@@ -32,6 +32,7 @@ import HealthManagerScreen from './screens/HealthManagerScreen'
 import CheckupsScreen from './screens/CheckupsScreen'
 import TravelMedicineScreen from './screens/TravelMedicineScreen'
 import SchoolMedicineScreen from './screens/SchoolMedicineScreen'
+import ServicesScreenPremium from './screens/ServicesScreenPremium'
 
 
 // Screen Router
@@ -63,7 +64,8 @@ function ScreenRouter({ currentScreen, screenParams, nav }) {
     'health-manager': <HealthManagerScreen nav={nav} />,
     checkups: <CheckupsScreen nav={nav} />,
     'travel-medicine': <TravelMedicineScreen nav={nav} />,
-    'school-medicine': <SchoolMedicineScreen nav={nav} />
+    'school-medicine': <SchoolMedicineScreen nav={nav} />,
+    pharmacy: <ServicesScreenPremium nav={nav} />
   }
 
   return (
@@ -79,7 +81,7 @@ function BottomNav({ activeTab, onTabChange }) {
     { id: 'home', icon: '🏠', label: 'Главная' },
     { id: 'records', icon: '📋', label: 'Записи' },
     { id: 'doctor-list', icon: '👨‍⚕️', label: 'Врачи' },
-    { id: 'pharmacy', icon: '💊', label: 'Аптека' },
+    { id: 'pharmacy', icon: '⚕️', label: 'Сервисы' },
     { id: 'profile', icon: '👤', label: 'Профиль' }
   ]
 
