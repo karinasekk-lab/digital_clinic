@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigation } from './hooks/useNavigation'
 import { StatusBar } from './components/UI'
 import { ToastProvider } from './contexts/ToastContext'
+import { Home, BookOpen, Stethoscope, Activity, User } from 'lucide-react'
 
 // Import all screens
 import HomeScreen from './screens/HomeScreen'
@@ -78,32 +79,56 @@ function ScreenRouter({ currentScreen, screenParams, nav }) {
 // Bottom Navigation
 function BottomNav({ activeTab, onTabChange }) {
   const tabs = [
-    { id: 'home', icon: '🏠', label: 'Главная' },
-    { id: 'records', icon: '📋', label: 'Записи' },
-    { id: 'doctor-list', icon: '👨‍⚕️', label: 'Врачи' },
-    { id: 'pharmacy', icon: '⚕️', label: 'Сервисы' },
-    { id: 'profile', icon: '👤', label: 'Профиль' }
+    { id: 'home', icon: Home, label: 'Главная' },
+    { id: 'records', icon: BookOpen, label: 'Записи' },
+    { id: 'doctor-list', icon: Stethoscope, label: 'Врачи' },
+    { id: 'pharmacy', icon: Activity, label: 'Сервисы' },
+    { id: 'profile', icon: User, label: 'Профиль' }
   ]
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 safe-area-inset-bottom">
-      <div className="backdrop-blur-md bg-[rgba(13,17,23,0.8)] border-t border-[rgba(0,185,86,0.1)]">
-        <div className="flex items-center justify-around min-h-[64px] sm:min-h-[64px] max-w-lg mx-auto pb-safe">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => onTabChange(tab.id)}
-              className={`flex-1 flex flex-col items-center justify-center gap-1 py-3 sm:py-2 transition-all active:scale-95 min-h-[64px] sm:min-h-auto relative ${
-                activeTab === tab.id ? 'text-[#00B956]' : 'text-[#94A3B8] hover:text-[#F9FAFB]'
-              }`}
-            >
-              {activeTab === tab.id && (
-                <div className="absolute top-0 w-8 h-1 bg-[#00B956] rounded-b-full animate-slideDown" />
-              )}
-              <span className="text-2xl sm:text-xl">{tab.icon}</span>
-              <span className="text-[11px] sm:text-xs font-600 text-center leading-tight">{tab.label}</span>
-            </button>
-          ))}
+      <div className="backdrop-blur-md bg-[rgba(13,17,23,0.95)] border-t border-[rgba(0,200,86,0.15)]">
+        <div className="flex items-stretch justify-around max-w-lg mx-auto h-[66px] px-1">
+          {tabs.map((tab) => {
+            const Icon = tab.icon
+            const isActive = activeTab === tab.id
+
+            return (
+              <button
+                key={tab.id}
+                onClick={() => onTabChange(tab.id)}
+                className={`flex-1 flex flex-col items-center justify-center gap-1.5 transition-all active:scale-95 relative group ${
+                  isActive ? 'text-[#00C853]' : 'text-[#6B7280] hover:text-[#D1D5DB]'
+                }`}
+              >
+                {/* Indicator Line */}
+                {isActive && (
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-[#00C853] rounded-b-full animate-slideDown" />
+                )}
+
+                {/* Icon Container */}
+                <div className={`p-2 rounded-[10px] transition-all ${
+                  isActive
+                    ? 'bg-[#00C853]/15'
+                    : 'bg-transparent group-hover:bg-[#374151]/50'
+                }`}>
+                  <Icon
+                    size={20}
+                    strokeWidth={isActive ? 2.5 : 2}
+                    className="transition-all"
+                  />
+                </div>
+
+                {/* Label */}
+                <span className={`text-[10px] font-600 leading-tight ${
+                  isActive ? 'text-[#00C853]' : 'text-[#9CA3AF]'
+                }`}>
+                  {tab.label}
+                </span>
+              </button>
+            )
+          })}
         </div>
       </div>
     </div>
