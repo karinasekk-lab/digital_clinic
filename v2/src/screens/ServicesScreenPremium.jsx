@@ -9,13 +9,13 @@ export default function ServicesScreenPremium({ nav }) {
       icon: '👤',
       title: 'Менеджер здоровья',
       subtitle: 'Персональный куратор',
-      description: 'Выделенный специалист отслеживает ваше здоровье, координирует обследования и назначения, напоминает о профилактике',
+      description: 'Выделенный специалист отслеживает ваше здоровье, координирует обследования и назначения',
       benefits: [
-        'Персональный план оздоровления',
-        'Контроль анализов и обследований',
-        'Рекомендации врачей в одном месте'
+        'Персональный план здоровья',
+        'Контроль обследований',
+        'Рекомендации в одном месте'
       ],
-      example: 'Менеджер напомнит о чек-апе, распределит обследования на удобные дни, объяснит результаты',
+      example: 'Менеджер распределит обследования на удобные дни',
       color: '#A855F7',
       badge: 'Популярно',
       action: () => nav.push('health-manager')
@@ -25,13 +25,13 @@ export default function ServicesScreenPremium({ nav }) {
       icon: '📋',
       title: 'Чек-апы',
       subtitle: 'Комплексные обследования',
-      description: 'Полная диагностика здоровья: анализы, УЗИ, ЭКГ, консультация врача. От базового пакета до VIP',
+      description: 'Полная диагностика здоровья: анализы, УЗИ, ЭКГ, консультация врача в один день',
       benefits: [
         'Все в один день',
         'Результаты за 24 часа',
         'Включены консультации'
       ],
-      example: 'Базовый чек-ап: кровь, моча, УЗИ, прием терапевта. Стоимость от 8,000₸',
+      example: 'Чек-ап: кровь, моча, УЗИ, прием терапевта от 8,000₸',
       color: '#3B82F6',
       badge: 'Часто',
       action: () => nav.push('checkups')
@@ -41,13 +41,13 @@ export default function ServicesScreenPremium({ nav }) {
       icon: '🛡️',
       title: 'Профилактика',
       subtitle: 'Программы здоровья',
-      description: 'Программы для сохранения здоровья: спорт, питание, сон. Для всех возрастов и состояний',
+      description: 'Программы для здоровья: спорт, питание, сон, контроль стресса для всех возрастов',
       benefits: [
         'Персональные рекомендации',
         'Тренировки и рецепты',
         'Отслеживание прогресса'
       ],
-      example: 'Программа "Здоровое сердце" включает упражнения, питание, контроль давления',
+      example: 'Программа "Здоровое сердце" с упражнениями и контролем давления',
       color: '#00C853',
       badge: 'Новое',
       action: () => nav.push('all-services')
@@ -57,29 +57,29 @@ export default function ServicesScreenPremium({ nav }) {
       icon: '🏠',
       title: 'Домашние визиты',
       subtitle: 'Врач приходит к вам',
-      description: 'Врач приедет на дом для консультации, осмотра, анализов. Без очередей и ожидания',
+      description: 'Врач приедет на дом для консультации, осмотра, анализов без очередей и ожидания',
       benefits: [
         'Экономия времени',
-        'Удобство для лежачих больных',
-        'Спокойная обстановка'
+        'Удобство дома',
+        'Быстрое обслуживание'
       ],
-      example: 'Визит терапевта на дом от 5,000₸, вызов врача за 30 минут',
+      example: 'Визит терапевта от 5,000₸, вызов за 30 минут',
       color: '#F97316',
       badge: null,
       action: () => nav.push('duty-doctor')
     },
     {
       id: 'specialists',
-      icon: '🔬',
+      icon: '⚕️',
       title: 'Консультации специалистов',
-      subtitle: 'Узкие специалисты',
-      description: 'Онлайн-консультации с кардиологами, неврологами, эндокринологами и другими специалистами',
+      subtitle: 'Узкие специалисты онлайн',
+      description: 'Видеоконсультации с кардиологами, неврологами, эндокринологами и другими специалистами',
       benefits: [
-        'Видеоконсультация за 30 минут',
+        'Консультация за 30 минут',
         'Выписка рецептов',
         'Направления на анализы'
       ],
-      example: 'Консультация кардиолога онлайн в день обращения. Записаны в личный кабинет',
+      example: 'Консультация кардиолога в день обращения, результаты в кабинете',
       color: '#06B6D4',
       badge: null,
       action: () => nav.push('doctor-list')
@@ -88,14 +88,14 @@ export default function ServicesScreenPremium({ nav }) {
       id: 'tests',
       icon: '🧪',
       title: 'Лабораторные анализы',
-      subtitle: 'Исследования крови и биопроб',
-      description: 'Все виды анализов: общие, гормоны, биохимия, коагулограмма. Срочные анализы за 1 час',
+      subtitle: 'Исследования крови и проб',
+      description: 'Все виды анализов: общие, гормоны, биохимия, коагулограмма, срочные за 1 час',
       benefits: [
-        'Ресурс 500+ видов анализов',
+        '500+ видов анализов',
         'Забор дома или в филиалах',
         'Результаты в приложении'
       ],
-      example: 'Развернутый анализ крови (общий + биохимия) за 2,000₸, результат за 8 часов',
+      example: 'Анализ крови за 2,000₸, результат за 8 часов',
       color: '#EF4444',
       badge: null,
       action: () => nav.push('all-services')
@@ -105,13 +105,13 @@ export default function ServicesScreenPremium({ nav }) {
       icon: '✈️',
       title: 'Медпомощь за рубежом',
       subtitle: 'Страховка в путешествиях',
-      description: 'Полная медицинская страховка для поездок: консультации, помощь в поиске врача, эвакуация',
+      description: 'Медицинская страховка для поездок: консультации, помощь в поиске врача, эвакуация',
       benefits: [
         'Действует в 195 странах',
         'Горячая линия 24/7',
         'От 2,000₸ за неделю'
       ],
-      example: 'Страховка на отпуск в ОАЭ: консультация врача + помощь по поиску клиники',
+      example: 'Страховка на отпуск в ОАЭ с консультацией врача',
       color: '#F59E0B',
       badge: null,
       action: () => nav.push('travel-medicine')
@@ -121,13 +121,13 @@ export default function ServicesScreenPremium({ nav }) {
       icon: '🎓',
       title: 'Школьная медицина',
       subtitle: 'Справки и осмотры',
-      description: 'Справки для школы, садика, спорта. Осмотры перед школой и после болезни',
+      description: 'Справки для школы, садика, спорта, осмотры перед школой и после болезни за день',
       benefits: [
         'За день в день',
         'Без очередей',
-        'Цена от 1,500₸'
+        'От 1,500₸'
       ],
-      example: 'Справка для школы после болезни с осмотром педиатра в день обращения',
+      example: 'Справка после болезни с осмотром педиатра в день обращения',
       color: '#8B5CF6',
       badge: null,
       action: () => nav.push('school-medicine')
@@ -142,93 +142,109 @@ export default function ServicesScreenPremium({ nav }) {
       {/* Content */}
       <div className="overflow-y-auto">
         {/* Hero Section */}
-        <div className="px-4 py-2">
-          <h2 className="text-base font-700 text-white mb-2">Медицинские услуги</h2>
-          <p className="text-xs text-[#AAB3C5] leading-4">Выбери нужный сервис и начни заботиться о здоровье</p>
+        <div className="px-4 py-3">
+          <div className="space-y-1">
+            <h1 className="text-lg font-700 text-white">Медицинские услуги</h1>
+            <p className="text-xs text-[#AAB3C5]">Выбери нужный сервис и начни заботиться о здоровье</p>
+          </div>
         </div>
 
         <Separator />
 
         {/* Services List */}
-        <div className="px-4 py-2 space-y-2">
-          {services.map((service, index) => (
-            <div key={service.id}>
-              <button
-                onClick={service.action}
-                className="w-full text-left transition-all active:opacity-70"
-              >
-                <div className="bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[14px] p-3 space-y-2">
-                  {/* Header with Icon and Badge */}
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex items-start gap-2 flex-1">
-                      <span className="text-2xl flex-shrink-0">{service.icon}</span>
-                      <div className="flex-1">
-                        <h3 className="text-sm font-700 text-white leading-tight">
-                          {service.title}
-                        </h3>
-                        <p className="text-xs text-[#AAB3C5] mt-0.5">{service.subtitle}</p>
-                      </div>
-                    </div>
-                    {service.badge && (
-                      <div
-                        className="px-2 py-0.5 rounded-full text-[9px] font-700 whitespace-nowrap flex-shrink-0"
-                        style={{ backgroundColor: `${service.color}20`, color: service.color }}
-                      >
-                        {service.badge}
-                      </div>
-                    )}
+        <div className="px-4 py-3 space-y-3">
+          {services.map((service) => (
+            <button
+              key={service.id}
+              onClick={service.action}
+              className="w-full text-left transition-all active:opacity-70 group"
+            >
+              <div className="bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[16px] p-4 space-y-3 group-hover:border-[#3B5469] transition-colors">
+                {/* Header: Icon, Title, and Badge */}
+                <div className="flex items-center gap-3">
+                  {/* Icon Container */}
+                  <div className="flex-shrink-0 w-12 h-12 rounded-[12px] bg-[#0D111A] border border-[#2A3145] flex items-center justify-center text-xl">
+                    {service.icon}
                   </div>
 
-                  {/* Description */}
-                  <p className="text-xs text-[#AAB3C5] leading-4 pl-10">
-                    {service.description}
-                  </p>
-
-                  {/* Benefits */}
-                  <div className="space-y-1 pl-10">
-                    {service.benefits.map((benefit, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <Check size={12} className="text-[#00C853] flex-shrink-0 mt-1" />
-                        <span className="text-[10px] text-[#AAB3C5]">{benefit}</span>
-                      </div>
-                    ))}
+                  {/* Title Section */}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm font-700 text-white leading-tight">
+                      {service.title}
+                    </h3>
+                    <p className="text-xs text-[#AAB3C5] mt-0.5">{service.subtitle}</p>
                   </div>
 
-                  {/* Example */}
-                  <div className="bg-[#0D111A]/50 rounded-[10px] p-2 pl-10 border border-[#2A3145]/50">
-                    <p className="text-[10px] text-[#4A5268] leading-3">
-                      <span className="text-[#AAB3C5] font-600">Пример: </span>
-                      {service.example}
-                    </p>
-                  </div>
-
-                  {/* CTA */}
-                  <div className="flex items-center gap-1 pl-10 pt-1">
-                    <span
-                      className="text-xs font-700"
-                      style={{ color: service.color }}
+                  {/* Badge */}
+                  {service.badge && (
+                    <div
+                      className="flex-shrink-0 px-2.5 py-1 rounded-full text-[10px] font-700 whitespace-nowrap"
+                      style={{ backgroundColor: `${service.color}25`, color: service.color, border: `1px solid ${service.color}40` }}
                     >
-                      Узнать больше
-                    </span>
-                    <ChevronRight size={14} style={{ color: service.color }} />
-                  </div>
+                      {service.badge}
+                    </div>
+                  )}
                 </div>
-              </button>
 
-              {index < services.length - 1 && <div className="h-px bg-[#2A3145] mx-0" />}
-            </div>
+                {/* Description */}
+                <p className="text-xs text-[#AAB3C5] leading-4">
+                  {service.description}
+                </p>
+
+                {/* Benefits Grid */}
+                <div className="grid grid-cols-1 gap-2">
+                  {service.benefits.map((benefit, i) => (
+                    <div key={i} className="flex items-center gap-2.5">
+                      <Check size={14} className="text-[#00C853] flex-shrink-0" />
+                      <span className="text-xs text-[#AAB3C5]">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Example Box */}
+                <div
+                  className="rounded-[12px] p-3 border"
+                  style={{
+                    backgroundColor: `${service.color}08`,
+                    borderColor: `${service.color}20`
+                  }}
+                >
+                  <p className="text-xs text-[#AAB3C5] leading-4">
+                    <span style={{ color: service.color }} className="font-600">Пример: </span>
+                    {service.example}
+                  </p>
+                </div>
+
+                {/* CTA Link */}
+                <div className="flex items-center justify-between pt-1">
+                  <span
+                    className="text-xs font-700"
+                    style={{ color: service.color }}
+                  >
+                    Подробнее
+                  </span>
+                  <ChevronRight size={16} style={{ color: service.color }} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </button>
           ))}
         </div>
 
         {/* Info Section */}
-        <div className="px-4 py-2 mt-2">
-          <div className="bg-[#0D111A]/50 border border-[#2A3145]/50 rounded-[12px] p-3 space-y-2">
-            <div className="flex items-start gap-2">
-              <span className="text-lg flex-shrink-0">💡</span>
-              <div>
-                <h4 className="text-xs font-700 text-white">Совет</h4>
-                <p className="text-[10px] text-[#AAB3C5] leading-3 mt-0.5">
-                  Начни с чек-апа, чтобы понять своё здоровье. Менеджер здоровья поможет сделать персональный план
+        <div className="px-4 py-3">
+          <div
+            className="rounded-[14px] p-4 border"
+            style={{
+              backgroundColor: '#00C85310',
+              borderColor: '#00C85320'
+            }}
+          >
+            <div className="flex items-start gap-3">
+              <span className="text-2xl flex-shrink-0">💡</span>
+              <div className="flex-1">
+                <h4 className="text-sm font-700 text-white">Рекомендация</h4>
+                <p className="text-xs text-[#AAB3C5] leading-4 mt-1">
+                  Начни с чек-апа для полной диагностики. Менеджер здоровья поможет составить персональный план
                 </p>
               </div>
             </div>
@@ -236,7 +252,7 @@ export default function ServicesScreenPremium({ nav }) {
         </div>
 
         {/* Bottom Spacing */}
-        <div className="h-3" />
+        <div className="h-4" />
       </div>
     </div>
   )
