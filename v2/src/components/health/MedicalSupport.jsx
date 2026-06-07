@@ -1,4 +1,4 @@
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, Heart, Clock } from 'lucide-react'
 
 export function MedicalSupport({ onViewDoctors }) {
   return (
@@ -10,9 +10,11 @@ export function MedicalSupport({ onViewDoctors }) {
       <div className="bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[16px] p-3 space-y-2">
         {/* Doctor Inner Card */}
         <div className="bg-[#0D111A]/50 border border-[#2A3145]/50 rounded-[12px] p-2.5 flex items-center gap-2.5">
-          {/* Avatar */}
-          <div className="w-10 h-10 rounded-[10px] bg-gradient-to-br from-[#00C853] to-[#00B85A] flex items-center justify-center flex-shrink-0">
-            <span className="text-base">💚</span>
+          {/* Avatar - Premium icon instead of emoji */}
+          <div
+            className="w-10 h-10 rounded-[10px] bg-[#00C853]/15 flex items-center justify-center flex-shrink-0 border border-[#00C853]/20"
+          >
+            <Heart size={18} color="#00C853" strokeWidth={2} fill="#00C853" />
           </div>
 
           {/* Doctor Info */}
@@ -27,14 +29,17 @@ export function MedicalSupport({ onViewDoctors }) {
           </button>
         </div>
 
-        {/* Doctor Status - Below card */}
+        {/* Doctor Status */}
         <div className="flex items-center gap-2 text-[10px] text-[#AAB3C5] px-0.5">
           <span className="flex items-center gap-1">
             <span className="w-1 h-1 bg-[#00C853] rounded-full flex-shrink-0"></span>
             Онлайн
           </span>
           <span>·</span>
-          <span>📅 2 дня</span>
+          <span className="flex items-center gap-1">
+            <Clock size={10} />
+            2 дня
+          </span>
         </div>
 
         {/* View All Doctors Link */}
