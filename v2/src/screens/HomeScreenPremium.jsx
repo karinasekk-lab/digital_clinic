@@ -4,6 +4,10 @@ import { HeroHealthAssistant } from '../components/health/HeroHealthAssistant'
 import { TodaySection } from '../components/health/TodaySection'
 import { MedicalSupport } from '../components/health/MedicalSupport'
 import { PromoCards } from '../components/health/PromoCards'
+import { UsefulServices } from '../components/health/UsefulServices'
+import { HistoryDocuments } from '../components/health/HistoryDocuments'
+import { RemindersGoals } from '../components/health/RemindersGoals'
+import { SupportCard } from '../components/health/SupportCard'
 import { Separator } from '../components/health/Separator'
 import { DOCTORS, APPOINTMENTS, CURRENT_USER } from '../data/mockData'
 import { useToast } from '../contexts/ToastContext'
@@ -34,8 +38,8 @@ export default function HomeScreenPremium({ nav }) {
     const routes = {
       'cashback': 'doctor-list',
       'analysis': 'analysis-upload',
-      'travel': null,
-      'health-manager': null
+      'travel-medicine': 'travel-medicine',
+      'health-manager': 'health-manager'
     }
 
     const route = routes[promoId]
@@ -44,6 +48,37 @@ export default function HomeScreenPremium({ nav }) {
     } else {
       addToast('Скоро будет доступно', 'info', 1500)
     }
+  }
+
+  const handleServiceClick = (serviceId) => {
+    const routes = {
+      'analyses': 'all-services',
+      'medications': 'all-services',
+      'checkups': 'checkups',
+      'vaccination': 'all-services',
+      'devices': 'all-services'
+    }
+
+    const route = routes[serviceId]
+    if (route) {
+      nav.push(route)
+    }
+  }
+
+  const handleViewHistory = () => {
+    nav.push('my-records')
+  }
+
+  const handleViewReminders = () => {
+    addToast('Функция напоминаний скоро будет доступна', 'info', 1500)
+  }
+
+  const handleChatClick = () => {
+    nav.push('support-chat')
+  }
+
+  const handleEmergencyClick = () => {
+    addToast('Экстренная служба: +7 (701) XXX-XX-XX', 'info', 2000)
   }
 
   if (isLoading) {
@@ -63,8 +98,8 @@ export default function HomeScreenPremium({ nav }) {
       <Header onBack={() => nav.pop()} notificationCount={2} />
 
       {/* Scrollable Content */}
-      <div className="overflow-y-auto">
-        {/* AI Health Assistant */}
+      <div className="overflow-y-auto space-y-0.5">
+        {/* SECTION 1: AI Health Assistant - Primary Focus */}
         <HeroHealthAssistant
           userName={CURRENT_USER.firstName}
           onStartCheck={handleStartCheck}
@@ -72,18 +107,44 @@ export default function HomeScreenPremium({ nav }) {
 
         <Separator />
 
-        {/* Today Section - Health Status */}
+        {/* SECTION 2: Today Health Status - Secondary Priority */}
         <TodaySection />
 
         <Separator />
 
-        {/* Medical Support - Doctors */}
+        {/* SECTION 3: Medical Support - Doctor Focus */}
         <MedicalSupport onViewDoctors={handleViewAllDoctors} />
 
         <Separator />
 
-        {/* Promo Cards */}
+        {/* SECTION 4: Promotional Services - 4 Cards with Horizontal Scroll */}
         <PromoCards onPromoClick={handlePromoClick} />
+
+        <Separator />
+
+        {/* SECTION 5: Useful Services - Utility Features */}
+        <UsefulServices onServiceClick={handleServiceClick} />
+
+        <Separator />
+
+        {/* SECTION 6: History & Documents */}
+        <HistoryDocuments onViewHistory={handleViewHistory} />
+
+        <Separator />
+
+        {/* SECTION 7: Reminders & Goals */}
+        <RemindersGoals
+          onViewReminders={handleViewReminders}
+          activeGoalsCount={3}
+        />
+
+        <Separator />
+
+        {/* SECTION 8: Support */}
+        <SupportCard
+          onChatClick={handleChatClick}
+          onEmergencyClick={handleEmergencyClick}
+        />
 
         {/* Bottom Spacing */}
         <div className="h-1" />
