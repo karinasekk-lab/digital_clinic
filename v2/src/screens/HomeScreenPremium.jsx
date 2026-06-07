@@ -93,12 +93,12 @@ export default function HomeScreenPremium({ nav }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#090D14] pb-20 safe-area-inset-bottom">
+    <div className="h-screen bg-[#090D14] flex flex-col">
       {/* Header */}
       <Header onBack={() => nav.pop()} notificationCount={2} />
 
       {/* Scrollable Content */}
-      <div className="overflow-y-auto space-y-0.5">
+      <div className="flex-1 overflow-y-auto pb-24 space-y-1">
         {/* SECTION 1: AI Health Assistant - Primary Focus */}
         <HeroHealthAssistant
           userName={CURRENT_USER.firstName}
@@ -146,8 +146,7 @@ export default function HomeScreenPremium({ nav }) {
           onEmergencyClick={handleEmergencyClick}
         />
 
-        {/* Bottom Spacing */}
-        <div className="h-1" />
+        {/* Bottom Spacing for safe area */}
       </div>
     </div>
   )

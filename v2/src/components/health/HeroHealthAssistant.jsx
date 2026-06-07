@@ -26,9 +26,9 @@ export function HeroHealthAssistant({ userName = 'Алихан', onStartCheck, o
   }
 
   return (
-    <div className="px-4 py-1.5 space-y-1.5">
+    <div className="px-4 py-1 space-y-1.5">
       {/* Hero Card */}
-      <div className="bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[20px] p-3 space-y-2">
+      <div className="bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[20px] p-3 space-y-1.5">
         {/* Greeting */}
         <div>
           <h2 className="text-base font-700 text-white leading-tight">

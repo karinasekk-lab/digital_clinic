@@ -2,7 +2,7 @@ import { MessageCircle, AlertCircle } from 'lucide-react'
 
 export function SupportCard({ onChatClick, onEmergencyClick }) {
   return (
-    <div className="px-4 py-1.5">
+    <div className="px-4 py-1">
       <div className="bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[16px] p-4 space-y-3">
         {/* Header */}
         <div>

@@ -2,7 +2,7 @@ import { FolderOpen, ChevronRight } from 'lucide-react'
 
 export function HistoryDocuments({ onViewHistory }) {
   return (
-    <div className="px-4 py-1.5">
+    <div className="px-4 py-1">
       <button
         onClick={onViewHistory}
         className="w-full bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[16px] p-4 text-left transition-all hover:border-[#3B5469] group"

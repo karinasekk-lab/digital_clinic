@@ -40,12 +40,12 @@ export function UsefulServices({ onServiceClick }) {
   ]
 
   return (
-    <div className="px-4 py-1.5 space-y-2">
+    <div className="px-4 py-1 space-y-1.5">
       {/* Section Title */}
       <h3 className="text-sm font-700 text-white">Полезные сервисы</h3>
 
       {/* Horizontal Scrolling Services */}
-      <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
         {services.map((service) => {
           const Icon = service.icon
 

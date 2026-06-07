@@ -44,9 +44,9 @@ export function TodaySection() {
   const scoreChange = '+4'
 
   return (
-    <div className="px-4 py-1.5">
+    <div className="px-4 py-1">
       {/* Premium Healthcare Dashboard Card */}
-      <div className="relative bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[24px] p-3 overflow-hidden max-h-[220px]">
+      <div className="relative bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[24px] p-3 overflow-hidden max-h-[200px]">
         {/* Header */}
         <h3 className="text-white font-600 text-sm mb-3">Сегодня</h3>
 

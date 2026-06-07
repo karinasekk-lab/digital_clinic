@@ -49,14 +49,14 @@ export function PromoCards({ onPromoClick }) {
   ]
 
   return (
-    <div className="px-4 py-1.5 space-y-2">
+    <div className="px-4 py-1 space-y-1.5">
       {/* Section Title */}
       <h3 className="text-sm font-700 text-white px-0">Рекомендуемые услуги</h3>
 
       {/* Horizontal Scrolling Promo Cards */}
       <div
         ref={scrollRef}
-        className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide"
+        className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide"
         style={{ scrollBehavior: 'smooth' }}
       >
         {promos.map((promo) => {
