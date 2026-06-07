@@ -7,7 +7,7 @@ export function MedicalSupport({ onViewDoctors }) {
       <h3 className="text-sm font-700 text-white">Медицинская поддержка</h3>
 
       {/* Outer Container Card */}
-      <div className="bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[16px] p-2.5 space-y-1
+      <div className="bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[16px] p-2.5 space-y-1">
         {/* Doctor Inner Card */}
         <div className="bg-[#0D111A]/50 border border-[#2A3145]/50 rounded-[12px] p-2.5 flex items-center gap-2.5">
           {/* Avatar - Premium icon instead of emoji */}
