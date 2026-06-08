@@ -94,38 +94,38 @@ export function TodaySection() {
         </div>
 
         {/* Premium Insights List - Left Side */}
-        <div className="relative z-10 pr-28 space-y-3">
+        <div className="relative z-10 pr-24 space-y-2.5">
           {insights.map((insight) => {
             const Icon = insight.icon
             return (
-              <div
+              <button
                 key={insight.id}
-                className="flex items-center gap-3"
+                className="w-full flex items-center gap-2.5 p-2 rounded-[10px] hover:bg-[#171C2B]/50 transition-colors active:scale-95"
               >
-                {/* Icon Container - Premium Gradient Background */}
+                {/* Icon Container - Bigger, more visible */}
                 <div
-                  className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
+                  className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center"
                   style={{ backgroundColor: insight.bgGradient }}
                 >
                   <Icon
-                    size={18}
+                    size={20}
                     color={insight.color}
                     strokeWidth={2}
                   />
                 </div>
 
-                {/* Label - Single Line, Premium Typography */}
-                <span className="text-xs text-[#E5E7EB] font-500 truncate">
+                {/* Label - Readable, no truncate */}
+                <span className="text-sm text-white font-500 flex-1 text-left leading-tight">
                   {insight.label}
                 </span>
 
-                {/* Chevron - Subtle */}
+                {/* Chevron */}
                 <ChevronRight
-                  size={14}
+                  size={16}
                   className="flex-shrink-0"
                   color="#6B7280"
                 />
-              </div>
+              </button>
             )
           })}
         </div>
