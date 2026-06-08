@@ -89,105 +89,55 @@ export function TodaySection() {
             </div>
           </div>
 
-          {/* Right: Smooth Curve Chart */}
+          {/* Right: Monotonic Line Chart */}
           <div className="flex-1 flex flex-col items-end justify-between">
-            {/* Mini Chart - SVG Smooth Line Chart */}
+            {/* Mini Chart - SVG Monotonic Line Chart */}
             <svg
               viewBox="0 0 160 80"
               className="w-full h-24"
               preserveAspectRatio="none"
               style={{ minWidth: '120px' }}
             >
-              {/* Grid lines - vertical */}
-              {chartData.map((d, i) => {
-                const x = (i / (chartData.length - 1)) * 160
-                return (
-                  <line
-                    key={`grid-${i}`}
-                    x1={x}
-                    y1="0"
-                    x2={x}
-                    y2="80"
-                    stroke="#1F2937"
-                    strokeWidth="0.5"
-                    opacity="0.5"
-                  />
-                )
-              })}
+              {/* Subtle horizontal grid lines */}
+              <line x1="0" y1="40" x2="160" y2="40" stroke="#2A3145" strokeWidth="0.5" opacity="0.3" />
 
-              {/* Smooth curve using quadratic bezier */}
-              <path
-                d={(() => {
-                  const points = chartData.map((d, i) => {
+              {/* Monotonic trend line - gentle, continuous, minimal smoothing */}
+              <polyline
+                points={chartData
+                  .map((d, i) => {
                     const x = (i / (chartData.length - 1)) * 160
                     const y = 80 - ((d.value - minValue) / range) * 80
-                    return { x, y }
+                    return `${x},${y}`
                   })
-
-                  let path = `M ${points[0].x} ${points[0].y}`
-
-                  for (let i = 1; i < points.length; i++) {
-                    const curr = points[i]
-                    const prev = points[i - 1]
-                    const next = points[i + 1]
-
-                    // Control point for smooth curve
-                    const cpx = prev.x + (curr.x - prev.x) / 2
-                    const cpy = prev.y + (curr.y - prev.y) / 2
-
-                    path += ` Q ${cpx} ${cpy} ${curr.x} ${curr.y}`
-                  }
-
-                  return path
-                })()}
+                  .join(' ')}
                 fill="none"
                 stroke="#00C853"
-                strokeWidth="2.5"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeDasharray="4,3"
+                vectorEffect="non-scaling-stroke"
               />
 
-              {/* Data points - circles on the line */}
-              {chartData.map((d, i) => {
-                const x = (i / (chartData.length - 1)) * 160
-                const y = 80 - ((d.value - minValue) / range) * 80
-                const isLast = i === chartData.length - 1
-
+              {/* Data point at end - emphasis on current value */}
+              {(() => {
+                const lastIndex = chartData.length - 1
+                const x = (lastIndex / (chartData.length - 1)) * 160
+                const y = 80 - ((chartData[lastIndex].value - minValue) / range) * 80
                 return (
                   <circle
-                    key={i}
                     cx={x}
                     cy={y}
-                    r={isLast ? 3.5 : 2}
-                    fill={isLast ? '#00C853' : 'none'}
-                    stroke="#00C853"
-                    strokeWidth={isLast ? 0 : 1.5}
-                  />
-                )
-              })}
-
-              {/* Dashed vertical line to last point */}
-              {(() => {
-                const lastX = (6 / 6) * 160
-                const lastY = 80 - ((84 - minValue) / range) * 80
-                return (
-                  <line
-                    x1={lastX}
-                    y1={lastY}
-                    x2={lastX}
-                    y2="80"
-                    stroke="#00C853"
-                    strokeWidth="1"
-                    strokeDasharray="3,3"
-                    opacity="0.4"
+                    r="3"
+                    fill="#00C853"
+                    stroke="white"
+                    strokeWidth="1.5"
                   />
                 )
               })()}
             </svg>
 
             {/* Day labels */}
-            <div className="flex justify-between w-full text-[9px] text-[#6B7280] font-500 mt-2 px-2">
+            <div className="flex justify-between w-full text-[9px] text-[#6B7280] font-500 mt-2 px-1">
               {chartData.map((d) => (
                 <span key={d.day}>{d.day}</span>
               ))}
