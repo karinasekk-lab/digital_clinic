@@ -126,7 +126,7 @@ export function StatusBar() {
       className="h-6 flex items-center justify-between px-4 text-[11px] font-500"
       style={{ background: '#0A0E1A', color: '#8A95B0', borderBottom: '1px solid #1E2235' }}
     >
-      <span>🇰🇿 Almaty</span>
+      <span>KZ Almaty</span>
       <span>{time}</span>
       <span>●●●●●</span>
     </div>
@@ -277,9 +277,26 @@ export function DoctorCard({ doctor, onTap, showPrice = true, compact = false, a
 }
 
 export function EmptyState({ icon, title, subtitle, actionText, onAction }) {
+  // Handle both emoji strings and Lucide icon components
+  let IconComponent = null
+  if (icon) {
+    if (typeof icon === 'string') {
+      IconComponent = hasLucideIcon(icon) ? getIconComponent(icon) : null
+    } else {
+      // It's a component reference
+      IconComponent = icon
+    }
+  }
+
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
-      <div className="text-6xl mb-4">{icon}</div>
+      {IconComponent ? (
+        <div className="mb-4">
+          <IconComponent size={48} className="text-[#00C853] mx-auto" strokeWidth={1.5} />
+        </div>
+      ) : typeof icon === 'string' ? (
+        <div className="text-6xl mb-4">{icon}</div>
+      ) : null}
       <h2 className="text-lg font-700 text-[#F9FAFB] mb-2">{title}</h2>
       {subtitle && <p className="text-sm text-[#94A3B8] mb-6">{subtitle}</p>}
       {actionText && onAction && (

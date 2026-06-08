@@ -9,7 +9,7 @@ export function RemindersGoals({ onViewReminders, activeGoalsCount = 3 }) {
       >
         <div className="flex items-start gap-3">
           {/* Icon */}
-          <div className="w-10 h-10 rounded-full bg-[#00C853]15 flex items-center justify-center flex-shrink-0">
+          <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#00C85315' }}>
             <Target size={18} color="#00C853" strokeWidth={2} />
           </div>
 

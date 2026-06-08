@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import { Header, Card, Button } from '../components/UI'
+import { ClipboardList, Baby, Waves, Activity, School } from 'lucide-react'
+import { Header, Card, Button, IconContainer } from '../components/UI'
 
 export default function SchoolMedicineScreen({ nav }) {
   const [activeTab, setActiveTab] = useState('parents')
 
   return (
     <div className="min-h-screen bg-[#0D1117] pb-24 relative">
-      <Header title="🏫 Школьная медицина" onBack={() => nav.pop()} />
+      <Header title="Школьная медицина" rightIcon={<School size={20} className="text-[#A855F7]" strokeWidth={2} />} onBack={() => nav.pop()} />
 
       <div className="px-4 space-y-4 pt-4">
         {/* Purple Sub */}
@@ -48,22 +49,22 @@ export default function SchoolMedicineScreen({ nav }) {
             <div className="space-y-2">
               {[
                 {
-                  icon: '📋',
+                  icon: ClipboardList,
                   title: 'Справка в школу онлайн',
                   subtitle: 'Не выходя из дома'
                 },
                 {
-                  icon: '👶',
+                  icon: Baby,
                   title: 'Педиатр по вопросам ребёнка',
                   subtitle: 'Консультация онлайн'
                 },
                 {
-                  icon: '🏊',
+                  icon: Waves,
                   title: 'Справка для секции / бассейна',
                   subtitle: 'За 15 минут'
                 },
                 {
-                  icon: '🤸',
+                  icon: Activity,
                   title: 'Освобождение от физкультуры',
                   subtitle: 'Врачебное заключение'
                 }
@@ -74,7 +75,7 @@ export default function SchoolMedicineScreen({ nav }) {
                   style={{ animationDelay: `${idx * 50}ms` }}
                 >
                   <div className="flex gap-3">
-                    <span className="text-2xl">{service.icon}</span>
+                    <IconContainer icon={service.icon} color="blue" size="md" />
                     <div className="flex-1">
                       <p className="font-600 text-sm text-[#F9FAFB]">{service.title}</p>
                       <p className="text-xs text-[#94A3B8] mt-1">{service.subtitle}</p>

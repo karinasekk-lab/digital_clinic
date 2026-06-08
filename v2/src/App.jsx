@@ -158,7 +158,7 @@ export default function App() {
     <ToastProvider>
       <div className="fixed inset-0 bg-gradient-to-b from-[#000000] to-[#0a0a0a] flex items-center justify-center p-4">
         {/* Phone Frame */}
-        <div className="w-full max-w-[420px] h-screen max-h-screen bg-black rounded-[40px] shadow-2xl overflow-hidden border-8 border-black relative flex flex-col">
+        <div className="w-full max-w-[390px] h-screen max-h-screen bg-black rounded-[40px] shadow-2xl overflow-hidden border-8 border-black relative flex flex-col">
           {/* Notch Simulation */}
           <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-7 bg-black rounded-b-3xl z-50"></div>
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { User, Mic, Camera, Phone, MessageCircle, ClipboardList } from 'lucide-react'
 import { DOCTORS } from '../data/mockData'
 
 export default function VideoCallScreen({ nav, params }) {
@@ -54,7 +55,7 @@ export default function VideoCallScreen({ nav, params }) {
 
         {/* Self view corner */}
         <div className="absolute bottom-4 right-4 w-24 h-32 bg-gradient-to-br from-[#243050] to-[#0D1117] rounded-[14px] border border-[rgba(255,255,255,0.1)] overflow-hidden flex items-center justify-center">
-          <div className="text-4xl">👤</div>
+          <User size={40} className="text-[#AAB3C5]" strokeWidth={1.5} />
         </div>
 
         {/* Top strip */}
@@ -80,26 +81,26 @@ export default function VideoCallScreen({ nav, params }) {
       {/* Control Bar */}
       <div className="bg-[rgba(0,0,0,0.8)] backdrop-blur-md border-t border-[rgba(255,255,255,0.1)] px-4 py-4">
         <div className="flex items-center justify-center gap-6">
-          <button className="w-12 h-12 rounded-full bg-[#1E2235] border border-[rgba(255,255,255,0.1)] flex items-center justify-center text-lg hover:bg-[#243050] transition-colors">
-            🎤
+          <button className="w-12 h-12 rounded-full bg-[#1E2235] border border-[rgba(255,255,255,0.1)] flex items-center justify-center hover:bg-[#243050] transition-colors">
+            <Mic size={20} className="text-[#AAB3C5]" strokeWidth={2} />
           </button>
-          <button className="w-12 h-12 rounded-full bg-[#1E2235] border border-[rgba(255,255,255,0.1)] flex items-center justify-center text-lg hover:bg-[#243050] transition-colors">
-            📷
+          <button className="w-12 h-12 rounded-full bg-[#1E2235] border border-[rgba(255,255,255,0.1)] flex items-center justify-center hover:bg-[#243050] transition-colors">
+            <Camera size={20} className="text-[#AAB3C5]" strokeWidth={2} />
           </button>
 
           {/* End Call Button */}
           <button
             onClick={handleEndCall}
-            className="w-16 h-16 rounded-full bg-[#E24B4A] flex items-center justify-center text-2xl hover:bg-[#d43d3c] transition-all active:scale-95 shadow-[0_4px_20px_rgba(226,75,74,0.4)]"
+            className="w-16 h-16 rounded-full bg-[#E24B4A] flex items-center justify-center hover:bg-[#d43d3c] transition-all active:scale-95 shadow-[0_4px_20px_rgba(226,75,74,0.4)]"
           >
-            📞
+            <Phone size={24} className="text-white" strokeWidth={2} />
           </button>
 
-          <button className="w-12 h-12 rounded-full bg-[#1E2235] border border-[rgba(255,255,255,0.1)] flex items-center justify-center text-lg hover:bg-[#243050] transition-colors">
-            💬
+          <button className="w-12 h-12 rounded-full bg-[#1E2235] border border-[rgba(255,255,255,0.1)] flex items-center justify-center hover:bg-[#243050] transition-colors">
+            <MessageCircle size={20} className="text-[#AAB3C5]" strokeWidth={2} />
           </button>
-          <button className="w-12 h-12 rounded-full bg-[#1E2235] border border-[rgba(255,255,255,0.1)] flex items-center justify-center text-lg hover:bg-[#243050] transition-colors">
-            📋
+          <button className="w-12 h-12 rounded-full bg-[#1E2235] border border-[rgba(255,255,255,0.1)] flex items-center justify-center hover:bg-[#243050] transition-colors">
+            <ClipboardList size={20} className="text-[#AAB3C5]" strokeWidth={2} />
           </button>
         </div>
       </div>

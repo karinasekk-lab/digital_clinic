@@ -100,11 +100,11 @@ export function PromoCards({ onPromoClick }) {
               </div>
 
               {/* Content */}
-              <div className="space-y-0.5">
-                <h4 className="text-xs font-700 text-white leading-tight">
+              <div className="space-y-1">
+                <h4 className="text-xs font-700 text-white leading-snug">
                   {promo.title}
                 </h4>
-                <p className="text-[10px] text-[#AAB3C5] leading-3">
+                <p className="text-[10px] text-[#AAB3C5] leading-tight">
                   {promo.description}
                 </p>
               </div>

@@ -46,13 +46,13 @@ export default function MyRecordsScreen({ nav }) {
 
         <div className="space-y-2 mb-4 text-sm text-[#94A3B8]">
           <div className="flex items-center gap-2">
-            <span>📅</span>
+            <Calendar size={16} className="text-[#00B956] flex-shrink-0" strokeWidth={2} />
             <span>
               {apt.date} · {apt.time}—{apt.time.split(':')[0]}:30
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <span>📹</span>
+            <Video size={16} className="text-[#00B956] flex-shrink-0" strokeWidth={2} />
             <span>Видеоконсультация</span>
           </div>
         </div>
@@ -81,7 +81,7 @@ export default function MyRecordsScreen({ nav }) {
     if (completedAppointments.length === 0) {
       return (
         <EmptyState
-          icon="✓"
+          icon={Check}
           title="Нет завершённых консультаций"
           subtitle="Записаться на первую консультацию"
           actionText="Выбрать врача"
@@ -93,7 +93,7 @@ export default function MyRecordsScreen({ nav }) {
     return completedAppointments.map((apt, idx) => (
       <Card key={apt.id} style={{ animationDelay: `${idx * 50}ms` }} className="animate-fadeIn">
         <div className="flex items-start justify-between mb-3">
-          <Pill variant="gray">ЗАВЕРШЕНА ✓</Pill>
+          <Pill variant="gray" icon={Check}>ЗАВЕРШЕНА</Pill>
         </div>
 
         <div className="flex gap-3 mb-3">
@@ -122,7 +122,7 @@ export default function MyRecordsScreen({ nav }) {
     if (PRESCRIPTIONS.length === 0) {
       return (
         <EmptyState
-          icon="💊"
+          icon={PillIcon}
           title="Нет назначений"
           subtitle="Назначения появятся после консультации с врачом"
           actionText="Начать консультацию"

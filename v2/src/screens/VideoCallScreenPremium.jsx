@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Mic, MicOff, Video, VideoOff, MessageCircle, Phone, FileText, MoreVertical } from 'lucide-react'
+import { Mic, MicOff, Video, VideoOff, MessageCircle, Phone, FileText, MoreVertical, User } from 'lucide-react'
 import { DOCTORS } from '../data/mockData'
 
 export default function VideoCallScreenPremium({ nav, params }) {
@@ -66,7 +66,7 @@ export default function VideoCallScreenPremium({ nav, params }) {
 
         {/* Self view corner */}
         <div className="absolute bottom-4 right-4 w-24 h-32 bg-gradient-to-br from-[#171C2B] to-[#090D14] rounded-[14px] border border-[#2A3145] overflow-hidden flex items-center justify-center shadow-lg">
-          <div className="text-4xl">👤</div>
+          <User size={40} className="text-[#AAB3C5]" strokeWidth={1.5} />
         </div>
 
         {/* Top strip */}

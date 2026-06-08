@@ -9,7 +9,7 @@ export function HistoryDocuments({ onViewHistory }) {
       >
         <div className="flex items-start gap-3">
           {/* Icon */}
-          <div className="w-10 h-10 rounded-full bg-[#3B82F6]15 flex items-center justify-center flex-shrink-0">
+          <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#3B82F615' }}>
             <FolderOpen size={18} color="#3B82F6" strokeWidth={2} />
           </div>
 

@@ -53,7 +53,7 @@ export function UsefulServices({ onServiceClick }) {
             <button
               key={service.id}
               onClick={() => onServiceClick?.(service.id)}
-              className="flex-shrink-0 w-24 bg-[#0D111A] border border-[#2A3145] rounded-[14px] p-2.5 text-center transition-all hover:border-[#3B5469] group"
+              className="flex-shrink-0 w-28 bg-[#0D111A] border border-[#2A3145] rounded-[14px] p-2.5 text-center transition-all hover:border-[#3B5469] group"
             >
               <div
                 className="w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-1.5"
