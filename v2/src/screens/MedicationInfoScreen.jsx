@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Header, Card, Input, Button, Pill } from '../components/UI'
+import { Header, Card, Input, Button, Pill, IconContainer } from '../components/UI'
 import { useToast } from '../contexts/ToastContext'
+import { Pill as PillIcon } from 'lucide-react'
 import { MEDICATIONS } from '../data/mockData'
 
 export default function MedicationInfoScreen({ nav }) {
@@ -77,7 +78,9 @@ export default function MedicationInfoScreen({ nav }) {
 
             {/* Drug Header */}
             <Card className="text-center animate-fadeIn">
-              <div className="text-6xl mb-3">💊</div>
+              <div className="flex justify-center mb-4">
+                <IconContainer icon={PillIcon} color="green" size="lg" />
+              </div>
               <h2 className="text-[20px] font-700 text-[#F9FAFB]">{drug.name}</h2>
               <div className="flex gap-2 justify-center mt-3 flex-wrap">
                 <Pill variant={drug.category === 'prescription' ? 'amber' : 'green'}>

@@ -161,13 +161,13 @@ export default function DoctorProfileScreenPremium({ nav, params }) {
         <div className="px-4 pt-2 pb-4 space-y-2">
           <button
             onClick={() => nav.push('confirmation', { doctorId: doctor.id })}
-            className="w-full bg-[#00C853] hover:bg-[#00B85A] text-white font-600 py-3 rounded-[12px] transition-colors active:scale-95 text-sm"
+            className="w-full bg-[#00C853] hover:bg-[#00B85A] text-white font-600 py-2.5 rounded-[10px] transition-colors active:scale-95 text-xs"
           >
             Записаться · {doctor.price.toLocaleString()} ₸
           </button>
           <button
             onClick={() => nav.push('slot-booking', { doctorId: doctor.id })}
-            className="w-full bg-[#3B82F6] hover:bg-[#60A5FA] text-white font-600 py-3 rounded-[12px] transition-colors active:scale-95 text-sm"
+            className="w-full bg-[#3B82F6] hover:bg-[#60A5FA] text-white font-600 py-2.5 rounded-[10px] transition-colors active:scale-95 text-xs"
           >
             Выбрать время
           </button>

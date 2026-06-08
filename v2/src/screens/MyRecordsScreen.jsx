@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ClipboardList, Check, Pill as PillIcon, Calendar, Video } from 'lucide-react'
 import { Header, Card, Button, EmptyState, Pill } from '../components/UI'
 import { APPOINTMENTS, PRESCRIPTIONS } from '../data/mockData'
 
@@ -19,7 +20,7 @@ export default function MyRecordsScreen({ nav }) {
     if (upcomingAppointments.length === 0) {
       return (
         <EmptyState
-          icon="📋"
+          icon={ClipboardList}
           title="Нет предстоящих записей"
           subtitle="Запишитесь на консультацию к врачу"
           actionText="Записаться к врачу"

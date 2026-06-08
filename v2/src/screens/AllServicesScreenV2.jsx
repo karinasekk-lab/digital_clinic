@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import { Header, ServiceCard, Button } from '../components/UI'
+import { getIconComponent, hasLucideIcon } from '../utils/iconMap'
+
+import { Video, Moon, Baby, Search, Users, Brain, Apple, Flower, Microscope, Pill, HelpCircle, Heart, Dna, BarChart3, FileText, Building2, Waves, CheckCircle2, User, TrendingUp, School, Shield, ClipboardList, Plane } from 'lucide-react'
 
 const SERVICES = {
   consultations: {

@@ -1,3 +1,4 @@
+import { Video, Moon, Baby, Eye, Users, Brain, Apple, Heart, Beaker, Pill, HelpCircle, Dna, BarChart3, FileText, Building2, Waves, Check, BookOpen, ClipboardList, Plane, Shield, User, TrendingUp } from 'lucide-react'
 import { Header } from '../components/UI'
 
 const SERVICES = {
@@ -5,37 +6,37 @@ const SERVICES = {
     title: 'ОНЛАЙН-КОНСУЛЬТАЦИИ',
     colorBorder: '#00C853',
     items: [
-      { id: 'doctor-online', icon: '📹', title: 'Врач онлайн', subtitle: 'Ответ за 3 минуты', status: 'active', price: '4 900 ₸' },
-      { id: 'duty-doctor', icon: '🌙', title: 'Дежурный врач 24/7', subtitle: 'Всегда на связи', status: 'active', price: '4 900 ₸' },
-      { id: 'pediatrician', icon: '👶', title: 'Педиатр онлайн', subtitle: 'Для детей 0-18 лет', status: 'active', price: '5 500 ₸' },
-      { id: 'second-opinion', icon: '🔍', title: 'Второе мнение врача', subtitle: 'Загрузи документы → эксперт', status: 'soon' },
-      { id: 'family-doctor', icon: '👨‍👩‍👧', title: 'Семейный врач', subtitle: 'Постоянный врач по подписке', status: 'soon' },
-      { id: 'psychologist', icon: '🧠', title: 'Психолог онлайн', subtitle: 'Тревога, стресс, кризис', status: 'soon' },
-      { id: 'dietician', icon: '🥗', title: 'Диетолог / нутрициолог', subtitle: 'Питание, вес, здоровье', status: 'soon' },
-      { id: 'gynecologist', icon: '🌸', title: 'Гинеколог онлайн', subtitle: 'Женское здоровье', status: 'soon' }
+      { id: 'doctor-online', icon: Video, title: 'Врач онлайн', subtitle: 'Ответ за 3 минуты', status: 'active', price: '4 900 ₸' },
+      { id: 'duty-doctor', icon: Moon, title: 'Дежурный врач 24/7', subtitle: 'Всегда на связи', status: 'active', price: '4 900 ₸' },
+      { id: 'pediatrician', icon: Baby, title: 'Педиатр онлайн', subtitle: 'Для детей 0-18 лет', status: 'active', price: '5 500 ₸' },
+      { id: 'second-opinion', icon: Eye, title: 'Второе мнение врача', subtitle: 'Загрузи документы → эксперт', status: 'soon' },
+      { id: 'family-doctor', icon: Users, title: 'Семейный врач', subtitle: 'Постоянный врач по подписке', status: 'soon' },
+      { id: 'psychologist', icon: Brain, title: 'Психолог онлайн', subtitle: 'Тревога, стресс, кризис', status: 'soon' },
+      { id: 'dietician', icon: Apple, title: 'Диетолог / нутрициолог', subtitle: 'Питание, вес, здоровье', status: 'soon' },
+      { id: 'gynecologist', icon: Heart, title: 'Гинеколог онлайн', subtitle: 'Женское здоровье', status: 'soon' }
     ]
   },
   ai_tools: {
     title: 'AI-ИНСТРУМЕНТЫ',
     colorBorder: '#3B82F6',
     items: [
-      { id: 'analysis-understanding', icon: '🔬', title: 'Понять мои анализы', subtitle: 'PDF или фото → объяснение', status: 'active' },
-      { id: 'medication-info', icon: '💊', title: 'Что за лекарство?', subtitle: 'Сфотографируй упаковку', status: 'active' },
-      { id: 'symptom-checker', icon: '🤔', title: 'Проверить симптомы', subtitle: 'Насколько серьёзно?', status: 'active' },
-      { id: 'ecg-analysis', icon: '❤️', title: 'Расшифровка ЭКГ', subtitle: 'Фото плёнки → AI анализ', status: 'soon', badge: 'NEW' },
-      { id: 'mri-analysis', icon: '🧬', title: 'МРТ / КТ снимки', subtitle: 'Второе мнение специалиста', status: 'soon' },
-      { id: 'health-diary', icon: '📊', title: 'Дневник здоровья', subtitle: 'Давление, сахар, вес', status: 'soon' }
+      { id: 'analysis-understanding', icon: Beaker, title: 'Понять мои анализы', subtitle: 'PDF или фото → объяснение', status: 'active' },
+      { id: 'medication-info', icon: Pill, title: 'Что за лекарство?', subtitle: 'Сфотографируй упаковку', status: 'active' },
+      { id: 'symptom-checker', icon: HelpCircle, title: 'Проверить симптомы', subtitle: 'Насколько серьёзно?', status: 'active' },
+      { id: 'ecg-analysis', icon: Heart, title: 'Расшифровка ЭКГ', subtitle: 'Фото плёнки → AI анализ', status: 'soon', badge: 'NEW' },
+      { id: 'mri-analysis', icon: Dna, title: 'МРТ / КТ снимки', subtitle: 'Второе мнение специалиста', status: 'soon' },
+      { id: 'health-diary', icon: BarChart3, title: 'Дневник здоровья', subtitle: 'Давление, сахар, вес', status: 'soon' }
     ]
   },
   documents: {
     title: 'ДОКУМЕНТЫ И СПРАВКИ',
     colorBorder: '#FFA500',
     items: [
-      { id: 'sick-leave', icon: '📄', title: 'Больничный онлайн', subtitle: '15 минут · официально', status: 'active' },
-      { id: 'work-certificate', icon: '🏢', title: 'Справка для работы', subtitle: 'Форма 095/у', status: 'soon' },
-      { id: 'sports-certificate', icon: '🏊', title: 'Справка для спорта', subtitle: 'Бассейн, секция, фитнес', status: 'soon' },
-      { id: 'prescription', icon: '💊', title: 'Рецепт онлайн', subtitle: 'QR-код в аптеку', status: 'soon' },
-      { id: 'medical-book', icon: '📘', title: 'Медицинская книжка', subtitle: 'Для работников питания, торговли', status: 'soon' }
+      { id: 'sick-leave', icon: FileText, title: 'Больничный онлайн', subtitle: '15 минут · официально', status: 'active' },
+      { id: 'work-certificate', icon: Building2, title: 'Справка для работы', subtitle: 'Форма 095/у', status: 'soon' },
+      { id: 'sports-certificate', icon: Waves, title: 'Справка для спорта', subtitle: 'Бассейн, секция, фитнес', status: 'soon' },
+      { id: 'prescription', icon: Pill, title: 'Рецепт онлайн', subtitle: 'QR-код в аптеку', status: 'soon' },
+      { id: 'medical-book', icon: BookOpen, title: 'Медицинская книжка', subtitle: 'Для работников питания, торговли', status: 'soon' }
     ]
   },
   checkups: {
@@ -43,10 +44,10 @@ const SERVICES = {
     colorBorder: '#06B6D4',
     badge: 'NEW',
     items: [
-      { id: 'basic-checkup', icon: '✅', title: 'Базовый чекап', subtitle: 'Анализы + расшифровка + врач', status: 'soon', badge: 'NEW' },
-      { id: 'mens-checkup', icon: '👨', title: 'Чекап для мужчин 35+', subtitle: 'Профильный набор обследований', status: 'soon' },
-      { id: 'womens-checkup', icon: '👩', title: 'Чекап для женщин 35+', subtitle: 'Женское здоровье', status: 'soon' },
-      { id: 'kids-checkup', icon: '🧒', title: 'Детский чекап', subtitle: 'Ежегодное обследование', status: 'soon' }
+      { id: 'basic-checkup', icon: Check, title: 'Базовый чекап', subtitle: 'Анализы + расшифровка + врач', status: 'soon', badge: 'NEW' },
+      { id: 'mens-checkup', icon: User, title: 'Чекап для мужчин 35+', subtitle: 'Профильный набор обследований', status: 'soon' },
+      { id: 'womens-checkup', icon: User, title: 'Чекап для женщин 35+', subtitle: 'Женское здоровье', status: 'soon' },
+      { id: 'kids-checkup', icon: Baby, title: 'Детский чекап', subtitle: 'Ежегодное обследование', status: 'soon' }
     ]
   },
   school: {
@@ -54,9 +55,9 @@ const SERVICES = {
     colorBorder: '#A855F7',
     badge: 'NEW',
     items: [
-      { id: 'school-medicine', icon: '🏫', title: 'Школьная медицина', subtitle: 'Телемедицина для учреждений', status: 'soon', badge: 'NEW' },
-      { id: 'child-health', icon: '👶', title: 'Здоровье ребёнка', subtitle: 'Педиатр онлайн 0-18 лет', status: 'active' },
-      { id: 'school-certificate', icon: '📋', title: 'Справка в школу', subtitle: 'Не выходя из дома', status: 'soon' }
+      { id: 'school-medicine', icon: Building2, title: 'Школьная медицина', subtitle: 'Телемедицина для учреждений', status: 'soon', badge: 'NEW' },
+      { id: 'child-health', icon: Baby, title: 'Здоровье ребёнка', subtitle: 'Педиатр онлайн 0-18 лет', status: 'active' },
+      { id: 'school-certificate', icon: ClipboardList, title: 'Справка в школу', subtitle: 'Не выходя из дома', status: 'soon' }
     ]
   },
   travel: {
@@ -64,8 +65,8 @@ const SERVICES = {
     colorBorder: '#F97316',
     badge: 'NEW',
     items: [
-      { id: 'travel-medicine', icon: '✈️', title: 'Медпомощь за рубежом', subtitle: 'Врач онлайн из любой страны', status: 'soon', badge: 'NEW' },
-      { id: 'travel-insurance', icon: '🛡', title: 'Медстрахование', subtitle: 'Для путешественников', status: 'soon' }
+      { id: 'travel-medicine', icon: Plane, title: 'Медпомощь за рубежом', subtitle: 'Врач онлайн из любой страны', status: 'soon', badge: 'NEW' },
+      { id: 'travel-insurance', icon: Shield, title: 'Медстрахование', subtitle: 'Для путешественников', status: 'soon' }
     ]
   },
   support: {
@@ -73,46 +74,59 @@ const SERVICES = {
     colorBorder: '#EC4899',
     badge: 'NEW',
     items: [
-      { id: 'health-manager', icon: '👤', title: 'Менеджер здоровья', subtitle: 'Персональный куратор', status: 'soon', badge: 'NEW' },
-      { id: 'pregnancy-care', icon: '🤱', title: 'Ведение беременности', subtitle: 'От зачатия до родов', status: 'soon' },
-      { id: 'chronic-care', icon: '📈', title: 'Хронические болезни', subtitle: 'Диабет, гипертония — контроль', status: 'soon' }
+      { id: 'health-manager', icon: User, title: 'Менеджер здоровья', subtitle: 'Персональный куратор', status: 'soon', badge: 'NEW' },
+      { id: 'pregnancy-care', icon: Heart, title: 'Ведение беременности', subtitle: 'От зачатия до родов', status: 'soon' },
+      { id: 'chronic-care', icon: TrendingUp, title: 'Хронические болезни', subtitle: 'Диабет, гипертония — контроль', status: 'soon' }
     ]
   }
 }
 
 function getScreenRoute(serviceId) {
   const routes = {
+    // Consultations
     'doctor-online': 'doctor-list',
-    'duty-doctor': 'duty-doctor',
+    'duty-doctor': 'doctor-list',
     'pediatrician': 'doctor-list',
-    'second-opinion': 'second-opinion',
-    'family-doctor': 'family-doctor',
+    'second-opinion': 'doctor-list',
+    'family-doctor': 'doctor-list',
     'psychologist': 'doctor-list',
     'dietician': 'doctor-list',
     'gynecologist': 'doctor-list',
+
+    // AI Tools
     'analysis-understanding': 'analysis-upload',
     'medication-info': 'medication-info',
     'symptom-checker': 'ai-chat',
     'ecg-analysis': 'analysis-upload',
     'mri-analysis': 'analysis-upload',
     'health-diary': 'profile',
+
+    // Documents
     'sick-leave': 'sick-leave',
-    'work-certificate': null,
-    'sports-certificate': null,
-    'prescription': null,
-    'medical-book': null,
-    'basic-checkup': 'checkups',
-    'mens-checkup': 'checkups',
-    'womens-checkup': 'checkups',
-    'kids-checkup': 'checkups',
+    'work-certificate': 'all-services',
+    'sports-certificate': 'all-services',
+    'prescription': 'all-services',
+    'medical-book': 'all-services',
+
+    // Checkups
+    'basic-checkup': 'slot-booking',
+    'mens-checkup': 'slot-booking',
+    'womens-checkup': 'slot-booking',
+    'kids-checkup': 'slot-booking',
+
+    // School
     'school-medicine': 'school-medicine',
     'child-health': 'doctor-list',
-    'school-certificate': null,
+    'school-certificate': 'all-services',
+
+    // Travel
     'travel-medicine': 'travel-medicine',
-    'travel-insurance': null,
+    'travel-insurance': 'all-services',
+
+    // Support
     'health-manager': 'health-manager',
-    'pregnancy-care': null,
-    'chronic-care': null
+    'pregnancy-care': 'doctor-list',
+    'chronic-care': 'doctor-list'
   }
   return routes[serviceId] || null
 }
@@ -191,7 +205,18 @@ export default function AllServicesScreenV2Premium({ nav }) {
                   }}
                 >
                   <div className="flex items-start gap-3">
-                    <div className="text-2xl flex-shrink-0">{item.icon}</div>
+                    {/* Icon Container */}
+                    <div
+                      className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center"
+                      style={{ backgroundColor: `${section.colorBorder}15` }}
+                    >
+                      {item.icon && (() => {
+                        const Icon = item.icon
+                        return <Icon size={20} color={section.colorBorder} strokeWidth={2} />
+                      })()}
+                    </div>
+
+                    {/* Content */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2">
                         <div>

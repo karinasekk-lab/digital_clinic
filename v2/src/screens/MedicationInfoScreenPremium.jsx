@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Header, Card, Button } from '../components/UI'
+import { Header, Card, Button, IconContainer } from '../components/UI'
 import { useToast } from '../contexts/ToastContext'
-import { Search, Camera, ChevronDown, AlertTriangle } from 'lucide-react'
+import { Search, Camera, ChevronDown, AlertTriangle, Pill } from 'lucide-react'
 import { MEDICATIONS } from '../data/mockData'
 
 export default function MedicationInfoScreenPremium({ nav }) {
@@ -83,8 +83,8 @@ export default function MedicationInfoScreenPremium({ nav }) {
 
             {/* Drug Header */}
             <Card variant="elevated" className="text-center animate-fadeIn">
-              <div className="w-16 h-16 rounded-[16px] bg-gradient-to-br from-[#00C853]/20 to-[#00B85A]/20 border border-[#00C853]/30 flex items-center justify-center mx-auto mb-4">
-                <span className="text-4xl">💊</span>
+              <div className="flex justify-center mx-auto mb-4">
+                <IconContainer icon={Pill} color="green" size="lg" />
               </div>
               <h2 className="text-xl font-700 text-white">{drug.name}</h2>
               <div className="flex gap-2 justify-center mt-3 flex-wrap">

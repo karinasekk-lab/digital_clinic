@@ -1,9 +1,10 @@
+import { Globe, ClipboardList, Building2, FileText, Ambulance, Plane, Clock } from 'lucide-react'
 import { Header, Card, Button } from '../components/UI'
 
 export default function TravelMedicineScreen({ nav }) {
   return (
     <div className="min-h-screen bg-[#0D1117] pb-24 relative">
-      <Header title="✈️ Медпомощь за рубежом" onBack={() => nav.pop()} />
+      <Header title="Медпомощь за рубежом" rightIcon={<Plane size={20} className="text-[#F97316]" strokeWidth={2} />} onBack={() => nav.pop()} />
 
       <div className="px-4 space-y-4 pt-4">
         {/* Orange Sub */}
@@ -20,24 +21,24 @@ export default function TravelMedicineScreen({ nav }) {
         <Card className="animate-fadeIn" style={{ animationDelay: '50ms' }}>
           <h3 className="text-sm font-700 text-[#F9FAFB] mb-3">Что мы делаем</h3>
           <div className="space-y-2">
-            <div className="flex gap-2">
-              <span>🌍</span>
+            <div className="flex gap-2 items-start">
+              <Globe size={18} className="text-[#F97316] flex-shrink-0 mt-0.5" strokeWidth={2} />
               <span className="text-xs text-[#94A3B8]">Консультация онлайн из любой страны</span>
             </div>
-            <div className="flex gap-2">
-              <span>📋</span>
+            <div className="flex gap-2 items-start">
+              <ClipboardList size={18} className="text-[#F97316] flex-shrink-0 mt-0.5" strokeWidth={2} />
               <span className="text-xs text-[#94A3B8]">Рекомендации на местном языке (перевод)</span>
             </div>
-            <div className="flex gap-2">
-              <span>🏥</span>
+            <div className="flex gap-2 items-start">
+              <Building2 size={18} className="text-[#F97316] flex-shrink-0 mt-0.5" strokeWidth={2} />
               <span className="text-xs text-[#94A3B8]">Помощь с выбором местной клиники</span>
             </div>
-            <div className="flex gap-2">
-              <span>📄</span>
+            <div className="flex gap-2 items-start">
+              <FileText size={18} className="text-[#F97316] flex-shrink-0 mt-0.5" strokeWidth={2} />
               <span className="text-xs text-[#94A3B8]">Документы для страховой компании</span>
             </div>
-            <div className="flex gap-2">
-              <span>🚑</span>
+            <div className="flex gap-2 items-start">
+              <Ambulance size={18} className="text-[#F97316] flex-shrink-0 mt-0.5" strokeWidth={2} />
               <span className="text-xs text-[#94A3B8]">Координация экстренной помощи</span>
             </div>
           </div>
@@ -91,7 +92,7 @@ export default function TravelMedicineScreen({ nav }) {
       {/* COMING SOON Overlay */}
       <div className="fixed inset-0 bg-[rgba(13,17,23,0.9)] backdrop-blur-sm flex items-center justify-center z-50 rounded-[40px] pointer-events-none">
         <div className="text-center">
-          <p className="text-4xl mb-4">🔜</p>
+          <Clock size={48} className="text-[#F97316] mb-4 mx-auto" strokeWidth={1.5} />
           <p className="text-white font-700 text-lg mb-2">Скоро</p>
           <p className="text-[#94A3B8] text-sm">Уведомим о запуске</p>
         </div>

@@ -50,7 +50,7 @@ export default function ServicesScreenPremium({ nav }) {
       example: 'Программа "Здоровое сердце" с упражнениями и контролем давления',
       color: '#00C853',
       badge: 'Новое',
-      action: () => nav.push('all-services')
+      action: () => nav.push('slot-booking', { serviceId: 'prevention' })
     },
     {
       id: 'house-calls',
@@ -98,7 +98,7 @@ export default function ServicesScreenPremium({ nav }) {
       example: 'Анализ крови за 2,000₸, результат за 8 часов',
       color: '#3B82F6',
       badge: null,
-      action: () => nav.push('all-services')
+      action: () => nav.push('slot-booking', { serviceId: 'tests' })
     },
     {
       id: 'travel-medicine',

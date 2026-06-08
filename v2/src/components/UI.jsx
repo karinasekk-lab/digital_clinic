@@ -1,5 +1,30 @@
 // Reusable UI Components
 import { ArrowLeft, ChevronRight } from 'lucide-react'
+import { getIconComponent, hasLucideIcon } from '../utils/iconMap'
+
+export function IconContainer({ icon: IconComponent, color = 'green', size = 'md' }) {
+  if (!IconComponent) return null
+
+  const colorConfig = {
+    green: { bg: 'bg-[#00C853]', bgLight: 'bg-[rgba(0,200,83,0.1)]' },
+    blue: { bg: 'bg-[#3B82F6]', bgLight: 'bg-[rgba(59,130,246,0.1)]' }
+  }
+
+  const sizeConfig = {
+    sm: { container: 'w-8 h-8', icon: 20 },
+    md: { container: 'w-10 h-10', icon: 24 },
+    lg: { container: 'w-12 h-12', icon: 28 }
+  }
+
+  const config = colorConfig[color] || colorConfig.green
+  const sizeStyle = sizeConfig[size]
+
+  return (
+    <div className={`${sizeStyle.container} ${config.bgLight} rounded-full flex items-center justify-center flex-shrink-0`}>
+      <IconComponent size={sizeStyle.icon} className={`${color === 'green' ? 'text-[#00C853]' : 'text-[#3B82F6]'}`} strokeWidth={2} />
+    </div>
+  )
+}
 
 export function Button({ children, variant = 'primary', size = 'md', onClick, disabled, className = '', isLoading = false }) {
   const baseClasses = 'font-600 rounded-[16px] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[48px] sm:min-h-auto focus:outline-none'
@@ -117,9 +142,24 @@ export function Pill({ children, variant = 'default', icon = '' }) {
     gray: 'bg-[rgba(100,116,139,0.2)] text-[#94A3B8]'
   }
 
+  // Handle both emoji strings and Lucide icon components
+  let IconComponent = null
+  if (icon) {
+    if (typeof icon === 'string') {
+      IconComponent = hasLucideIcon(icon) ? getIconComponent(icon) : null
+    } else {
+      // It's a component reference
+      IconComponent = icon
+    }
+  }
+
   return (
-    <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-600 whitespace-nowrap ${variants[variant]}`}>
-      {icon && <span>{icon}</span>}
+    <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-600 whitespace-nowrap ${variants[variant]}`}>
+      {IconComponent ? (
+        <IconComponent size={16} strokeWidth={2} />
+      ) : typeof icon === 'string' ? (
+        <span>{icon}</span>
+      ) : null}
       {children}
     </span>
   )
@@ -547,6 +587,7 @@ export function ServiceCard({ icon, title, subtitle, status = 'active', onTap, b
 
   const isActive = status === 'active'
   const isNew = badge === 'NEW'
+  const IconComponent = hasLucideIcon(icon) ? getIconComponent(icon) : null
 
   return (
     <button
@@ -562,7 +603,11 @@ export function ServiceCard({ icon, title, subtitle, status = 'active', onTap, b
     >
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-3 flex-1">
-          <span className="text-2xl pt-1">{icon}</span>
+          {IconComponent ? (
+            <IconContainer icon={IconComponent} size="md" />
+          ) : (
+            <span className="text-2xl pt-1">{icon}</span>
+          )}
           <div className="flex-1 min-w-0">
             <h4 className="font-600 text-sm text-[#F9FAFB]">{title}</h4>
             <p className="text-xs text-[#94A3B8] mt-1">{subtitle}</p>

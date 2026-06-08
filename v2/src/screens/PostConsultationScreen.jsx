@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Calendar, Pill as PillIcon, FileText, Check } from 'lucide-react'
 import { Card, Button, Pill } from '../components/UI'
 import { useToast } from '../contexts/ToastContext'
 import { DOCTORS, CURRENT_USER } from '../data/mockData'
@@ -24,7 +25,7 @@ export default function PostConsultationScreen({ nav, params }) {
       {/* Success Header */}
       <div className="text-center pt-12 pb-8 px-4">
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#00B956] mb-4 animate-scaleIn">
-          <span className="text-4xl">✓</span>
+          <Check size={40} className="text-white" strokeWidth={3} />
         </div>
         <h1 className="text-[22px] font-700 text-[#F9FAFB] mb-2">Консультация завершена</h1>
         <p className="text-sm text-[#00B956] font-600">Начислено 980 ₸ бонусами Freedom</p>
@@ -103,7 +104,7 @@ export default function PostConsultationScreen({ nav, params }) {
         {/* Follow-up */}
         <Card variant="green" className="animate-fadeIn" style={{ animationDelay: '200ms' }}>
           <div className="flex gap-3">
-            <span className="text-2xl">📅</span>
+            <Calendar size={24} className="text-[#00B956] flex-shrink-0" strokeWidth={2} />
             <div className="flex-1">
               <h4 className="font-700 text-[#F9FAFB] text-sm mb-1">Продолжить наблюдение</h4>
               <p className="text-xs text-[#94A3B8] mb-3">Врач напишет через 3 дня</p>
@@ -122,7 +123,7 @@ export default function PostConsultationScreen({ nav, params }) {
         {/* Pharmacy */}
         <Card className="animate-fadeIn" style={{ animationDelay: '250ms' }}>
           <div className="flex gap-3">
-            <span className="text-2xl">💊</span>
+            <PillIcon size={24} className="text-[#00B956] flex-shrink-0" strokeWidth={2} />
             <div className="flex-1">
               <h4 className="font-700 text-[#F9FAFB] text-sm mb-1">Купить назначенное</h4>
               <p className="text-xs text-[#94A3B8] mb-3">Аптека Freedom · кешбэк 20%</p>
@@ -148,7 +149,7 @@ export default function PostConsultationScreen({ nav, params }) {
         {/* Sick Leave */}
         <Card className="animate-fadeIn" style={{ animationDelay: '300ms' }}>
           <div className="flex gap-3">
-            <span className="text-2xl">📄</span>
+            <FileText size={24} className="text-[#00B956] flex-shrink-0" strokeWidth={2} />
             <div className="flex-1">
               <h4 className="font-700 text-[#F9FAFB] text-sm mb-1">Оформить больничный</h4>
               <p className="text-xs text-[#94A3B8] mb-3">На основе консультации · 15 мин</p>

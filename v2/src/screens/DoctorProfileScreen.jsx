@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { GraduationCap, MapPin, Globe, MessageCircle, ClipboardList } from 'lucide-react'
 import { Header, Card, Button, Pill, DoctorCard } from '../components/UI'
 import { DOCTORS, REVIEWS_SAMPLE } from '../data/mockData'
 
@@ -35,13 +36,13 @@ export default function DoctorProfileScreen({ nav, params }) {
 
           {/* Info Chips */}
           <div className="flex flex-wrap gap-2 justify-center mt-4">
-            <Pill variant="gray" icon="🎓">
+            <Pill variant="gray" icon={GraduationCap}>
               КНМУ 2016
             </Pill>
-            <Pill variant="gray" icon="📍">
+            <Pill variant="gray" icon={MapPin}>
               {doctor.city}
             </Pill>
-            <Pill variant="gray" icon="🌐">
+            <Pill variant="gray" icon={Globe}>
               {doctor.languages.join(' · ')}
             </Pill>
           </div>
@@ -88,12 +89,14 @@ export default function DoctorProfileScreen({ nav, params }) {
               <span className="text-[#94A3B8]">С кешбэком 20%</span>
               <span className="text-xl font-700 text-[#00B956]">{doctor.cashback.toLocaleString()} ₸</span>
             </div>
-            <p className="text-xs text-[#94A3B8] pt-2 border-t border-[rgba(255,255,255,0.08)]">
-              💬 Длительность: до 30 минут
-            </p>
-            <p className="text-xs text-[#94A3B8]">
-              📋 Включено: консультация + назначения + follow-up
-            </p>
+            <div className="flex items-center gap-2 text-xs text-[#94A3B8] pt-2 border-t border-[rgba(255,255,255,0.08)]">
+              <MessageCircle size={16} strokeWidth={2} />
+              <span>Длительность: до 30 минут</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-[#94A3B8]">
+              <ClipboardList size={16} strokeWidth={2} />
+              <span>Включено: консультация + назначения + follow-up</span>
+            </div>
           </div>
         </Card>
 
