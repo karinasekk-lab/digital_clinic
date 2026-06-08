@@ -1,133 +1,147 @@
-import { HeartPulse, Activity, CalendarDays, Droplets, Brain, ChevronRight } from 'lucide-react'
+import { Heart, Activity, Moon, TrendingUp, Info } from 'lucide-react'
 
 export function TodaySection() {
-  const insights = [
+  const healthScore = 84
+  const healthStatus = 'Хорошее состояние'
+  const scoreChange = '+4'
+  const scoreChangeWeek = '+4 за неделю'
+
+  const metrics = [
     {
       id: 'pressure',
       label: 'Давление в норме',
-      icon: HeartPulse,
-      color: '#00C853',
-      bgGradient: 'rgba(0,200,83,0.15)'
+      icon: Heart,
+      color: '#00C853'
     },
     {
       id: 'heart-rate',
       label: 'Пульс стабилен',
       icon: Activity,
-      color: '#00C853',
-      bgGradient: 'rgba(0,200,83,0.15)'
+      color: '#00C853'
     },
     {
-      id: 'appointment',
-      label: 'Приём через 2 дня',
-      icon: CalendarDays,
-      color: '#F59E0B',
-      bgGradient: 'rgba(245,158,11,0.15)'
-    },
-    {
-      id: 'hydration',
-      label: 'Осталось выпить 700 мл',
-      icon: Droplets,
-      color: '#3B82F6',
-      bgGradient: 'rgba(59,130,246,0.15)'
-    },
-    {
-      id: 'stress',
-      label: 'Стресс ниже среднего',
-      icon: Brain,
-      color: '#A855F7',
-      bgGradient: 'rgba(139,92,246,0.15)'
+      id: 'sleep',
+      label: 'Сон улучшился',
+      icon: Moon,
+      color: '#3B82F6'
     }
   ]
 
-  const healthScore = 84
-  const healthStatus = 'Хорошее состояние'
-  const scoreChange = '+4'
+  // Chart data points for the week
+  const chartData = [
+    { day: 'Пн', value: 65 },
+    { day: 'Вт', value: 72 },
+    { day: 'Ср', value: 75 },
+    { day: 'Чт', value: 78 },
+    { day: 'Пт', value: 80 },
+    { day: 'Сб', value: 82 },
+    { day: 'Вс', value: 84 }
+  ]
+
+  const maxValue = 100
+  const minValue = 0
+  const range = maxValue - minValue
 
   return (
     <div className="px-4 py-1">
-      {/* Premium Healthcare Dashboard Card */}
-      <div className="relative bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[24px] p-3 overflow-y-auto max-h-[200px]">
+      {/* Health Status Card */}
+      <div className="bg-gradient-to-br from-[#171C2B] to-[#0D111A] border border-[#2A3145] rounded-[20px] p-4 space-y-3">
         {/* Header */}
-        <h3 className="text-white font-600 text-sm mb-3">Сегодня</h3>
-
-        {/* Health Status Ring - Right Side (25-30% of card width) */}
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col items-center justify-center">
-          {/* Ring Container */}
-          <div className="relative w-20 h-20">
-            {/* Background Circle */}
-            <svg className="w-full h-full" viewBox="0 0 80 80">
-              <circle
-                cx="40"
-                cy="40"
-                r="36"
-                stroke="#2A3145"
-                strokeWidth="2"
-                fill="none"
-              />
-              {/* Green Progress Ring - 84% */}
-              <circle
-                cx="40"
-                cy="40"
-                r="36"
-                stroke="#00C853"
-                strokeWidth="2.5"
-                fill="none"
-                strokeDasharray={`${(84 / 100) * 226.19} 226.19`}
-                strokeLinecap="round"
-                style={{
-                  transform: 'rotate(-90deg)',
-                  transformOrigin: '50% 50%',
-                  opacity: 0.85
-                }}
-              />
-            </svg>
-            {/* Score Text */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-lg font-700 text-white">{healthScore}</span>
-              <span className="text-[9px] text-[#AAB3C5] font-500">{scoreChange}</span>
-            </div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <h3 className="text-white font-700 text-sm">Ваше состояние</h3>
+            <Info size={14} className="text-[#6B7280]" strokeWidth={2.5} />
           </div>
-          {/* Status Label */}
-          <p className="text-[10px] text-[#AAB3C5] text-center mt-1.5 leading-tight max-w-[68px] font-500">
-            {healthStatus}
-          </p>
+          <a href="#" className="text-xs text-[#3B82F6] font-600 hover:text-[#60A5FA]">
+            Все показатели →
+          </a>
         </div>
 
-        {/* Premium Insights List - Left Side */}
-        <div className="relative z-10 pr-24 space-y-2.5">
-          {insights.map((insight) => {
-            const Icon = insight.icon
-            return (
-              <button
-                key={insight.id}
-                className="w-full flex items-center gap-2.5 p-2 rounded-[10px] hover:bg-[#171C2B]/50 transition-colors active:scale-95"
-              >
-                {/* Icon Container - Bigger, more visible */}
-                <div
-                  className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: insight.bgGradient }}
-                >
-                  <Icon
-                    size={20}
-                    color={insight.color}
-                    strokeWidth={2}
+        {/* Score + Metrics + Chart Row */}
+        <div className="flex gap-4">
+          {/* Left: Score */}
+          <div className="flex flex-col gap-2 min-w-fit">
+            <div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-3xl font-700 text-white">{healthScore}</span>
+                <span className="text-sm text-[#6B7280]">/ 100</span>
+              </div>
+              <p className="text-xs text-[#00C853] font-600 mt-1">{healthStatus}</p>
+              <p className="text-xs text-[#00C853] font-500">↑ {scoreChangeWeek}</p>
+            </div>
+
+            {/* Metrics */}
+            <div className="space-y-1.5">
+              {metrics.map((metric) => {
+                const Icon = metric.icon
+                return (
+                  <div key={metric.id} className="flex items-center gap-2">
+                    <div
+                      className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                      style={{ backgroundColor: `${metric.color}20` }}
+                    >
+                      <Icon size={12} color={metric.color} strokeWidth={2.5} />
+                    </div>
+                    <span className="text-xs text-[#AAB3C5]">{metric.label}</span>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Right: Simple Chart */}
+          <div className="flex-1 flex flex-col items-end justify-between">
+            {/* Mini Chart - SVG Line Chart */}
+            <svg
+              viewBox="0 0 160 80"
+              className="w-full h-20"
+              preserveAspectRatio="none"
+              style={{ minWidth: '120px' }}
+            >
+              {/* Grid lines */}
+              <line x1="0" y1="20" x2="160" y2="20" stroke="#2A3145" strokeWidth="0.5" />
+              <line x1="0" y1="40" x2="160" y2="40" stroke="#2A3145" strokeWidth="0.5" />
+              <line x1="0" y1="60" x2="160" y2="60" stroke="#2A3145" strokeWidth="0.5" />
+
+              {/* Line chart */}
+              <polyline
+                points={chartData
+                  .map((d, i) => {
+                    const x = (i / (chartData.length - 1)) * 160
+                    const y = 80 - ((d.value - minValue) / range) * 80
+                    return `${x},${y}`
+                  })
+                  .join(' ')}
+                fill="none"
+                stroke="#00C853"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+
+              {/* Data points */}
+              {chartData.map((d, i) => {
+                const x = (i / (chartData.length - 1)) * 160
+                const y = 80 - ((d.value - minValue) / range) * 80
+                return (
+                  <circle
+                    key={i}
+                    cx={x}
+                    cy={y}
+                    r="2"
+                    fill={i === chartData.length - 1 ? '#00C853' : '#2A3145'}
                   />
-                </div>
+                )
+              })}
+            </svg>
 
-                {/* Label - Readable, no truncate */}
-                <span className="text-sm text-white font-500 flex-1 text-left leading-tight">
-                  {insight.label}
-                </span>
-
-                {/* Chevron */}
-                <ChevronRight
-                  size={16}
-                  className="flex-shrink-0"
-                  color="#6B7280"
-                />
-              </button>
-            )
-          })}
+            {/* Day labels */}
+            <div className="flex justify-between w-full text-[9px] text-[#6B7280] font-500 mt-1 px-2">
+              {chartData.map((d) => (
+                <span key={d.day}>{d.day}</span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
