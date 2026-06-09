@@ -85,13 +85,43 @@ function CompactProfileBar() {
   )
 }
 
-// VERSION 2 — Full services catalog
+// VERSION 2 — Full services catalog (improved with proper icons and aligned buttons)
 function ServicesCatalog({ navigate }) {
+  // Icon components as SVG
+  const IconVideo = ({ color }) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ color }}>
+      <path d="M23 7l-7 5 7 5V7z" fill="currentColor"/>
+      <rect x="1" y="5" width="15" height="14" rx="2" ry="2" stroke="currentColor" strokeWidth="2" fill="none"/>
+    </svg>
+  )
+  const IconRobot = ({ color }) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ color }}>
+      <rect x="3" y="2" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
+      <circle cx="9" cy="9" r="1.5" fill="currentColor"/>
+      <circle cx="15" cy="9" r="1.5" fill="currentColor"/>
+      <path d="M9 15h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <rect x="6" y="20" width="2" height="2" fill="currentColor"/>
+      <rect x="16" y="20" width="2" height="2" fill="currentColor"/>
+    </svg>
+  )
+  const IconDocument = ({ color }) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ color }}>
+      <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke="currentColor" strokeWidth="2" fill="none"/>
+      <polyline points="13 2 13 9 20 9" stroke="currentColor" strokeWidth="2" fill="none"/>
+    </svg>
+  )
+  const IconCheckCircle = ({ color }) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ color }}>
+      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+      <path d="M8 12l2 2 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+
   const catalog = {
     consultations: {
       title: 'ОНЛАЙН-КОНСУЛЬТАЦИИ',
       color: '#00B956',
-      icon: '📹',
+      icon: IconVideo,
       services: [
         { title: 'Врач онлайн', sub: 'ответ за 3 мин', status: 'available', screen: 2 },
         { title: 'Дежурный врач 24/7', sub: 'всегда на связи', status: 'available', screen: 2 },
@@ -105,7 +135,7 @@ function ServicesCatalog({ navigate }) {
     ai: {
       title: 'AI-ИНСТРУМЕНТЫ',
       color: '#3B82F6',
-      icon: '🤖',
+      icon: IconRobot,
       services: [
         { title: 'Понять мои анализы', sub: 'расшифровка', status: 'available', screen: 7 },
         { title: 'Что за лекарство?', sub: 'AI объяснит', status: 'available', screen: 11 },
@@ -116,7 +146,7 @@ function ServicesCatalog({ navigate }) {
     documents: {
       title: 'ДОКУМЕНТЫ',
       color: '#F59E0B',
-      icon: '📄',
+      icon: IconDocument,
       services: [
         { title: 'Больничный онлайн', sub: 'ЭЛН · официально', status: 'available', screen: 3, ctx: { symptom: 'Справка для работы', symptomIcon: '📄', isSickLeave: true } },
         { title: 'Справка для работы', sub: 'Скоро', status: 'soon' },
@@ -127,7 +157,7 @@ function ServicesCatalog({ navigate }) {
     companion: {
       title: 'СОПРОВОЖДЕНИЕ',
       color: '#8B5CF6',
-      icon: '🎯',
+      icon: IconCheckCircle,
       services: [
         { title: 'Менеджер здоровья', sub: 'Скоро', status: 'soon' },
         { title: 'Ведение беременности', sub: 'Скоро', status: 'soon' },
@@ -140,54 +170,60 @@ function ServicesCatalog({ navigate }) {
 
   return (
     <div className="px-4 space-y-5">
-      {Object.entries(catalog).map(([key, section]) => (
-        <div key={key}>
-          <div className="flex items-center gap-2 mb-3">
-            <span style={{ fontSize: 20 }}>{section.icon}</span>
-            <div className="text-xs font-bold uppercase tracking-widest" style={{ color: section.color }}>
-              {section.title}
+      {Object.entries(catalog).map(([key, section]) => {
+        const SectionIcon = section.icon
+        return (
+          <div key={key}>
+            <div className="flex items-center gap-2.5 mb-3">
+              <SectionIcon color={section.color} />
+              <div className="text-xs font-bold uppercase tracking-widest" style={{ color: section.color }}>
+                {section.title}
+              </div>
             </div>
-          </div>
 
-          <div className="space-y-2">
-            {section.services.map((svc, i) => (
-              <button
-                key={i}
-                onClick={() => svc.status === 'available' && navigate(svc.screen, svc.ctx || {})}
-                disabled={svc.status === 'soon'}
-                className="w-full rounded-xl p-3 text-left transition-all active:scale-95 disabled:active:scale-100"
-                style={{
-                  background: svc.status === 'available'
-                    ? `rgba(${parseInt(section.color.slice(1,3),16)}, ${parseInt(section.color.slice(3,5),16)}, ${parseInt(section.color.slice(5,7),16)}, 0.08)`
-                    : 'var(--bg-elevated)',
-                  border: svc.status === 'available'
-                    ? `1px solid ${section.color}33`
-                    : '1px solid var(--border)',
-                  opacity: svc.status === 'soon' ? 0.6 : 1,
-                  cursor: svc.status === 'available' ? 'pointer' : 'default'
-                }}>
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="font-semibold text-sm text-white">{svc.title}</div>
-                    <div className="text-xs mt-0.5" style={{ color: svc.status === 'available' ? section.color : 'var(--text-muted)' }}>
-                      {svc.sub}
+            <div className="space-y-2">
+              {section.services.map((svc, i) => (
+                <button
+                  key={i}
+                  onClick={() => svc.status === 'available' && navigate(svc.screen, svc.ctx || {})}
+                  disabled={svc.status === 'soon'}
+                  className="w-full rounded-xl p-3 text-left transition-all active:scale-95 disabled:active:scale-100 h-16 flex items-center"
+                  style={{
+                    background: svc.status === 'available'
+                      ? `rgba(${parseInt(section.color.slice(1,3),16)}, ${parseInt(section.color.slice(3,5),16)}, ${parseInt(section.color.slice(5,7),16)}, 0.08)`
+                      : 'var(--bg-elevated)',
+                    border: svc.status === 'available'
+                      ? `1px solid ${section.color}33`
+                      : '1px solid var(--border)',
+                    opacity: svc.status === 'soon' ? 0.6 : 1,
+                    cursor: svc.status === 'available' ? 'pointer' : 'default'
+                  }}>
+                  <div className="flex items-center justify-between w-full gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-sm text-white">{svc.title}</div>
+                      <div className="text-xs mt-0.5" style={{ color: svc.status === 'available' ? section.color : 'var(--text-muted)' }}>
+                        {svc.sub}
+                      </div>
+                    </div>
+                    {/* Fixed-width right element (24px to match icon width) */}
+                    <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+                      {svc.status === 'available' ? (
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ color: section.color }}>
+                          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      ) : (
+                        <span className="text-[10px] font-semibold px-1 py-0.5 rounded-full" style={{ background: 'rgba(100,116,139,0.2)', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+                          СКОРО
+                        </span>
+                      )}
                     </div>
                   </div>
-                  {svc.status === 'available' ? (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ color: section.color, marginLeft: 8 }}>
-                      <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  ) : (
-                    <span className="text-[10px] font-semibold px-2 py-1 rounded-full" style={{ background: 'rgba(100,116,139,0.2)', color: 'var(--text-muted)' }}>
-                      СКОРО
-                    </span>
-                  )}
-                </div>
-              </button>
-            ))}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }
@@ -3163,6 +3199,111 @@ function Screen18({ navigate, goBack, onExit, ctx }) {
   )
 }
 
+// ─── Healthcare Screen (Premium Dark Design) ─────────────────────────────────
+
+function HealthcareScreen({ navigate, goBack, onExit, ctx, version, setVersion }) {
+  const [selectedTriage, setSelectedTriage] = useState(null)
+
+  const triageItems = [
+    { id: 'temp', label: 'Температура' },
+    { id: 'throat', label: 'Горло / нос' },
+    { id: 'belly', label: 'Живот' },
+    { id: 'pressure', label: 'Давление' },
+    { id: 'child', label: 'Здоровье ребёнка' },
+    { id: 'other', label: 'Другое' },
+  ]
+
+  return (
+    <div className="min-h-screen" style={{ background: '#071015' }}>
+      <FreedomShell onExit={onExit} onSupportClick={() => {}} version={version} setVersion={setVersion} />
+      <CompactProfileBar />
+
+      <div className="px-5 pt-6 pb-24 space-y-5">
+        {/* AI Triage Card */}
+        <div className="rounded-3xl p-6 space-y-4" style={{ background: 'linear-gradient(135deg, #0B1518 0%, #10231D 100%)', border: '1px solid rgba(0,200,83,0.22)' }}>
+          <div>
+            <h1 className="text-3xl font-700 text-white leading-tight">Что вас беспокоит?</h1>
+            <p className="text-sm text-white mt-1" style={{ color: '#AAB3C5' }}>AI подберёт нужного врача за 2 вопроса</p>
+          </div>
+
+          {/* Triage Grid */}
+          <div className="grid grid-cols-2 gap-2.5">
+            {triageItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setSelectedTriage(item.id)}
+                className="py-3 px-3 rounded-2xl text-sm font-500 transition-all text-left"
+                style={{
+                  background: selectedTriage === item.id ? 'rgba(0,200,83,0.08)' : 'rgba(30,43,53,0.4)',
+                  border: `1px solid ${selectedTriage === item.id ? 'rgba(0,200,83,0.22)' : '#1E2B35'}`,
+                  color: selectedTriage === item.id ? '#00C853' : '#AAB3C5'
+                }}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          <button className="text-sm font-500" style={{ color: '#00A86B' }}>
+            Не знаю что выбрать — помогите определить →
+          </button>
+        </div>
+
+        {/* Quick Services */}
+        <div className="space-y-2.5">
+          <h2 className="text-xl font-600 text-white px-1">Быстрые услуги</h2>
+          <div className="grid grid-cols-1 gap-2.5">
+            {[
+              { title: 'Врач онлайн', sub: 'прямо сейчас', badge: '12 онлайн', hasGreen: true },
+              { title: 'Понять мои анализы', sub: 'AI расшифровка', hasGreen: false },
+              { title: 'Чекап', sub: 'AI оценка рисков', hasGreen: false },
+            ].map((service, i) => (
+              <button
+                key={i}
+                className="py-3.5 px-4 rounded-2xl text-left transition-all active:opacity-70"
+                style={{
+                  background: 'linear-gradient(135deg, #0B1518 0%, #10231D 100%)',
+                  border: `1px solid ${service.hasGreen ? 'rgba(0,200,83,0.22)' : '#1E2B35'}`,
+                }}
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm font-600 text-white">{service.title}</div>
+                    <div className="text-xs mt-0.5" style={{ color: '#667085' }}>{service.sub}</div>
+                  </div>
+                  {service.badge && (
+                    <div className="text-[10px] font-600 px-2 py-1 rounded-full" style={{ background: 'rgba(0,200,83,0.12)', color: '#00C853' }}>
+                      {service.badge}
+                    </div>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Appointment Card */}
+        <div className="rounded-3xl p-6 space-y-3" style={{ background: 'linear-gradient(135deg, #0B1518 0%, #10231D 100%)', border: '1px solid rgba(0,200,83,0.22)', borderLeftWidth: 4, borderLeftColor: '#00C853' }}>
+          <div className="text-[11px] font-700 tracking-wide text-yellow-600" style={{ color: '#667085' }}>СЛЕДУЮЩИЙ ПРИЁМ</div>
+          <div className="text-2xl font-700 text-white">Айгуль Сейткали</div>
+          <div className="text-sm text-white" style={{ color: '#AAB3C5' }}>Ср 14 мая · 14:00–14:30 · Видео</div>
+          <div className="text-xs" style={{ color: '#667085' }}>Оплачено · 3 920 ₸ · через 2 дня</div>
+
+          <button
+            onClick={() => navigate(2)}
+            className="w-full py-3 rounded-xl font-700 text-white text-sm transition-all active:scale-95 mt-2"
+            style={{ background: 'linear-gradient(135deg, #00C853 0%, #00A86B 100%)' }}
+          >
+            Войти →
+          </button>
+        </div>
+      </div>
+
+      <BottomNav current={19} navigate={navigate} />
+    </div>
+  )
+}
+
 // ─── App Shell ────────────────────────────────────────────────────────────────
 
 const SCREENS = {
@@ -3170,7 +3311,7 @@ const SCREENS = {
   4: Screen4, 5: Screen5, 6: Screen6, 7: Screen7,
   8: Screen8, 9: Screen9, 10: Screen10, 11: Screen11,
   12: Screen12, 13: Screen13, 14: Screen14, 15: Screen15,
-  16: Screen16, 17: Screen17, 18: Screen18,
+  16: Screen16, 17: Screen17, 18: Screen18, 19: HealthcareScreen,
 }
 
 export default function App() {
