@@ -391,24 +391,98 @@ function Screen1({ navigate, onExit, version, setVersion }) {
   function resumeSession()  { localStorage.removeItem('cdk_pending_session'); navigate(5) }
   function cancelSession()  { localStorage.removeItem('cdk_pending_session'); setPendingSession(null) }
 
+  // Icon components for symptoms
+  const SymptomThermometer = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2v8m0 0v8m0-8h-1.5m1.5 0h1.5" stroke="currentColor" strokeWidth="2"/>
+      <circle cx="12" cy="18" r="3" fill="currentColor"/>
+    </svg>
+  )
+  const SymptomThroat = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2c0 0-2 3-2 6s1 4 2 5c1-1 2-2 2-5s-2-6-2-6" stroke="currentColor" strokeWidth="2"/>
+      <circle cx="10" cy="16" r="1" fill="currentColor"/>
+      <circle cx="14" cy="16" r="1" fill="currentColor"/>
+    </svg>
+  )
+  const SymptomStomach = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="13" r="5" stroke="currentColor" strokeWidth="2"/>
+      <path d="M12 9V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+  )
+  const SymptomHeart = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+    </svg>
+  )
+  const SymptomChild = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="6" r="3" stroke="currentColor" strokeWidth="2"/>
+      <path d="M12 9c-2 0-3 2-3 4v3h6v-3c0-2-1-4-3-4z" stroke="currentColor" strokeWidth="2"/>
+    </svg>
+  )
+  const SymptomBrain = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M9 2c-1 1-1 3-1 5 0 2 1 3 2 4-1 1-1 2-1 3s1 2 2 2c1 0 2-1 2-2 1 0 1 1 2 2 1 0 2-1 2-2 0-1-0-2-1-3 1-1 2-2 2-4 0-2 0-4-1-5" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+    </svg>
+  )
+  const SymptomPill = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M7 8c0-1 1-2 2-2s2 1 2 2v8c0 1-1 2-2 2s-2-1-2-2V8z" stroke="currentColor" strokeWidth="2"/>
+      <path d="M13 8c0-1 1-2 2-2s2 1 2 2v8c0 1-1 2-2 2s-2-1-2-2V8z" fill="currentColor"/>
+    </svg>
+  )
+
+  // Icon components for services
+  const IconVideo = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M23 7l-7 5 7 5V7z" fill="currentColor"/>
+      <rect x="1" y="5" width="15" height="14" rx="2" ry="2" stroke="currentColor" strokeWidth="2" fill="none"/>
+    </svg>
+  )
+  const IconLab = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M6 2h12v8H6V2z" stroke="currentColor" strokeWidth="2" fill="none"/>
+      <path d="M12 10v6" stroke="currentColor" strokeWidth="2"/>
+      <circle cx="9" cy="5" r="1" fill="currentColor"/>
+      <circle cx="15" cy="5" r="1" fill="currentColor"/>
+      <path d="M10 16h4l-2 4-2-4z" stroke="currentColor" strokeWidth="2"/>
+    </svg>
+  )
+  const IconPill = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M4 12c0-3 3-6 4-6s4 3 4 6-1 6-4 6-4-3-4-6z" stroke="currentColor" strokeWidth="2" fill="currentColor"/>
+      <path d="M12 12c0-3 3-6 4-6s4 3 4 6-1 6-4 6-4-3-4-6z" stroke="currentColor" strokeWidth="2" fill="none"/>
+    </svg>
+  )
+  const IconDocument = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke="currentColor" strokeWidth="2" fill="none"/>
+      <polyline points="13 2 13 9 20 9" stroke="currentColor" strokeWidth="2" fill="none"/>
+      <line x1="10" y1="13" x2="16" y2="13" stroke="currentColor" strokeWidth="1.5"/>
+      <line x1="10" y1="17" x2="16" y2="17" stroke="currentColor" strokeWidth="1.5"/>
+    </svg>
+  )
+
   // FIX 3 & 4 — Rename "Ребёнок" → "Здоровье ребёнка", add "Психологическая помощь"
   const symptoms = [
-    { icon: '🌡', label: 'Температура' },
-    { icon: '🤧', label: 'Горло / нос' },
-    { icon: '🤢', label: 'Живот' },
-    { icon: '❤️', label: 'Давление' },
-    { icon: '👶', label: 'Здоровье ребёнка' },
-    { icon: '🧠', label: 'Психологическая помощь' },
+    { icon: SymptomThermometer, label: 'Температура', emoji: '🌡' },
+    { icon: SymptomThroat, label: 'Горло / нос', emoji: '🤧' },
+    { icon: SymptomStomach, label: 'Живот', emoji: '🤢' },
+    { icon: SymptomHeart, label: 'Давление', emoji: '❤️' },
+    { icon: SymptomChild, label: 'Здоровье ребёнка', emoji: '👶' },
+    { icon: SymptomBrain, label: 'Психологическая помощь', emoji: '🧠' },
   ]
   const extraSymptoms = [
-    { icon: '💊', label: 'Другое' },
+    { icon: SymptomPill, label: 'Другое', emoji: '💊' },
   ]
   // FIX 7 — Simplified language for users
   const services = [
-    { icon: '📹', title: 'Врач онлайн', sub: 'прямо сейчас', border: '#00B956', screen: 2, badge: '● 12 онлайн' },
-    { icon: '🔬', title: 'Понять мои анализы', sub: 'AI расшифровка', border: '#0F6E56', screen: 7 },
-    { icon: '💊', title: 'Что за лекарство?', sub: 'AI объяснит', border: '#534AB7', screen: 11 },
-    { icon: '📄', title: 'Больничный онлайн', sub: 'ЭЛН · официально', border: '#185FA5', screen: 3, ctx: { symptom: 'Справка для работы', symptomIcon: '📄', isSickLeave: true } },
+    { icon: IconVideo, title: 'Врач онлайн', sub: 'прямо сейчас', border: '#00B956', screen: 2, badge: '● 12 онлайн', emoji: '📹' },
+    { icon: IconLab, title: 'Понять мои анализы', sub: 'AI расшифровка', border: '#0F6E56', screen: 7, emoji: '🔬' },
+    { icon: IconPill, title: 'Что за лекарство?', sub: 'AI объяснит', border: '#534AB7', screen: 11, emoji: '💊' },
+    { icon: IconDocument, title: 'Больничный онлайн', sub: 'ЭЛН · официально', border: '#185FA5', screen: 3, emoji: '📄', ctx: { symptom: 'Справка для работы', symptomIcon: '📄', isSickLeave: true } },
   ]
 
   return (
@@ -449,24 +523,30 @@ function Screen1({ navigate, onExit, version, setVersion }) {
 
             {/* Main 3x2 grid */}
             <div className="grid grid-cols-2 gap-2 mb-3">
-              {symptoms.map((s, i) => (
-                <button key={i} onClick={() => navigate(3, { symptom: s.label, symptomIcon: s.icon })}
-                  className="rounded-xl py-2.5 px-3 text-sm text-white flex items-center gap-2 transition-all active:scale-95 text-left"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}>
-                  <span className="text-base leading-none">{s.icon}</span><span className="font-medium">{s.label}</span>
-                </button>
-              ))}
+              {symptoms.map((s, i) => {
+                const IconComponent = s.icon
+                return (
+                  <button key={i} onClick={() => navigate(3, { symptom: s.label, symptomIcon: s.emoji })}
+                    className="rounded-xl py-3 px-3 text-sm text-white flex items-center gap-2 transition-all active:scale-95 text-left h-14"
+                    style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}>
+                    <span className="text-white flex-shrink-0"><IconComponent /></span><span className="font-medium leading-tight">{s.label}</span>
+                  </button>
+                )
+              })}
             </div>
 
             {/* Extra row for "Другое" */}
             <div className="grid grid-cols-2 gap-2 mb-3">
-              {extraSymptoms.map((s, i) => (
-                <button key={i} onClick={() => navigate(3, { symptom: s.label, symptomIcon: s.icon })}
-                  className="rounded-xl py-2.5 px-3 text-sm text-white flex items-center gap-2 transition-all active:scale-95 text-left"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}>
-                  <span className="text-base leading-none">{s.icon}</span><span className="font-medium">{s.label}</span>
-                </button>
-              ))}
+              {extraSymptoms.map((s, i) => {
+                const IconComponent = s.icon
+                return (
+                  <button key={i} onClick={() => navigate(3, { symptom: s.label, symptomIcon: s.emoji })}
+                    className="rounded-xl py-3 px-3 text-sm text-white flex items-center gap-2 transition-all active:scale-95 text-left h-14"
+                    style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}>
+                    <span className="text-white flex-shrink-0"><IconComponent /></span><span className="font-medium leading-tight">{s.label}</span>
+                  </button>
+                )
+              })}
             </div>
 
             <button onClick={() => navigate(3, { symptom: 'Общее', symptomIcon: '🤔' })}
@@ -480,27 +560,30 @@ function Screen1({ navigate, onExit, version, setVersion }) {
         <div className="card-up-d2">
           <div className="text-xs font-semibold uppercase tracking-widest mb-2.5" style={{ color: 'var(--text-muted)' }}>Быстрые услуги</div>
           <div className="horizontal-scroll">
-            {services.map((s, i) => (
-              <button key={i} onClick={() => navigate(s.screen, s.ctx || {})}
-                className="rounded-2xl p-3.5 flex flex-col items-start gap-1.5 transition-all active:scale-95 flex-shrink-0"
-                style={{ background: 'var(--bg-elevated)', border: `1.5px solid ${s.border}33`, minWidth: 136,
-                  boxShadow: `0 4px 16px ${s.border}18` }}>
-                <div className="flex items-center justify-between w-full">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xl"
-                    style={{ background: `${s.border}22` }}>
-                    {s.icon}
+            {services.map((s, i) => {
+              const ServiceIcon = s.icon
+              return (
+                <button key={i} onClick={() => navigate(s.screen, s.ctx || {})}
+                  className="rounded-2xl p-3.5 flex flex-col items-start gap-2 transition-all active:scale-95 flex-shrink-0"
+                  style={{ background: 'var(--bg-elevated)', border: `1.5px solid ${s.border}33`, minWidth: 140,
+                    boxShadow: `0 4px 16px ${s.border}18` }}>
+                  <div className="flex items-center justify-between w-full">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ background: `${s.border}22`, color: s.border }}>
+                      <ServiceIcon />
+                    </div>
+                    {s.badge && (
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"
+                        style={{ background: 'rgba(0,185,86,0.15)', color: 'var(--green-500)' }}>
+                        {s.badge}
+                      </span>
+                    )}
                   </div>
-                  {s.badge && (
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"
-                      style={{ background: 'rgba(0,185,86,0.15)', color: 'var(--green-500)' }}>
-                      {s.badge}
-                    </span>
-                  )}
-                </div>
-                <div className="font-semibold text-white text-sm leading-tight tracking-tight">{s.title}</div>
-                <div className="text-[11px] font-medium" style={{ color: 'var(--text-secondary)' }}>{s.sub}</div>
-              </button>
-            ))}
+                  <div className="font-semibold text-white text-sm leading-tight tracking-tight">{s.title}</div>
+                  <div className="text-[11px] font-medium" style={{ color: 'var(--text-secondary)' }}>{s.sub}</div>
+                </button>
+              )
+            })}
           </div>
         </div>
 
